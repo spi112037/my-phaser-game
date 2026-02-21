@@ -25,6 +25,8 @@ export default class GridBoardUI {
     this.deployEnabled = false;
     this.inspectEnabled = true;
     this.board = null;
+    this.canDeployCellFn = null;
+    this.pendingTargets = new Set();
 
     this._draw();
   }
@@ -50,11 +52,15 @@ export default class GridBoardUI {
 
         rect.on("pointerover", () => {
           if (!this.deployEnabled) return;
-          rect.setFillStyle(0x9ddcff, 0.1);
+          this._refreshCellHighlights();
+          const key = `${cell.r},${cell.c}`;
+          if (this.pendingTargets.has(key)) return;
+          if (this.canDeployCellFn && !this.canDeployCellFn(cell.r, cell.c)) return;
+          rect.setFillStyle(0x9ddcff, 0.16);
         });
 
         rect.on("pointerout", () => {
-          rect.setFillStyle(0xffffff, 0.03);
+          this._refreshCellHighlights();
           this._clearCellTimer(cell);
         });
 
@@ -124,14 +130,43 @@ export default class GridBoardUI {
   setDeployEnabled(enabled) {
     this.deployEnabled = Boolean(enabled);
     this.container.setAlpha(this.deployEnabled ? 1 : 0.85);
+    this._refreshCellHighlights();
   }
 
   setInspectEnabled(enabled) {
     this.inspectEnabled = Boolean(enabled);
   }
 
+  setDeployRule(fn) {
+    this.canDeployCellFn = typeof fn === "function" ? fn : null;
+    this._refreshCellHighlights();
+  }
+
+  setPendingTargets(targets) {
+    this.pendingTargets = targets instanceof Set ? targets : new Set();
+    this._refreshCellHighlights();
+  }
+
+  _refreshCellHighlights() {
+    for (let i = 0; i < this.cells.length; i += 1) {
+      const cell = this.cells[i];
+      const key = `${cell.r},${cell.c}`;
+      if (this.pendingTargets.has(key)) {
+        cell.rect.setFillStyle(0xffc26b, 0.18);
+        continue;
+      }
+      if (!this.deployEnabled) {
+        cell.rect.setFillStyle(0xffffff, 0.03);
+        continue;
+      }
+      const can = this.canDeployCellFn ? Boolean(this.canDeployCellFn(cell.r, cell.c)) : true;
+      cell.rect.setFillStyle(can ? 0x9ddcff : 0xffffff, can ? 0.1 : 0.03);
+    }
+  }
+
   renderBoard(board) {
     this.board = board;
+    this._refreshCellHighlights();
 
     for (let i = 0; i < this.unitViews.length; i += 1) this.unitViews[i].destroy(true);
     this.unitViews = [];

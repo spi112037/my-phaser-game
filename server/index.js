@@ -89,6 +89,14 @@ function sendJson(reqOrRes, resOrStatus, statusOrData, maybeData) {
   res.end(JSON.stringify(data));
 }
 
+function getPublicBase(req) {
+  const proto = String(req?.headers?.["x-forwarded-proto"] || "").split(",")[0].trim()
+    || (req?.socket?.encrypted ? "https" : "http");
+  const host = String(req?.headers?.["x-forwarded-host"] || req?.headers?.host || "").split(",")[0].trim();
+  if (!host) return "";
+  return `${proto}://${host}`;
+}
+
 function parseBody(req) {
   return new Promise((resolve, reject) => {
     let raw = "";
@@ -646,8 +654,13 @@ const server = http.createServer(async (req, res) => {
       if (!cardId) return sendJson(res, 400, { error: "invalid_card_id" });
       if (!dataUrl.startsWith("data:image/")) return sendJson(res, 400, { error: "invalid_data_url" });
       const saved = await saveCardImageFromDataUrl({ cardId, cardName, dataUrl });
-      if (!saved.ok) return sendJson(res, 400, { error: saved.error || "save_failed" });
-      return sendJson(res, 200, { ok: true, imagePath: saved.imagePath });
+      if (!saved.ok) return sendJson(req, res, 400, { error: saved.error || "save_failed" });
+      const publicBase = getPublicBase(req);
+      return sendJson(req, res, 200, {
+        ok: true,
+        imagePath: saved.imagePath,
+        imageUrl: publicBase ? `${publicBase}${saved.imagePath}` : saved.imagePath
+      });
     }
 
     if (req.method === "POST" && reqPath === "/api/comfy/generate-from-description") {
@@ -699,10 +712,12 @@ const server = http.createServer(async (req, res) => {
         if (!chosen) return sendJson(res, 500, { error: "generated_image_not_found", apiBase });
 
         const saved = await moveGeneratedImageToCustom({ cardId, cardName, generatedPath: chosen });
-        if (!saved.ok) return sendJson(res, 500, { error: saved.error || "save_custom_failed" });
-        return sendJson(res, 200, {
+        if (!saved.ok) return sendJson(req, res, 500, { error: saved.error || "save_custom_failed" });
+        const publicBase = getPublicBase(req);
+        return sendJson(req, res, 200, {
           ok: true,
           imagePath: saved.imagePath,
+          imageUrl: publicBase ? `${publicBase}${saved.imagePath}` : saved.imagePath,
           sourcePath: chosen,
           usedPrompt: prompt,
           styleMode,
@@ -770,11 +785,14 @@ const server = http.createServer(async (req, res) => {
         if (paths.length === 0) return sendJson(res, 500, { error: "generated_sprite_not_found", apiBase });
 
         const saved = await moveGeneratedSpritesToCustom({ cardId, cardName, imagePaths: paths });
-        if (!saved.ok) return sendJson(res, 500, { error: saved.error || "save_sprite_failed" });
+        if (!saved.ok) return sendJson(req, res, 500, { error: saved.error || "save_sprite_failed" });
 
-        return sendJson(res, 200, {
+        const publicBase = getPublicBase(req);
+        return sendJson(req, res, 200, {
           ok: true,
           ...saved,
+          previewFrameUrl: publicBase && saved.previewFramePath ? `${publicBase}${saved.previewFramePath}` : saved.previewFramePath,
+          frameUrls: publicBase ? (Array.isArray(saved.frames) ? saved.frames.map((p) => `${publicBase}${p}`) : []) : saved.frames,
           apiBase,
           autoStarted: comfy.startedByServer
         });

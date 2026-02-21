@@ -9,6 +9,15 @@ const LOCKED_IMAGE_STYLE_MODE = "bright";
 const LOCKED_IMAGE_STYLE_REF = "/cards/style/style_reference.png";
 const EDITOR_API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:8787").replace(/\/$/, "");
 
+function resolveEditorAssetUrl(v) {
+  const s = String(v || "").trim();
+  if (!s) return "";
+  if (s.startsWith("data:image/")) return s;
+  if (/^https?:\/\//i.test(s)) return s;
+  if (s.startsWith("/cards/custom/")) return `${EDITOR_API_BASE}${s}`;
+  return s;
+}
+
 function escHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -526,7 +535,7 @@ export default class CardEditorScene extends Phaser.Scene {
 
     const host = document.getElementById("app") || document.body;
     const draft = this._loadDraft();
-    this.imageDataUrl = String(draft.image || "");
+    this.imageDataUrl = resolveEditorAssetUrl(draft.image || "");
 
     const wrap = document.createElement("div");
     wrap.id = "card-editor-root";
@@ -1005,7 +1014,7 @@ export default class CardEditorScene extends Phaser.Scene {
         abilityInputs[i].value = effects[i] || "";
       }
 
-      this.imageDataUrl = String(card.image || "");
+      this.imageDataUrl = resolveEditorAssetUrl(card.image || "");
       renderPreview();
     };
 
@@ -1118,16 +1127,17 @@ export default class CardEditorScene extends Phaser.Scene {
       const data = this._collectData({ idInput, nameInput, costInput, atkInput, hpInput, abilityInputs, descInput });
       data.image = await optimizeImageDataUrlForStorage(this.imageDataUrl || "");
       appendEventLog("圖片壓縮/最佳化完成");
+      let diskWriteFailed = false;
       try {
         appendEventLog("寫入圖片到本機硬碟");
         data.image = await persistCardImageToDisk(data.id, data.name, data.image);
         appendEventLog(`圖片寫入成功：${data.image}`);
       } catch (err) {
         appendEventLog(`失敗：圖片寫入失敗 -> ${String(err?.message || err)}`);
-        msg.textContent = `儲存失敗：圖片無法寫入硬碟（${String(err?.message || err)}）。請先啟動 npm run dev:all。`;
-        return false;
+        diskWriteFailed = true;
+        // no backend mode: keep local image payload and continue saving draft/override.
       }
-      this.imageDataUrl = data.image;
+      this.imageDataUrl = resolveEditorAssetUrl(data.image);
       const saveResult = this._saveDraft(data);
       const aiResult = this._autoRegisterMissingEffectRules(data);
       appendEventLog(`草稿儲存：${saveResult.ok ? "成功" : "失敗"}，新增規則 ${aiResult.added} 條`);
@@ -1167,6 +1177,8 @@ export default class CardEditorScene extends Phaser.Scene {
         msg.textContent = `已儲存並套用新卡，但圖片因容量限制未保存；AI 新增 ${aiResult.added} 條效果規則。`;
       } else if (writeResult.compacted) {
         msg.textContent = `已儲存並套用新卡，且清理其他卡片舊圖片以騰出容量；AI 新增 ${aiResult.added} 條效果規則。`;
+      } else if (diskWriteFailed) {
+        msg.textContent = `已儲存草稿與覆蓋（本機模式，圖片未寫入伺服器硬碟）；AI 新增 ${aiResult.added} 條效果規則。`;
       } else {
         msg.textContent = `已儲存並套用新卡：${data.id}；AI 新增 ${aiResult.added} 條效果規則。`;
       }
@@ -1181,13 +1193,13 @@ export default class CardEditorScene extends Phaser.Scene {
     const doApplyOverride = async () => {
       const data = this._collectData({ idInput, nameInput, costInput, atkInput, hpInput, abilityInputs, descInput });
       data.image = await optimizeImageDataUrlForStorage(this.imageDataUrl || "");
+      let diskWriteFailed = false;
       try {
         data.image = await persistCardImageToDisk(data.id, data.name, data.image);
       } catch (err) {
-        msg.textContent = `套用失敗：圖片無法寫入硬碟（${String(err?.message || err)}）。請先啟動 npm run dev:all。`;
-        return;
+        diskWriteFailed = true;
       }
-      this.imageDataUrl = data.image;
+      this.imageDataUrl = resolveEditorAssetUrl(data.image);
       const aiResult = this._autoRegisterMissingEffectRules(data);
 
       const map = this._readOverrides();
@@ -1218,6 +1230,8 @@ export default class CardEditorScene extends Phaser.Scene {
         msg.textContent = `已套用本機覆蓋：${data.id}，但圖片因容量限制未保存；AI 新增 ${aiResult.added} 條效果規則。`;
       } else if (writeResult.compacted) {
         msg.textContent = `已套用本機覆蓋：${data.id}，並清理其他卡片舊圖片以騰出容量；AI 新增 ${aiResult.added} 條效果規則。`;
+      } else if (diskWriteFailed) {
+        msg.textContent = `已套用本機覆蓋：${data.id}（本機模式，圖片未寫入伺服器硬碟）；AI 新增 ${aiResult.added} 條效果規則。`;
       } else {
         msg.textContent = `已套用本機覆蓋：${data.id}（返回戰鬥/牌組頁會讀到新值），AI 新增 ${aiResult.added} 條效果規則。`;
       }
@@ -1373,8 +1387,8 @@ export default class CardEditorScene extends Phaser.Scene {
           atk: data.atk,
           hp: data.hp
         });
-        const imagePath = String(result?.imagePath || "");
-        this.imageDataUrl = `${encodeURI(imagePath)}?v=${Date.now()}`;
+        const imagePath = String(result?.imageUrl || result?.imagePath || "");
+        this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(imagePath))}?v=${Date.now()}`;
         renderPreview();
         msg.textContent = `生成成功：${imagePath}`;
         appendEventLog(`成功：插圖生成完成 -> ${imagePath}`);
@@ -1442,7 +1456,8 @@ export default class CardEditorScene extends Phaser.Scene {
           frames: animFrames,
           size: animSize
         });
-        this.imageDataUrl = `${encodeURI(result.previewFramePath)}?v=${Date.now()}`;
+        const previewFramePath = String(result?.previewFrameUrl || result?.previewFramePath || "");
+        this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(previewFramePath))}?v=${Date.now()}`;
         renderPreview();
         msg.textContent = `攻擊動畫生成成功：${result.sequenceDir}（${result.frameCount} 幀）`;
         appendEventLog(`成功：動畫輸出 -> ${result.sequenceDir}，幀數=${result.frameCount}`);

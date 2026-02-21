@@ -129,6 +129,7 @@ export default class BattleScene extends Phaser.Scene {
       (r, c) => this._onCellClick(r, c),
       (unit) => this._onInspectUnit(unit)
     );
+    this.boardUI.setDeployRule((r, c) => this._canDeployAt(r, c));
     this.hud = new HeroHUD(this);
     this.hand = new HandBar(
       this,
@@ -422,6 +423,7 @@ export default class BattleScene extends Phaser.Scene {
     });
     if (!isSkill) this.pendingTargets.add(`${row},${col}`);
     this.pendingCardUse.set(this.selectedCard.id, (this.pendingCardUse.get(this.selectedCard.id) || 0) + 1);
+    this.combat?._log?.(`已暫存${isSkill ? "技能" : "召喚"}【${this.selectedCard.name}】@(${row + 1},${col + 1})，回合結束後送出`);
 
     this.selectedCard = null;
     this.hand.clearSelection();
@@ -553,7 +555,8 @@ export default class BattleScene extends Phaser.Scene {
     this.hand.setBattleLog(state.logs);
 
     const canOperate = this._isMyTurn();
-    this.boardUI.setDeployEnabled(canOperate);
+    this.boardUI.setDeployEnabled(canOperate && (this.removeMode || Boolean(this.selectedCard)));
+    this.boardUI.setPendingTargets(this.pendingTargets);
     this.boardUI.setInspectEnabled(!this.removeMode);
 
     let hint = this.removeMode
@@ -564,6 +567,7 @@ export default class BattleScene extends Phaser.Scene {
 
     if (this._isOnlineMode()) {
       hint += ` | 房號:${this.roomCode} 玩家:${this.playerId} | 已暫存動作:${this.turnActionBuffer.length}`;
+      hint += " | 連線模式：我方自動AI停用";
     }
 
     const myHero = this._isOnlineMode() && this.mySide === "R" ? right : left;

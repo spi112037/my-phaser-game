@@ -281,7 +281,8 @@ export default class DeckScene extends Phaser.Scene {
     root.style.display = "flex";
     root.style.gap = "8px";
     root.style.alignItems = "center";
-    root.style.flexWrap = "wrap";
+    root.style.flexWrap = "nowrap";
+    root.style.justifyContent = "space-between";
     root.style.zIndex = "60";
     root.style.pointerEvents = "auto";
     root.style.position = "absolute";
@@ -418,13 +419,13 @@ export default class DeckScene extends Phaser.Scene {
     };
 
     const raceTags = document.createElement("div");
-    raceTags.style.position = "absolute";
-    raceTags.style.right = "0";
-    raceTags.style.top = "0";
+    raceTags.style.position = "relative";
     raceTags.style.display = "flex";
     raceTags.style.flexDirection = "column";
     raceTags.style.gap = "6px";
     raceTags.style.alignItems = "stretch";
+    raceTags.style.flexShrink = "0";
+    raceTags.style.minWidth = "48px";
     raceTags.style.maxHeight = "128px";
     raceTags.style.overflowY = "auto";
     raceTags.style.padding = "2px";
@@ -472,7 +473,8 @@ export default class DeckScene extends Phaser.Scene {
     leftWrap.style.display = "flex";
     leftWrap.style.alignItems = "center";
     leftWrap.style.gap = "8px";
-    leftWrap.style.paddingRight = "66px";
+    leftWrap.style.flex = "1 1 auto";
+    leftWrap.style.minWidth = "0";
     leftWrap.appendChild(searchInput);
     leftWrap.appendChild(typeSel);
     leftWrap.appendChild(raceSel);
@@ -542,7 +544,7 @@ export default class DeckScene extends Phaser.Scene {
     this.filterRoot.style.top = "14px";
     this.filterRoot.style.width = `${avail}px`;
     this.filterRoot.style.maxWidth = `${avail}px`;
-    this.filterRoot.style.overflow = "hidden";
+    this.filterRoot.style.overflow = "visible";
 
     if (this.searchInputEl) {
       const searchW = Math.max(140, Math.floor(avail * 0.34));
