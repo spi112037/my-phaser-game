@@ -7,7 +7,20 @@ const EFFECT_RULE_OVERRIDE_KEY = "my-phaser-game.effect-rule-overrides.v1";
 const IMAGE_STORE_MAX_BYTES = 160 * 1024;
 const LOCKED_IMAGE_STYLE_MODE = "bright";
 const LOCKED_IMAGE_STYLE_REF = "/cards/style/style_reference.png";
-const EDITOR_API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:8787").replace(/\/$/, "");
+function resolveEditorApiBase() {
+  const envBase = String(import.meta.env.VITE_API_BASE || "").trim();
+  if (envBase) return envBase.replace(/\/$/, "");
+
+  const host = String(globalThis?.location?.hostname || "").toLowerCase();
+  const proto = String(globalThis?.location?.protocol || "https:");
+  if (!host || host === "localhost" || host === "127.0.0.1") return "http://localhost:8787";
+
+  if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
+  if (host.startsWith("api.")) return `${proto}//${host}`;
+  return `${proto}//api.${host}`;
+}
+
+const EDITOR_API_BASE = resolveEditorApiBase();
 
 function resolveEditorAssetUrl(v) {
   const s = String(v || "").trim();

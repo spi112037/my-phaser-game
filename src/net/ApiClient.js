@@ -1,4 +1,17 @@
-﻿const API_BASE = (import.meta.env.VITE_API_BASE || "http://localhost:8787").replace(/\/$/, "");
+function resolveApiBase() {
+  const envBase = String(import.meta.env.VITE_API_BASE || "").trim();
+  if (envBase) return envBase.replace(/\/$/, "");
+
+  const host = String(globalThis?.location?.hostname || "").toLowerCase();
+  const proto = String(globalThis?.location?.protocol || "https:");
+  if (!host || host === "localhost" || host === "127.0.0.1") return "http://localhost:8787";
+
+  if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
+  if (host.startsWith("api.")) return `${proto}//${host}`;
+  return `${proto}//api.${host}`;
+}
+
+const API_BASE = resolveApiBase();
 
 async function request(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
