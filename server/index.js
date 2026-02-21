@@ -193,6 +193,41 @@ function filePathToWebPath(absPath) {
   return `/${rel.split(path.sep).join("/")}`;
 }
 
+function getMimeByExt(absPath) {
+  const ext = String(path.extname(absPath || "")).toLowerCase();
+  if (ext === ".png") return "image/png";
+  if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
+  if (ext === ".webp") return "image/webp";
+  if (ext === ".gif") return "image/gif";
+  if (ext === ".svg") return "image/svg+xml";
+  if (ext === ".json") return "application/json; charset=utf-8";
+  if (ext === ".txt") return "text/plain; charset=utf-8";
+  return "application/octet-stream";
+}
+
+async function sendPublicFile(req, res, reqPath) {
+  const rel = String(reqPath || "").replace(/^\/+/, "");
+  const abs = path.resolve(PUBLIC_ROOT, rel);
+  const relCheck = path.relative(PUBLIC_ROOT, abs);
+  if (relCheck.startsWith("..")) {
+    return sendJson(req, res, 403, { error: "forbidden_path" });
+  }
+
+  if (!fsSync.existsSync(abs) || !fsSync.statSync(abs).isFile()) {
+    return sendJson(req, res, 404, { error: "file_not_found" });
+  }
+
+  const mime = getMimeByExt(abs);
+  const buf = await fs.readFile(abs);
+  res.writeHead(200, {
+    "Content-Type": mime,
+    "Cache-Control": "public, max-age=60",
+    ...buildCorsHeaders(req)
+  });
+  res.end(buf);
+  return null;
+}
+
 function detectComfyApiBase(preferred) {
   const preferredBase = String(preferred || "").trim();
   if (preferredBase) return preferredBase;
@@ -577,6 +612,10 @@ const server = http.createServer(async (req, res) => {
   if (req.method === "OPTIONS") return sendJson(req, res, 204, {});
 
   try {
+    if (req.method === "GET" && reqPath.startsWith("/cards/")) {
+      return sendPublicFile(req, res, reqPath);
+    }
+
     if (req.method === "GET" && reqPath === "/api/health") {
       return sendJson(req, res, 200, {
         ok: true,
