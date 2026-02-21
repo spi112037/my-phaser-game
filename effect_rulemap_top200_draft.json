@@ -1,0 +1,2097 @@
+{
+  "隱匿": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 308,
+    "samples": [
+      "隱匿:不能被單體技能指定。",
+      "隱匿：単体目標技能的ターゲットならない。"
+    ]
+  },
+  "警戒": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 220,
+    "samples": [
+      "警戒:优先攻擊周围一格內位於身後的敵方士兵。",
+      "警戒：優先的周圍1格的後方的敵方士兵攻擊する。"
+    ]
+  },
+  "墙": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 204,
+    "samples": [
+      "墙:無法移動，無法攻擊。墙類。"
+    ]
+  },
+  "聖光": {
+    "tags": [
+      "range_up",
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 202,
+    "samples": [
+      "聖光:射程+2。攻擊造成的傷害無法被減免，消滅的士兵無法激活能力重生、还魂或骷髏。"
+    ]
+  },
+  "破甲": {
+    "tags": [
+      "armor_break"
+    ],
+    "valueHint": 1,
+    "count": 180,
+    "samples": [
+      "破甲:攻擊造成的傷害無法被減免。",
+      "破甲：相手的傷害減免無視。"
+    ]
+  },
+  "奔跑": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 154,
+    "samples": [
+      "奔跑:移動力+1。"
+    ]
+  },
+  "火彈": {
+    "tags": [
+      "step_damage",
+      "range_up",
+      "burn"
+    ],
+    "valueHint": 1,
+    "count": 136,
+    "samples": [
+      "火彈:射程+2。令受傷士兵下一回合额外受到1點火焰傷害。"
+    ]
+  },
+  "飛行": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 118,
+    "samples": [
+      "飛行:移動時可穿越非飛行類士兵。飛行類。",
+      "飛行：移動時，非飛行系的敵方士兵飛び越せる。飛行系。"
+    ]
+  },
+  "天使": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 116,
+    "samples": [
+      "天使:阻止敵方飛行類士兵穿越。",
+      "天使：敵的飛行系士兵的通過妨害する。"
+    ]
+  },
+  "反擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 110,
+    "samples": [
+      "反擊:受到射程內攻擊時，反擊攻擊者。"
+    ]
+  },
+  "暗影彈": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 106,
+    "samples": [
+      "暗影彈:射程+2。隨機造成0%至200%傷害。"
+    ]
+  },
+  "吸血": {
+    "tags": [
+      "range_up",
+      "lifesteal"
+    ],
+    "valueHint": 1,
+    "count": 104,
+    "samples": [
+      "吸血:造成物理傷害時，對自己治療等量的傷害。",
+      "吸血：射程+2，與えた魔法傷害分的HP回復。",
+      "吸血：物理攻擊時，傷害と同じ量だけ自分治療。"
+    ]
+  },
+  "無瑕之盾": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 98,
+    "samples": [
+      "無瑕之盾:不受減益狀態效果的影响。"
+    ]
+  },
+  "先制": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 94,
+    "samples": [
+      "先制:受到射程內攻擊時，抢先反擊。",
+      "先制：射程内で攻擊受けようとする時，先反撃加える。"
+    ]
+  },
+  "加速1": {
+    "tags": [
+      "step_draw",
+      "summon_token"
+    ],
+    "valueHint": 1,
+    "count": 90,
+    "samples": [
+      "加速1:每回合使召喚者準備欄中準備值最高的1張卡牌準備值-1。",
+      "加速1：每回合召喚者的準備欄で準備值が最も高い卡牌的準備值-1。"
+    ]
+  },
+  "重生": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 88,
+    "samples": [
+      "重生:死亡後有33%機率在原地復活，僅能復活一次。"
+    ]
+  },
+  "佯攻": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 78,
+    "samples": [
+      "佯攻:攻擊完毕後，向身後移動。"
+    ]
+  },
+  "翱翔": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 78,
+    "samples": [
+      "翱翔:移動力+1。移動時可穿越非飛行類士兵。飛行類。"
+    ]
+  },
+  "英勇1": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 76,
+    "samples": [
+      "英勇1:造成傷害時，攻擊力+1。"
+    ]
+  },
+  "吸血球": {
+    "tags": [
+      "range_up",
+      "lifesteal"
+    ],
+    "valueHint": 1,
+    "count": 68,
+    "samples": [
+      "吸血球:射程+2。造成法術傷害時，對自己治療等量的傷害。"
+    ]
+  },
+  "騎乘": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 68,
+    "samples": [
+      "騎乘:移動力+2。騎乘類。"
+    ]
+  },
+  "弓箭": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 66,
+    "samples": [
+      "弓箭:射程+3。遠程類。"
+    ]
+  },
+  "英勇2": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 2,
+    "count": 64,
+    "samples": [
+      "英勇2:造成傷害時，攻擊力+2。"
+    ]
+  },
+  "治療2": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 2,
+    "count": 62,
+    "samples": [
+      "治療2:每回合對受到最多傷害的友方士兵治療2點傷害。"
+    ]
+  },
+  "後撤": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 62,
+    "samples": [
+      "後撤:受到射程內攻擊時，尝试向身後移動。若能逃离攻擊範圍，则不受该次攻擊。"
+    ]
+  },
+  "減速1": {
+    "tags": [
+      "step_draw",
+      "slow"
+    ],
+    "valueHint": 1,
+    "count": 62,
+    "samples": [
+      "減速1:每回合令1名敵方英雄準備欄中隨機的1張卡牌準備值+1。"
+    ]
+  },
+  "还魂": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 1,
+    "count": 60,
+    "samples": [
+      "还魂:死亡時，有50%的機率返回召喚者的準備欄。免疫聖光。"
+    ]
+  },
+  "投掷": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 56,
+    "samples": [
+      "投掷:射程+1。遠程類。"
+    ]
+  },
+  "長槍": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 56,
+    "samples": [
+      "長槍:射程+1。對騎乘類士兵造成的傷害×2。",
+      "長槍：射程+1，騎馬系士兵向的傷害×2。"
+    ]
+  },
+  "疾風步": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 54,
+    "samples": [
+      "疾風步:進場後第一回合移動力+5。"
+    ]
+  },
+  "霜寒彈": {
+    "tags": [
+      "range_up",
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 54,
+    "samples": [
+      "霜寒彈:射程+2。令受傷士兵的移動力降低50%，持續2回合。"
+    ]
+  },
+  "背刺": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 52,
+    "samples": [
+      "背刺:以2倍的攻擊力，优先攻擊身後一格的敵方士兵。"
+    ]
+  },
+  "钝步": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 52,
+    "samples": [
+      "钝步:移動力-1。"
+    ]
+  },
+  "天馬": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 50,
+    "samples": [
+      "天馬:移動力+2。移動時可穿越非飛行類士兵。騎乘類，飛行類。"
+    ]
+  },
+  "伏擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 50,
+    "samples": [
+      "伏擊:第一次攻擊時攻擊力×2。"
+    ]
+  },
+  "骨堆": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 50,
+    "samples": [
+      "骨堆:無法移動，無法攻擊。行動時，重组為骷髏。"
+    ]
+  },
+  "恢復2": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 2,
+    "count": 48,
+    "samples": [
+      "恢復2:每回合對自己治療2點傷害。"
+    ]
+  },
+  "治療3": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 3,
+    "count": 46,
+    "samples": [
+      "治療3:每回合對受到最多傷害的友方士兵治療3點傷害。",
+      "治療3：每回合最も多く的傷害受けた友方士兵3治療。"
+    ]
+  },
+  "長弓": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 46,
+    "samples": [
+      "長弓:射程+4。對飛行類士兵造成的傷害×2。遠程類。"
+    ]
+  },
+  "守護": {
+    "tags": [
+      "hero_guard"
+    ],
+    "valueHint": 1,
+    "count": 44,
+    "samples": [
+      "守護:代替周围一格內所有友方士兵及英雄承受傷害。",
+      "守護:進場時，所有敵方士兵被魅惑，持續2回合。令敵方英雄召喚進場的士兵被魅惑，持續1回合。"
+    ]
+  },
+  "冷風": {
+    "tags": [
+      "range_up",
+      "hot_wind_knockback"
+    ],
+    "valueHint": 1,
+    "count": 44,
+    "samples": [
+      "冷風:射程+2。令受傷士兵後退2格。"
+    ]
+  },
+  "治療1": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 1,
+    "count": 44,
+    "samples": [
+      "治療1:每回合對受到最多傷害的友方士兵治療1點傷害。"
+    ]
+  },
+  "重甲3": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 3,
+    "count": 44,
+    "samples": [
+      "重甲3:減免3點受到的物理傷害。重甲類。"
+    ]
+  },
+  "自毁3": {
+    "tags": [
+      "step_damage",
+      "burn"
+    ],
+    "valueHint": 3,
+    "count": 42,
+    "samples": [
+      "自毁3:每回合受到3點火焰傷害。"
+    ]
+  },
+  "減速2": {
+    "tags": [
+      "step_draw",
+      "slow"
+    ],
+    "valueHint": 2,
+    "count": 42,
+    "samples": [
+      "減速2:每回合令1名敵方英雄準備欄中隨機的1張卡牌準備值+2。",
+      "減速2：每回合敵英雄的準備欄内ある卡牌的中或ら隨機で準備值+2。"
+    ]
+  },
+  "嗜血6": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 6,
+    "count": 42,
+    "samples": [
+      "嗜血6:殺死敵方士兵時，生命+6。"
+    ]
+  },
+  "聖聖光": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 42,
+    "samples": [
+      "聖聖光：射程+2，相手的傷害減免無視。死亡士兵は再生，回帰，回帰的魂，骸骨不可。"
+    ]
+  },
+  "受到的遠程傷害減免一半。": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 40,
+    "samples": [
+      "受到的遠程傷害減免一半。"
+    ]
+  },
+  "聖療打擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 40,
+    "samples": [
+      "聖療打擊:造成物理傷害時，對召喚者治療等量的傷害。"
+    ]
+  },
+  "骷髏": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 40,
+    "samples": [
+      "骷髏:受到的遠程傷害減免一半。死亡時，散落成骨堆。"
+    ]
+  },
+  "擊晕": {
+    "tags": [
+      "stun",
+      "on_damaged_stun"
+    ],
+    "valueHint": 1,
+    "count": 40,
+    "samples": [
+      "擊晕:有50%機率令受傷士兵無法行動，持續1回合。"
+    ]
+  },
+  "土遁": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "土遁:受到面前一格的攻擊時，尝试土遁到攻擊者背後。若能离開攻擊範圍，则不受该次攻擊。"
+    ]
+  },
+  "出血攻擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "出血攻擊:令受傷士兵無法被治療。"
+    ]
+  },
+  "攻擊造成的傷害無法被減免，消滅的士兵無法激活能力重生、还魂或骷髏。": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "攻擊造成的傷害無法被減免，消滅的士兵無法激活能力重生、还魂或骷髏。"
+    ]
+  },
+  "狂怒1": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "狂怒1:受到傷害時，攻擊力+1。"
+    ]
+  },
+  "狂怒2": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 2,
+    "count": 38,
+    "samples": [
+      "狂怒2:受到傷害時，攻擊力+2。"
+    ]
+  },
+  "重甲2": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 2,
+    "count": 38,
+    "samples": [
+      "重甲2:減免2點受到的物理傷害。重甲類。"
+    ]
+  },
+  "重骑1": {
+    "tags": [
+      "hp_up",
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "重骑1:移動力+2。減免1點受到的物理傷害。騎乘類，重甲類。"
+    ]
+  },
+  "碎甲": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 38,
+    "samples": [
+      "碎甲:攻擊造成的傷害無法被減免，對重甲類士兵造成的傷害×2。"
+    ]
+  },
+  "加速2": {
+    "tags": [
+      "step_draw",
+      "summon_token"
+    ],
+    "valueHint": 2,
+    "count": 36,
+    "samples": [
+      "加速2:每回合使召喚者準備欄中準備值最高的1張卡牌準備值-2。",
+      "加速2：每回合召喚者的準備欄で準備值が最も高い卡牌的準備值-2。"
+    ]
+  },
+  "电球": {
+    "tags": [
+      "range_up",
+      "stun",
+      "on_damaged_stun"
+    ],
+    "valueHint": 1,
+    "count": 36,
+    "samples": [
+      "电球:射程+2。有25%機率令受傷士兵無法行動，持續1回合。"
+    ]
+  },
+  "使役的代償3": {
+    "tags": [
+      "step_damage",
+      "burn",
+      "summon_token"
+    ],
+    "valueHint": 3,
+    "count": 36,
+    "samples": [
+      "使役的代償3：每回合召喚者火焰傷害3。"
+    ]
+  },
+  "强襲": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 36,
+    "samples": [
+      "强襲:對敵方士兵造成傷害時，對其召喚者造成等量的傷害。"
+    ]
+  },
+  "無瑕屏障": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 36,
+    "samples": [
+      "無瑕屏障:不受狀態效果的影响。"
+    ]
+  },
+  "擊飛": {
+    "tags": [
+      "hot_wind_knockback"
+    ],
+    "valueHint": 1,
+    "count": 36,
+    "samples": [
+      "擊飛:令受傷士兵後退2格。"
+    ]
+  },
+  "召集3": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 3,
+    "count": 34,
+    "samples": [
+      "召集3:進場時，召喚者有100%機率從自己的牌庫抽取1張卡牌置於自己的準備欄。",
+      "召集3：召喚時，100%的機率で召喚者的牌庫或ら卡牌1枚引く。"
+    ]
+  },
+  "穿刺": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 34,
+    "samples": [
+      "穿刺:攻擊目標及目標身後1格內的敵方士兵和英雄。"
+    ]
+  },
+  "無欠的盾": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 34,
+    "samples": [
+      "無欠的盾：マイナス効果的影響無效化する。"
+    ]
+  },
+  "狂暴": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 32,
+    "samples": [
+      "狂暴:進場時，對召喚者造成3點物理傷害。"
+    ]
+  },
+  "信仰1": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 32,
+    "samples": [
+      "信仰1:造成治療時，攻擊力+1，生命+1。"
+    ]
+  },
+  "恢復3": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 3,
+    "count": 32,
+    "samples": [
+      "恢復3:每回合對自己治療3點傷害。"
+    ]
+  },
+  "疾驰": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 32,
+    "samples": [
+      "疾驰:移動力+3。"
+    ]
+  },
+  "暗影爆裂": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 32,
+    "samples": [
+      "暗影爆裂:射程+3。攻擊目標及目標周围十字格內的所有敵方士兵和英雄。隨機造成0%至200%傷害。"
+    ]
+  },
+  "靈體": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 32,
+    "samples": [
+      "靈體:受到物理傷害時，將傷害減免到1。"
+    ]
+  },
+  "六翼": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "六翼:阻止敵方飛行類士兵穿越。不受減益狀態效果的影响。"
+    ]
+  },
+  "狙擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "狙擊:优先攻擊射程內生命最低的敵人。"
+    ]
+  },
+  "重骑2": {
+    "tags": [
+      "hp_up",
+      "speed_up"
+    ],
+    "valueHint": 2,
+    "count": 30,
+    "samples": [
+      "重骑2:移動力+2。減免2點受到的物理傷害。騎乘類，重甲類。"
+    ]
+  },
+  "淨化": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "淨化:每回合有50%機率清除隨機1名友方士兵的1個減益狀態。"
+    ]
+  },
+  "渗透": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "渗透:移動時可穿越敵方士兵。"
+    ]
+  },
+  "短弓": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "短弓:射程+2。遠程類。"
+    ]
+  },
+  "酷寒": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "酷寒:攻擊時目標每携带一個狀態（不包含光环狀態），该次攻擊攻擊力+2。"
+    ]
+  },
+  "震退": {
+    "tags": [
+      "hot_wind_knockback"
+    ],
+    "valueHint": 1,
+    "count": 30,
+    "samples": [
+      "震退:令受傷士兵後退3格。"
+    ]
+  },
+  "闘志2": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 2,
+    "count": 30,
+    "samples": [
+      "闘志2：冥霊 味方的全冥霊士兵闘志2付與：傷害造成たび攻擊力+2。",
+      "闘志2：傷害造成たび攻擊力+2。",
+      "闘志2：悪魔 味方的全悪魔士兵闘志2付與：傷害造成たび攻擊力+2。",
+      "闘志2：精霊 味方的全精霊士兵闘志2付與：傷害造成たび攻擊力+2。",
+      "闘志2：竜族 味方的全竜族士兵闘志2付與：傷害造成たび攻擊力+2。"
+    ]
+  },
+  "完全防御": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 28,
+    "samples": [
+      "完全防御:受到傷害時，將傷害減免到3。",
+      "完全防御：被物理傷害と被魔法傷害0減免する。"
+    ]
+  },
+  "幸存": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 28,
+    "samples": [
+      "幸存:死亡後有50%機率在原地復活，僅能復活一次。"
+    ]
+  },
+  "火焰龍翼": {
+    "tags": [
+      "burn"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "火焰龍翼:移動時可穿越非飛行類士兵。受到的火焰傷害減免一半。飛行類。"
+    ]
+  },
+  "沸血": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "沸血:受到致死傷害時，保留1點生命。自己行動结束時才结算受到的致死傷害。"
+    ]
+  },
+  "连弩": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "连弩:射程+2。攻擊時一次射出2箭。遠程類。"
+    ]
+  },
+  "挑戰": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "挑戰:對準備值大於或等於5的士兵造成的傷害×2。"
+    ]
+  },
+  "毒箭1": {
+    "tags": [
+      "step_damage",
+      "range_up",
+      "poison"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "毒箭1:射程+3。令受傷士兵中毒，每回合受到1點暗影傷害。遠程類。"
+    ]
+  },
+  "神聖攻擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "神聖攻擊：相手的傷害減免無視。死亡士兵は再生，回帰，骸骨不可。"
+    ]
+  },
+  "铁翼": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "铁翼:移動時可穿越非飛行類士兵，減免1點受到的物理傷害。飛行類，重甲類。"
+    ]
+  },
+  "虚無障壁": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "虚無障壁：状態効果的影響無效化する。"
+    ]
+  },
+  "嗜血3": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 3,
+    "count": 26,
+    "samples": [
+      "嗜血3:殺死敵方士兵時，生命+3。"
+    ]
+  },
+  "暗影波": {
+    "tags": [
+      "step_damage",
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 26,
+    "samples": [
+      "暗影波:射程+2。令受傷士兵被诅咒，攻擊時對其自己造成與其攻擊力等值的傷害，持續1回合。",
+      "暗影波：射程+2。傷害対象士兵呪い付與：傷害與えた時，自分自身も[自身的攻擊力]で1回攻擊する。1回合持續。"
+    ]
+  },
+  "噬魂2": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 2,
+    "count": 26,
+    "samples": [
+      "噬魂2:對英雄造成傷害時，攻擊力+2，生命+2。"
+    ]
+  },
+  "冰箭": {
+    "tags": [
+      "range_up",
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 24,
+    "samples": [
+      "冰箭:射程+2。有50%機率令受傷士兵無法移動，持續1回合。"
+    ]
+  },
+  "识破": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 24,
+    "samples": [
+      "识破:受到射程內攻擊時，抢先反擊。若反擊能造成傷害则打断敵人的攻擊。"
+    ]
+  },
+  "法術反射": {
+    "tags": [
+      "reflect"
+    ],
+    "valueHint": 1,
+    "count": 24,
+    "samples": [
+      "法術反射:反射法術傷害。"
+    ]
+  },
+  "毒刃2": {
+    "tags": [
+      "step_damage",
+      "poison"
+    ],
+    "valueHint": 2,
+    "count": 24,
+    "samples": [
+      "毒刃2:令受傷士兵中毒，每回合受到2點暗影傷害。"
+    ]
+  },
+  "突擊1": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 24,
+    "samples": [
+      "突擊1:每移動2格下次攻擊時攻擊力+1。對遠程類士兵造成的傷害×2。"
+    ]
+  },
+  "転進": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 24,
+    "samples": [
+      "転進：攻擊後，後方移動する。"
+    ]
+  },
+  "魔甲3": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 3,
+    "count": 24,
+    "samples": [
+      "魔甲3:減免3點受到的法術傷害。"
+    ]
+  },
+  "自毁2": {
+    "tags": [
+      "step_damage",
+      "burn"
+    ],
+    "valueHint": 2,
+    "count": 22,
+    "samples": [
+      "自毁2:每回合受到2點火焰傷害。"
+    ]
+  },
+  "底力": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "底力:受傷失去生命時，提高等值的攻擊力。受到治療獲得生命時，降低等值的攻擊力。",
+      "底力：受けた傷害的分だけ攻擊力が上昇する。HPが回復した場合，上昇分的攻擊力も失う。"
+    ]
+  },
+  "法傷加深2": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 2,
+    "count": 22,
+    "samples": [
+      "法傷加深2:令受傷士兵受到的法術傷害+2。"
+    ]
+  },
+  "舍身": {
+    "tags": [
+      "hero_guard"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "舍身:在場時，替召喚者承担受到的傷害。"
+    ]
+  },
+  "重甲4": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 4,
+    "count": 22,
+    "samples": [
+      "重甲4:減免4點受到的物理傷害。重甲類。"
+    ]
+  },
+  "恐惧": {
+    "tags": [
+      "step_draw",
+      "summon_token"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "恐惧:每回合有25%機率使射程內隨機1名敵方士兵返回其召喚者的準備欄。"
+    ]
+  },
+  "惊骇": {
+    "tags": [
+      "step_draw",
+      "summon_token"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "惊骇:每回合有50%機率使射程內隨機1名敵方士兵返回其召喚者的準備欄。"
+    ]
+  },
+  "混乱彈": {
+    "tags": [
+      "range_up",
+      "burn"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "混乱彈:射程+2。隨機使用冰箭、火彈、暗影彈中的一種進行攻擊。"
+    ]
+  },
+  "脱兔": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "脱兔:不受移動限制狀態效果的影响。"
+    ]
+  },
+  "瞬移": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "瞬移:移動力提升至极限。移動時可穿越敵方士兵。"
+    ]
+  },
+  "骤現": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 22,
+    "samples": [
+      "骤現:自己行動结束時死亡。"
+    ]
+  },
+  "魔甲4": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 4,
+    "count": 22,
+    "samples": [
+      "魔甲4:減免4點受到的法術傷害。"
+    ]
+  },
+  "狂怒3": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 3,
+    "count": 20,
+    "samples": [
+      "狂怒3:受到傷害時，攻擊力+3。"
+    ]
+  },
+  "奉献": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 20,
+    "samples": [
+      "奉献:代替所有友方士兵及英雄承受傷害。"
+    ]
+  },
+  "迟钝": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 20,
+    "samples": [
+      "迟钝:移動力-1，射程-1。"
+    ]
+  },
+  "疲惫2": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 2,
+    "count": 20,
+    "samples": [
+      "疲惫2:敵方英雄每次從牌庫抽取1張卡牌置於自己的準備欄，都會受到2點暗影傷害。"
+    ]
+  },
+  "虚弱攻擊2": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 2,
+    "count": 20,
+    "samples": [
+      "虚弱攻擊2:令受傷士兵的攻擊力-2。"
+    ]
+  },
+  "劝诱2": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 2,
+    "count": 18,
+    "samples": [
+      "劝诱2:對英雄造成傷害時，令其牌庫中隨機的2張卡牌進入墓地。"
+    ]
+  },
+  "天罚": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "天罚:射程+2。攻擊目標及目標周围2×3格內的所有敵方士兵和英雄，傷害由所有目標分摊。"
+    ]
+  },
+  "安全第一": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "安全第一:受到物理傷害時，將傷害減免到3。"
+    ]
+  },
+  "炎雷3": {
+    "tags": [
+      "step_damage",
+      "burn"
+    ],
+    "valueHint": 3,
+    "count": 18,
+    "samples": [
+      "炎雷3:每回合對1名敵方英雄造成3點火焰傷害，對隨機1名敵方士兵或英雄造成3點闪电傷害。"
+    ]
+  },
+  "物理反射": {
+    "tags": [
+      "reflect"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "物理反射:反射物理傷害。",
+      "物理反射：被物理傷害反射。反射傷害は減免不可。"
+    ]
+  },
+  "活化": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "活化:死亡時，轉化為石像鬼（2/5/13/飛行/背刺）。",
+      "活化:死亡時，轉化為白玉石像鬼（3/5/9/飛行/背刺）。",
+      "活化:死亡時，轉化為黑曜石像鬼（4/5/14/飛行/背刺）。",
+      "活化:死亡時，轉化為沉睡者洛多維科（4/6/8/飛行/背刺/魔甲3）。",
+      "活化:死亡時，轉化為沉睡者洛多維科（4/7/12/飛行/背刺/魔甲3）。"
+    ]
+  },
+  "重弩": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "重弩:射程+2。移動過的回合內無法攻擊。遠程類。"
+    ]
+  },
+  "烈風": {
+    "tags": [
+      "range_up",
+      "hot_wind_knockback"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "烈風:首次行動時，殺死所有飛行類士兵。",
+      "烈風：射程+2，傷害対象2格後退させる。"
+    ]
+  },
+  "黑翼": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "黑翼:死亡後有33%機率在原地復活，僅能復活一次。阻止敵方飛行類士兵穿越。"
+    ]
+  },
+  "標槍": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "標槍:射程+2。遠程類。"
+    ]
+  },
+  "擊昏": {
+    "tags": [
+      "stun",
+      "on_damaged_stun"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "擊昏:令受傷士兵無法行動，持續1回合。"
+    ]
+  },
+  "魔甲5": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 5,
+    "count": 18,
+    "samples": [
+      "魔甲5:減免5點受到的法術傷害。",
+      "魔甲5：被魔法傷害5減免。"
+    ]
+  },
+  "魔防": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 18,
+    "samples": [
+      "魔防:受到法術傷害時，將傷害減免到0。"
+    ]
+  },
+  "大師": {
+    "tags": [
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "大師:對騎乘、飛行、遠程、重甲、墙類士兵造成的傷害×2。"
+    ]
+  },
+  "反彈·迷惑": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "反彈·迷惑:受到傷害時，33%機率使攻擊者被魅惑，持續2回合"
+    ]
+  },
+  "闪电龍翼": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "闪电龍翼:移動時可穿越非飛行類士兵。受到的闪电傷害減免一半。飛行類。"
+    ]
+  },
+  "冰霜龍翼": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "冰霜龍翼:移動時可穿越非飛行類士兵。受到的冰霜傷害減免一半。飛行類。"
+    ]
+  },
+  "尖槍": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "尖槍:射程+1。對騎乘類士兵造成的傷害×2。攻擊造成的傷害無法被減免。"
+    ]
+  },
+  "死亡": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "死亡:敵方士兵死亡時，自己攻擊力+2。",
+      "死亡：敵方士兵死亡時，攻擊力+2。"
+    ]
+  },
+  "自爆1": {
+    "tags": [
+      "burn"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "自爆1:死亡時，對周围一格內所有士兵和英雄造成4點火焰傷害。"
+    ]
+  },
+  "狂月想": {
+    "tags": [
+      "step_damage"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "狂月想:每回合對隨機1名敵方士兵或英雄造成4點暗影傷害。"
+    ]
+  },
+  "制空": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "制空:對飛行類士兵造成的傷害×2。"
+    ]
+  },
+  "固守1": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "固守1:优先攻擊周围一格內位於身後的敵方士兵。在己方半場時，攻擊力+1。"
+    ]
+  },
+  "固守2": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 2,
+    "count": 16,
+    "samples": [
+      "固守2:优先攻擊周围一格內位於身後的敵方士兵。在己方半場時，攻擊力+2。"
+    ]
+  },
+  "狙殺大師": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "狙殺大師:對被敵方英雄召喚進場的士兵造成3點遠程傷害。"
+    ]
+  },
+  "诡计魔盒": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "诡计魔盒:無法移動，無法攻擊。不能被單體技能指定。不受減益狀態效果的影响。"
+    ]
+  },
+  "城防士兵": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "城防士兵:無法移動。"
+    ]
+  },
+  "恢復1": {
+    "tags": [
+      "step_damage",
+      "step_heal"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "恢復1:每回合對自己治療1點傷害。"
+    ]
+  },
+  "热風": {
+    "tags": [
+      "step_damage",
+      "range_up",
+      "burn",
+      "hot_wind_knockback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "热風:射程+2。攻擊造成的傷害無法被減免。令受傷士兵後退2格，下一回合额外受到1點火焰傷害。"
+    ]
+  },
+  "掠食": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "掠食:在場時，殺死場內所有敵方衍生士兵。"
+    ]
+  },
+  "通缉3": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 3,
+    "count": 16,
+    "samples": [
+      "通缉3:离場後對敵方英雄治療3點傷害，通缉類。"
+    ]
+  },
+  "禁飛": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "禁飛:阻止敵方飛行類士兵穿越。"
+    ]
+  },
+  "聖療攻擊": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "聖療攻擊:造成傷害時，對召喚者治療等量的傷害。"
+    ]
+  },
+  "蓄力擊": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "蓄力擊:進場後第一回合射程+4，优先攻擊射程內生命最低的敵人。"
+    ]
+  },
+  "整備": {
+    "tags": [
+      "stun"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "整備:進場後第一回合無法行動。",
+      "整備：召喚後1回合目的み無法行動。"
+    ]
+  },
+  "龍鳞": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 16,
+    "samples": [
+      "龍鳞:受到物理傷害時，將傷害減免到3。"
+    ]
+  },
+  "大手里劍": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "大手里劍:射程+4。攻擊目標及目標身後2×1格內的所有敵方士兵和英雄。"
+    ]
+  },
+  "劝诱1": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "劝诱1:對英雄造成傷害時，令其牌庫中隨機的1張卡牌進入墓地。"
+    ]
+  },
+  "反撃": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "反撃：射程内で攻擊受到時，反撃する。"
+    ]
+  },
+  "天使的祈祷": {
+    "tags": [
+      "step_damage",
+      "step_heal",
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "天使的祈祷:每回合對受到最多傷害的友方士兵治療2點傷害。造成治療時，生命+2。"
+    ]
+  },
+  "尘暴": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "尘暴:所有敵方士兵獲得能力：超载，移動過的回合內無法攻擊。"
+    ]
+  },
+  "吸魔": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "吸魔:代替周围一格內所有友方士兵及英雄承受法術傷害。"
+    ]
+  },
+  "巫毒6": {
+    "tags": [
+      "poison"
+    ],
+    "valueHint": 6,
+    "count": 14,
+    "samples": [
+      "巫毒6:死亡時，對殺死自己的士兵造成6點暗影傷害。"
+    ]
+  },
+  "诅咒": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "诅咒:主動攻擊令受傷士兵被诅咒，攻擊時對其自己造成與其攻擊力等值的傷害，持續1回合。"
+    ]
+  },
+  "迅捷之刃": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "迅捷之刃:不受減益效果影响。受到射程內攻擊時，抢先反擊。"
+    ]
+  },
+  "拥戴": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "拥戴:由周围一格內的友方士兵承受所有傷害。"
+    ]
+  },
+  "法傷加深3": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 3,
+    "count": 14,
+    "samples": [
+      "法傷加深3:令受傷士兵受到的法術傷害+3。"
+    ]
+  },
+  "泼水·虚弱1": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "泼水·虚弱1:射程+1。令受傷士兵的攻擊力-1。"
+    ]
+  },
+  "物傷加深2": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 2,
+    "count": 14,
+    "samples": [
+      "物傷加深2:令受傷士兵受到的物理傷害+2。"
+    ]
+  },
+  "物傷防護": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "物傷防護:受到的物理傷害減免一半。"
+    ]
+  },
+  "直擊2": {
+    "tags": [
+      "step_damage",
+      "burn"
+    ],
+    "valueHint": 2,
+    "count": 14,
+    "samples": [
+      "直擊2:每回合對1名敵方英雄造成2點火焰傷害。"
+    ]
+  },
+  "威猛2": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 2,
+    "count": 14,
+    "samples": [
+      "威猛2:攻擊造成傷害時，攻擊力+1，生命+3。"
+    ]
+  },
+  "星辉指引": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "星辉指引:不能被單體技能指定。攻擊造成傷害時，攻擊+2，生命+3。"
+    ]
+  },
+  "英勇3": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 3,
+    "count": 14,
+    "samples": [
+      "英勇3:造成傷害時，攻擊力+3。"
+    ]
+  },
+  "飛翔": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "飛翔:移動力+2。移動時可穿越非飛行類士兵。飛行類。",
+      "飛翔：移動力無限。"
+    ]
+  },
+  "涅槃": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "涅槃:死亡後有100%機率在原地復活，僅能復活一次。"
+    ]
+  },
+  "神行": {
+    "tags": [
+      "speed_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "神行:移動力+4。"
+    ]
+  },
+  "混乱1": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "混乱1:對英雄造成傷害時，令其準備欄中隨機的1張卡牌準備值+1。"
+    ]
+  },
+  "混乱2": {
+    "tags": [
+      "step_draw"
+    ],
+    "valueHint": 2,
+    "count": 14,
+    "samples": [
+      "混乱2:對英雄造成傷害時，令其準備欄中隨機的1張卡牌準備值+2。"
+    ]
+  },
+  "虚弱2": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 2,
+    "count": 14,
+    "samples": [
+      "虚弱2:每回合有50%機率使射程內隨機1名敵方士兵攻擊力-2。"
+    ]
+  },
+  "復活": {
+    "tags": [
+      "revive_once"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "復活：死亡時，100%的機率で1度だけそ的場復活。"
+    ]
+  },
+  "惡念1": {
+    "tags": [
+      "step_damage"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "惡念1:每回合對1名敵方英雄造成1點暗影傷害。"
+    ]
+  },
+  "毁滅8": {
+    "tags": [
+      "burn"
+    ],
+    "valueHint": 8,
+    "count": 14,
+    "samples": [
+      "毁滅8:死亡時，對每個士兵和英雄各造成8點火焰傷害。"
+    ]
+  },
+  "落雷3": {
+    "tags": [
+      "step_damage"
+    ],
+    "valueHint": 3,
+    "count": 14,
+    "samples": [
+      "落雷3:每回合對隨機1名敵方士兵或英雄造成3點闪电傷害。"
+    ]
+  },
+  "魅惑": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "魅惑:每回合控制射程內隨機1名敵方士兵，持續1回合。"
+    ]
+  },
+  "噬魂1": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "噬魂1:對英雄造成傷害時，攻擊力+1，生命+1。"
+    ]
+  },
+  "ボス": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 1,
+    "count": 14,
+    "samples": [
+      "ボス：竜族 戰場内味方的竜族士兵が1体存在する每，攻擊力+1，HP+3。",
+      "ボス：精霊 戰場内味方的精霊士兵が1体存在する每，攻擊力+1，HP+3。",
+      "ボス：異界 戰場内味方的異界士兵が1体存在する每，攻擊力+1，HP+3。",
+      "ボス：獣人 戰場内味方的獣人士兵が1体存在する每，攻擊力+1，HP+3。",
+      "ボス：冥霊 戰場内味方的冥霊士兵が1体存在する每，攻擊力+1，HP+3。"
+    ]
+  },
+  "力天使召喚": {
+    "tags": [
+      "hero_guard",
+      "summon_token"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "力天使召喚:每回合在周围一個召喚一個光力天使（1/4/2/天使/長槍/舍身），最多一個。",
+      "力天使召喚:每回合在周围一個召喚一個光力天使（1/4/3/天使/長槍/舍身），最多一個。",
+      "力天使召喚：每回合周圍1格内聖光的力天使（1/4/2/天使/長槍/自己犠牲）1体召喚。最大1体。",
+      "力天使召喚：每回合周圍1格内聖光的力天使（1/1/1/天使/長槍/自己犠牲）1体召喚。最大1体。"
+    ]
+  },
+  "仁慈": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "仁慈:不能對當前攻擊力小於或等於3的士兵造成傷害。"
+    ]
+  },
+  "劝诱3": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 3,
+    "count": 12,
+    "samples": [
+      "劝诱3:對英雄造成傷害時，令其牌庫中隨機的3張卡牌進入墓地。"
+    ]
+  },
+  "引诱之吻": {
+    "tags": [
+      "range_up"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "引诱之吻:射程+2。有25%機率令受傷士兵被魅惑，持續1回合。"
+    ]
+  },
+  "仗勢": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "仗勢:在場的敵方士兵數量小於或等於己方時，攻擊力+3。"
+    ]
+  },
+  "冬眠": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "冬眠:令敵方英雄召喚進場的士兵無法移動，持續3回合。",
+      "冬眠：敵英雄が場召喚した士兵対し，凍結付與：移動不能。3回合持續。"
+    ]
+  },
+  "先發制人": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "先發制人:受到射程內攻擊時，抢先反擊。若反擊能造成傷害则打断敵人的攻擊。"
+    ]
+  },
+  "光體2": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 2,
+    "count": 12,
+    "samples": [
+      "光體2:受到法術傷害時，攻擊力+2，生命+6。"
+    ]
+  },
+  "冰盾2": {
+    "tags": [
+      "no_move"
+    ],
+    "valueHint": 2,
+    "count": 12,
+    "samples": [
+      "冰盾2:受到物理傷害時，對攻擊者造成2點冰霜傷害，同時令攻擊者無法移動，持續1回合。"
+    ]
+  },
+  "执念": {
+    "tags": [
+      "fallback"
+    ],
+    "valueHint": 1,
+    "count": 12,
+    "samples": [
+      "执念:受到射程內攻擊時，反擊攻擊者。受到致死傷害時，保留1點生命。自己行動结束時才结算受到的致死傷害。"
+    ]
+  },
+  "助攻2": {
+    "tags": [
+      "atk_up"
+    ],
+    "valueHint": 2,
+    "count": 12,
+    "samples": [
+      "助攻2:友方所有其他士兵攻擊力+2。"
+    ]
+  },
+  "吸魂2": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 2,
+    "count": 12,
+    "samples": [
+      "吸魂2:敵方士兵死亡時，自己生命+2。",
+      "吸魂2：英雄対して傷害造成と，攻擊力+2，HP+2。"
+    ]
+  },
+  "吸魂3": {
+    "tags": [
+      "atk_up",
+      "hp_up"
+    ],
+    "valueHint": 3,
+    "count": 12,
+    "samples": [
+      "吸魂3:敵方士兵死亡時，自己生命+3。",
+      "吸魂3：英雄対して傷害造成と，攻擊力+3，HP+3。"
+    ]
+  }
+}

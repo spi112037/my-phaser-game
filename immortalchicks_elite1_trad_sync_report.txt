@@ -1,0 +1,6 @@
+immortalchicks elite1 traditional + sync
+target_cards=263
+best_changed_cards=15
+base_changed_cards=4
+best_path=D:\pray\my-phaser-game\src\data\flameCardsBest.json
+base_path=D:\pray\my-phaser-game\src\data\flameCards.json

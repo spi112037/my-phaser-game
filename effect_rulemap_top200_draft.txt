@@ -1,0 +1,203 @@
+total_keys=2189
+draft_keys=200
+
+1. 隱匿 (308) tags=[fallback] valueHint=1
+2. 警戒 (220) tags=[fallback] valueHint=1
+3. 墙 (204) tags=[no_move] valueHint=1
+4. 聖光 (202) tags=[range_up, revive_once] valueHint=1
+5. 破甲 (180) tags=[armor_break] valueHint=1
+6. 奔跑 (154) tags=[speed_up] valueHint=1
+7. 火彈 (136) tags=[step_damage, range_up, burn] valueHint=1
+8. 飛行 (118) tags=[fallback] valueHint=1
+9. 天使 (116) tags=[fallback] valueHint=1
+10. 反擊 (110) tags=[fallback] valueHint=1
+11. 暗影彈 (106) tags=[range_up] valueHint=1
+12. 吸血 (104) tags=[range_up, lifesteal] valueHint=1
+13. 無瑕之盾 (98) tags=[fallback] valueHint=1
+14. 先制 (94) tags=[fallback] valueHint=1
+15. 加速1 (90) tags=[step_draw, summon_token] valueHint=1
+16. 重生 (88) tags=[revive_once] valueHint=1
+17. 佯攻 (78) tags=[fallback] valueHint=1
+18. 翱翔 (78) tags=[speed_up] valueHint=1
+19. 英勇1 (76) tags=[atk_up] valueHint=1
+20. 吸血球 (68) tags=[range_up, lifesteal] valueHint=1
+21. 騎乘 (68) tags=[speed_up] valueHint=1
+22. 弓箭 (66) tags=[range_up] valueHint=1
+23. 英勇2 (64) tags=[atk_up] valueHint=2
+24. 治療2 (62) tags=[step_damage, step_heal] valueHint=2
+25. 後撤 (62) tags=[fallback] valueHint=1
+26. 減速1 (62) tags=[step_draw, slow] valueHint=1
+27. 还魂 (60) tags=[step_draw] valueHint=1
+28. 投掷 (56) tags=[range_up] valueHint=1
+29. 長槍 (56) tags=[range_up] valueHint=1
+30. 疾風步 (54) tags=[speed_up] valueHint=1
+31. 霜寒彈 (54) tags=[range_up, speed_up] valueHint=1
+32. 背刺 (52) tags=[fallback] valueHint=1
+33. 钝步 (52) tags=[speed_up] valueHint=1
+34. 天馬 (50) tags=[speed_up] valueHint=1
+35. 伏擊 (50) tags=[fallback] valueHint=1
+36. 骨堆 (50) tags=[no_move] valueHint=1
+37. 恢復2 (48) tags=[step_damage, step_heal] valueHint=2
+38. 治療3 (46) tags=[step_damage, step_heal] valueHint=3
+39. 長弓 (46) tags=[range_up] valueHint=1
+40. 守護 (44) tags=[hero_guard] valueHint=1
+41. 冷風 (44) tags=[range_up, hot_wind_knockback] valueHint=1
+42. 治療1 (44) tags=[step_damage, step_heal] valueHint=1
+43. 重甲3 (44) tags=[hp_up] valueHint=3
+44. 自毁3 (42) tags=[step_damage, burn] valueHint=3
+45. 減速2 (42) tags=[step_draw, slow] valueHint=2
+46. 嗜血6 (42) tags=[hp_up] valueHint=6
+47. 聖聖光 (42) tags=[range_up] valueHint=1
+48. 受到的遠程傷害減免一半。 (40) tags=[fallback] valueHint=1
+49. 聖療打擊 (40) tags=[fallback] valueHint=1
+50. 骷髏 (40) tags=[fallback] valueHint=1
+51. 擊晕 (40) tags=[stun, on_damaged_stun] valueHint=1
+52. 土遁 (38) tags=[fallback] valueHint=1
+53. 出血攻擊 (38) tags=[fallback] valueHint=1
+54. 攻擊造成的傷害無法被減免，消滅的士兵無法激活能力重生、还魂或骷髏。 (38) tags=[revive_once] valueHint=1
+55. 狂怒1 (38) tags=[atk_up] valueHint=1
+56. 狂怒2 (38) tags=[atk_up] valueHint=2
+57. 重甲2 (38) tags=[hp_up] valueHint=2
+58. 重骑1 (38) tags=[hp_up, speed_up] valueHint=1
+59. 碎甲 (38) tags=[hp_up] valueHint=1
+60. 加速2 (36) tags=[step_draw, summon_token] valueHint=2
+61. 电球 (36) tags=[range_up, stun, on_damaged_stun] valueHint=1
+62. 使役的代償3 (36) tags=[step_damage, burn, summon_token] valueHint=3
+63. 强襲 (36) tags=[fallback] valueHint=1
+64. 無瑕屏障 (36) tags=[fallback] valueHint=1
+65. 擊飛 (36) tags=[hot_wind_knockback] valueHint=1
+66. 召集3 (34) tags=[step_draw] valueHint=3
+67. 穿刺 (34) tags=[fallback] valueHint=1
+68. 無欠的盾 (34) tags=[fallback] valueHint=1
+69. 狂暴 (32) tags=[fallback] valueHint=1
+70. 信仰1 (32) tags=[atk_up, hp_up] valueHint=1
+71. 恢復3 (32) tags=[step_damage, step_heal] valueHint=3
+72. 疾驰 (32) tags=[speed_up] valueHint=1
+73. 暗影爆裂 (32) tags=[range_up] valueHint=1
+74. 靈體 (32) tags=[fallback] valueHint=1
+75. 六翼 (30) tags=[fallback] valueHint=1
+76. 狙擊 (30) tags=[fallback] valueHint=1
+77. 重骑2 (30) tags=[hp_up, speed_up] valueHint=2
+78. 淨化 (30) tags=[fallback] valueHint=1
+79. 渗透 (30) tags=[fallback] valueHint=1
+80. 短弓 (30) tags=[range_up] valueHint=1
+81. 酷寒 (30) tags=[atk_up] valueHint=1
+82. 震退 (30) tags=[hot_wind_knockback] valueHint=1
+83. 闘志2 (30) tags=[atk_up] valueHint=2
+84. 完全防御 (28) tags=[fallback] valueHint=1
+85. 幸存 (28) tags=[revive_once] valueHint=1
+86. 火焰龍翼 (26) tags=[burn] valueHint=1
+87. 沸血 (26) tags=[fallback] valueHint=1
+88. 连弩 (26) tags=[range_up] valueHint=1
+89. 挑戰 (26) tags=[step_draw] valueHint=1
+90. 毒箭1 (26) tags=[step_damage, range_up, poison] valueHint=1
+91. 神聖攻擊 (26) tags=[fallback] valueHint=1
+92. 铁翼 (26) tags=[hp_up] valueHint=1
+93. 虚無障壁 (26) tags=[fallback] valueHint=1
+94. 嗜血3 (26) tags=[hp_up] valueHint=3
+95. 暗影波 (26) tags=[step_damage, range_up] valueHint=1
+96. 噬魂2 (26) tags=[atk_up, hp_up] valueHint=2
+97. 冰箭 (24) tags=[range_up, no_move] valueHint=1
+98. 识破 (24) tags=[fallback] valueHint=1
+99. 法術反射 (24) tags=[reflect] valueHint=1
+100. 毒刃2 (24) tags=[step_damage, poison] valueHint=2
+101. 突擊1 (24) tags=[atk_up] valueHint=1
+102. 転進 (24) tags=[fallback] valueHint=1
+103. 魔甲3 (24) tags=[fallback] valueHint=3
+104. 自毁2 (22) tags=[step_damage, burn] valueHint=2
+105. 底力 (22) tags=[fallback] valueHint=1
+106. 法傷加深2 (22) tags=[fallback] valueHint=2
+107. 舍身 (22) tags=[hero_guard] valueHint=1
+108. 重甲4 (22) tags=[hp_up] valueHint=4
+109. 恐惧 (22) tags=[step_draw, summon_token] valueHint=1
+110. 惊骇 (22) tags=[step_draw, summon_token] valueHint=1
+111. 混乱彈 (22) tags=[range_up, burn] valueHint=1
+112. 脱兔 (22) tags=[fallback] valueHint=1
+113. 瞬移 (22) tags=[speed_up] valueHint=1
+114. 骤現 (22) tags=[fallback] valueHint=1
+115. 魔甲4 (22) tags=[fallback] valueHint=4
+116. 狂怒3 (20) tags=[atk_up] valueHint=3
+117. 奉献 (20) tags=[fallback] valueHint=1
+118. 迟钝 (20) tags=[speed_up] valueHint=1
+119. 疲惫2 (20) tags=[step_draw] valueHint=2
+120. 虚弱攻擊2 (20) tags=[fallback] valueHint=2
+121. 劝诱2 (18) tags=[fallback] valueHint=2
+122. 天罚 (18) tags=[range_up] valueHint=1
+123. 安全第一 (18) tags=[fallback] valueHint=1
+124. 炎雷3 (18) tags=[step_damage, burn] valueHint=3
+125. 物理反射 (18) tags=[reflect] valueHint=1
+126. 活化 (18) tags=[fallback] valueHint=1
+127. 重弩 (18) tags=[range_up] valueHint=1
+128. 烈風 (18) tags=[range_up, hot_wind_knockback] valueHint=1
+129. 黑翼 (18) tags=[revive_once] valueHint=1
+130. 標槍 (18) tags=[range_up] valueHint=1
+131. 擊昏 (18) tags=[stun, on_damaged_stun] valueHint=1
+132. 魔甲5 (18) tags=[fallback] valueHint=5
+133. 魔防 (18) tags=[fallback] valueHint=1
+134. 大師 (16) tags=[hp_up] valueHint=1
+135. 反彈·迷惑 (16) tags=[fallback] valueHint=1
+136. 闪电龍翼 (16) tags=[fallback] valueHint=1
+137. 冰霜龍翼 (16) tags=[fallback] valueHint=1
+138. 尖槍 (16) tags=[range_up] valueHint=1
+139. 死亡 (16) tags=[atk_up] valueHint=1
+140. 自爆1 (16) tags=[burn] valueHint=1
+141. 狂月想 (16) tags=[step_damage] valueHint=1
+142. 制空 (16) tags=[fallback] valueHint=1
+143. 固守1 (16) tags=[atk_up] valueHint=1
+144. 固守2 (16) tags=[atk_up] valueHint=2
+145. 狙殺大師 (16) tags=[fallback] valueHint=1
+146. 诡计魔盒 (16) tags=[no_move] valueHint=1
+147. 城防士兵 (16) tags=[no_move] valueHint=1
+148. 恢復1 (16) tags=[step_damage, step_heal] valueHint=1
+149. 热風 (16) tags=[step_damage, range_up, burn, hot_wind_knockback] valueHint=1
+150. 掠食 (16) tags=[fallback] valueHint=1
+151. 通缉3 (16) tags=[fallback] valueHint=3
+152. 禁飛 (16) tags=[fallback] valueHint=1
+153. 聖療攻擊 (16) tags=[fallback] valueHint=1
+154. 蓄力擊 (16) tags=[range_up] valueHint=1
+155. 整備 (16) tags=[stun] valueHint=1
+156. 龍鳞 (16) tags=[fallback] valueHint=1
+157. 大手里劍 (14) tags=[range_up] valueHint=1
+158. 劝诱1 (14) tags=[fallback] valueHint=1
+159. 反撃 (14) tags=[fallback] valueHint=1
+160. 天使的祈祷 (14) tags=[step_damage, step_heal, hp_up] valueHint=1
+161. 尘暴 (14) tags=[fallback] valueHint=1
+162. 吸魔 (14) tags=[fallback] valueHint=1
+163. 巫毒6 (14) tags=[poison] valueHint=6
+164. 诅咒 (14) tags=[fallback] valueHint=1
+165. 迅捷之刃 (14) tags=[fallback] valueHint=1
+166. 拥戴 (14) tags=[fallback] valueHint=1
+167. 法傷加深3 (14) tags=[fallback] valueHint=3
+168. 泼水·虚弱1 (14) tags=[range_up] valueHint=1
+169. 物傷加深2 (14) tags=[fallback] valueHint=2
+170. 物傷防護 (14) tags=[fallback] valueHint=1
+171. 直擊2 (14) tags=[step_damage, burn] valueHint=2
+172. 威猛2 (14) tags=[atk_up, hp_up] valueHint=2
+173. 星辉指引 (14) tags=[atk_up, hp_up] valueHint=1
+174. 英勇3 (14) tags=[atk_up] valueHint=3
+175. 飛翔 (14) tags=[speed_up] valueHint=1
+176. 涅槃 (14) tags=[revive_once] valueHint=1
+177. 神行 (14) tags=[speed_up] valueHint=1
+178. 混乱1 (14) tags=[step_draw] valueHint=1
+179. 混乱2 (14) tags=[step_draw] valueHint=2
+180. 虚弱2 (14) tags=[fallback] valueHint=2
+181. 復活 (14) tags=[revive_once] valueHint=1
+182. 惡念1 (14) tags=[step_damage] valueHint=1
+183. 毁滅8 (14) tags=[burn] valueHint=8
+184. 落雷3 (14) tags=[step_damage] valueHint=3
+185. 魅惑 (14) tags=[fallback] valueHint=1
+186. 噬魂1 (14) tags=[atk_up, hp_up] valueHint=1
+187. ボス (14) tags=[atk_up, hp_up] valueHint=1
+188. 力天使召喚 (12) tags=[hero_guard, summon_token] valueHint=1
+189. 仁慈 (12) tags=[fallback] valueHint=1
+190. 劝诱3 (12) tags=[fallback] valueHint=3
+191. 引诱之吻 (12) tags=[range_up] valueHint=1
+192. 仗勢 (12) tags=[atk_up] valueHint=1
+193. 冬眠 (12) tags=[no_move] valueHint=1
+194. 先發制人 (12) tags=[fallback] valueHint=1
+195. 光體2 (12) tags=[atk_up, hp_up] valueHint=2
+196. 冰盾2 (12) tags=[no_move] valueHint=2
+197. 执念 (12) tags=[fallback] valueHint=1
+198. 助攻2 (12) tags=[atk_up] valueHint=2
+199. 吸魂2 (12) tags=[atk_up, hp_up] valueHint=2
+200. 吸魂3 (12) tags=[atk_up, hp_up] valueHint=3

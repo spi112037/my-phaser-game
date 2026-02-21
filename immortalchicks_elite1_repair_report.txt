@@ -1,0 +1,6 @@
+immortalchicks elite=1 new repair (card_ability parser)
+seen=263
+changed=0
+imported=263
+
+sample:

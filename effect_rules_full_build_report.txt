@@ -1,0 +1,10 @@
+rules_total=2189
+best_cards=3617
+best_cards_changed=2819
+base_cards=5687
+base_cards_changed=5181
+bindings_seen_best=15479
+bindings_seen_base=24264
+rules_path=D:\pray\my-phaser-game\src\data\effectRulesFromExcel.json
+best_path=D:\pray\my-phaser-game\src\data\flameCardsBest.json
+base_path=D:\pray\my-phaser-game\src\data\flameCards.json

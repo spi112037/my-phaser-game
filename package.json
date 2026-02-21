@@ -1,0 +1,25 @@
+{
+  "name": "my-phaser-game",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "mock:dev": "node server/index.js",
+    "dev:all": "concurrently \"npm run mock:dev\" \"npm run dev\"",
+    "art:generate": "node tools/batchGenerateCardArt.cjs",
+    "art:generate:comfy": "node tools/comfyBatchFromCards.cjs",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "vite": "^8.0.0-beta.13"
+  },
+  "overrides": {
+    "vite": "^8.0.0-beta.13"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  }
+}

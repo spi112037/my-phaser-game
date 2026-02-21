@@ -1,0 +1,32 @@
+用法範例（請先把你的 ComfyUI workflow 另存為 API format JSON）：
+
+node tools/comfyBatchFromCards.cjs ^
+  --workflow tools/comfy_api_workflow.json ^
+  --cards src/data/flameCardsBest.json ^
+  --api http://127.0.0.1:8188 ^
+  --positiveNode 6 ^
+  --positiveField text ^
+  --negativeNode 7 ^
+  --negativeField text ^
+  --seedNode 3 ^
+  --seedField seed ^
+  --sizeNode 13 ^
+  --width 768 ^
+  --height 1152 ^
+  --saveNode 9 ^
+  --saveField filename_prefix ^
+  --out public/cards/comfy ^
+  --groupByRace 1 ^
+  --limit 100
+
+常用參數：
+- --limit 100            先跑 100 張測試（不填=全量）
+- --writeImage 1         自動把 image 欄位改成對應輸出路徑（預設1）
+- --overwrite 0          檔案已存在時跳過（預設0）
+- --negative "..."       覆蓋負面提示詞
+- --width 768 --height 1152   指定卡圖尺寸
+- --sizeNode 13               你的工作流尺寸節點（EmptySD3LatentImage）
+
+輸出：
+- 圖檔：public/cards/comfy/<種族>/<cardId>_<cardName>.png
+- 清單：public/cards/comfy/_manifest.json

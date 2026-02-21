@@ -1,0 +1,401 @@
+id	name	field	before	after
+f_37385	建御雷神	ability1	電撃球:射程+2、傷害対象25%機率無法行動。1回合持續。	電撃球:射程+2、傷害目標25%機率無法行動，持續1回合。
+f_37385	建御雷神	ability2	雷神信仰:每回合、隨機1名敵方士兵或英雄雷傷害2與。魔法傷害與時攻擊力+1。	雷神信仰:每回合，隨機1名敵方士兵或英雄雷傷害2與。魔法傷害與時攻擊+1。
+f_37385	建御雷神	ability3	擊退3:傷害対象後退3格。	擊退3:傷害目標後退3格。
+f_37385	建御雷神	ability4	雷神撃2:每回合、隨機敵方士兵或英雄2、3、4雷傷害與。傷害対象士兵25%機率無法行動。1回合持續。	雷神撃2:每回合，隨機敵方士兵或英雄2、3、4雷傷害與。受傷士兵25%機率無法行動，持續1回合。
+f_37385	建御雷神	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:建御雷神。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:建御雷神。
+f_37355	石田三成	ability4	冥助5:召喚時、自身冥助效果賦予:戰場時、召喚者被傷害0減免。5回合持續。	冥助5:召喚時、自身冥助效果獲得:戰場時、召喚者被傷害0減免。5回合持續。
+f_37355	石田三成	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:石田三成。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:石田三成。
+f_37367	利維坦	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:利維坦。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:利維坦。
+f_37373	織田信長	ability2	戻:首次行動時、全友方士兵後退賦予:射程内攻擊受到時、向後移動。移動因攻擊範囲外移動若可、該攻擊回避可能。自身先於行動終士兵4回合持續。自身之後行動士兵3回合持續。	戻:首次行動時、全友方士兵後退獲得:射程内攻擊受傷時、向後移動。移動因攻擊範囲外移動若可、該攻擊回避可能。自身先於行動終士兵4回合持續。自身之後行動士兵3回合持續。
+f_37373	織田信長	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:織田信長。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:織田信長。
+f_37361	上杉謙信	ability3	沸立血:致死傷害受到時、HP1残生残。效果発動後、下一次行動結束時残傷害受到。	沸立血:致死傷害受傷時、HP1残生残。效果発動後、下一次行動結束時残傷害受到。
+f_37361	上杉謙信	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:上杉謙信。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:上杉謙信。
+f_37379	戰車EX	ability3	炎上8:每回合、火炎傷害8。	炎上8:每回合，火炎傷害8。
+f_37379	戰車EX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:戰車EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:戰車EX。
+f_37325	英雄殺ジューバ	ability1	生贄祭祀:每回合、友方士兵1體生贄賦予:行動結束時死亡。生贄持續回合5。	生贄祭祀:每回合，友方士兵1體生贄獲得:行動結束時死亡。生贄持續回合5。
+f_37325	英雄殺ジューバ	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_37325	英雄殺ジューバ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:英雄殺。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:英雄殺。
+f_37343	シェイクスピア	ability3	恋女:每回合、周囲1格（4/1/6/恋男/破甲/猛毒撃1）1體召喚。最大1體。	恋女:每回合，周囲1格（4/1/6/恋男/破甲/猛毒撃1）1體召喚。最大1體。
+f_37343	シェイクスピア	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:莎士比亞。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:莎士比亞。
+f_37331	アポピス	ability2	意地6:状態效果影響無效化。每回合、全友方士兵一矢6賦予:移動力無限。士兵對、傷害與敵方致死傷害受到。行動結束時死亡。自身先於行動終士兵2回合持續。自身之後行動士兵1回合持續。	意地6:状態效果影響無效化。每回合，全友方士兵一矢6獲得:移動力無限。士兵對、傷害與敵方致死傷害受到。行動結束時死亡。自身先於行動終士兵2回合持續。自身之後行動士兵1回合持續。
+f_37331	アポピス	ability3	接合2:敵士兵死亡時、自身攻擊力+2。友方士兵死亡時、自身HP+2。	接合2:敵士兵死亡時、自身攻擊+2。友方士兵死亡時、自身HP+2。
+f_37331	アポピス	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:阿波菲斯。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:阿波菲斯。
+f_37337	メジェド	ability3	加速舞2:自身召喚者味方英雄場召喚士兵加速2賦予。5回合持續。	加速舞2:自身召喚者味方英雄場召喚士兵加速2獲得。5回合持續。
+f_37337	メジェド	ability4	痛烈光:首次行動時、全敵士兵盲目賦予:攻擊不能。1回合持續。	痛烈光:首次行動時、全敵士兵盲目獲得:攻擊不能。1回合持續。
+f_37337	メジェド	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:梅傑德。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:梅傑德。
+f_37349	ウリエル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:烏列爾。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:烏列爾。
+f_37307	八岐大蛇	ability2	竜信仰:味方全竜族士兵竜魂賦予:攻擊力+2、HP+6。	竜信仰:味方全竜族士兵竜魂獲得:攻擊力+2、HP+6。
+f_37307	八岐大蛇	ability3	全友方士兵一緒賦予:死亡時、隨機敵士兵1體倒。	全友方士兵一緒獲得:死亡時、隨機敵士兵1體倒。
+f_37307	八岐大蛇	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:八岐大蛇。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:八岐大蛇。
+f_37319	顔良	ability1	堕天大剣:目標以及該上下2格内全敵士兵英雄攻擊。傷害対象後退2格。	堕天大剣:目標以及該上下2格内全敵士兵英雄攻擊。傷害目標後退2格。
+f_37319	顔良	ability2	目力:召喚時、全敵士兵死相賦予:[自身HP]1。2回合持續。	目力:召喚時、全敵士兵死相獲得:[自身HP]1。2回合持續。
+f_37319	顔良	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:顔良。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:顔良。
+f_37301	サスカッチ	ability4	减速舞2:自身召喚者味方英雄場召喚士兵減速2賦予。5回合持續。	减速舞2:自身召喚者味方英雄場召喚士兵減速2獲得。5回合持續。
+f_37301	サスカッチ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:薩斯奎奇。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:薩斯奎奇。
+f_37313	ガウェイン	ability1	片手一刀平突:目標以及該後方3×1内全敵士兵英雄攻擊。傷害対象士兵全深手2賦予、2回合持續。	片手一刀平突:目標以及該後方3×1内全敵士兵英雄攻擊。受傷士兵全深手2獲得、2回合持續。
+f_37313	ガウェイン	ability4	恐21:全友方士兵勇気21賦予:敵方傷害減免無視。HP+21。	恐21:全友方士兵勇気21獲得:敵方傷害減免無視。HP+21。
+f_37313	ガウェイン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37265	アメミット	ability2	貪6:每回合、周囲1格影(5/5/12/怒/喰6/暗器2/諜報2/小粋2)1體召喚。最大1體。	貪6:每回合，周囲1格影(5/5/12/怒/喰6/暗器2/諜報2/小粋2)1體召喚。最大1體。
+f_37265	アメミット	ability3	暗器2:每回合、敵英雄1人物理傷害2。	暗器2:每回合，敵英雄1人物理傷害2。
+f_37265	アメミット	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37271	アメミットの影	ability2	喰6:每回合、周囲1格(3/6/13/吸血/貪6/暗器2/死囁3/安魂曲)1體召喚。最大1體。	喰6:每回合，周囲1格(3/6/13/吸血/貪6/暗器2/死囁3/安魂曲)1體召喚。最大1體。
+f_37271	アメミットの影	ability3	暗器2:每回合、敵英雄1人物理傷害2。	暗器2:每回合，敵英雄1人物理傷害2。
+f_37271	アメミットの影	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:影。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:影。
+f_37295	チェルシーEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_37259	サマエル	ability3	末日:全敵士兵賦予:每回合、暗黒傷害3。	末日:全敵士兵獲得:每回合，暗黒傷害3。
+f_37259	サマエル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:薩麥爾。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:薩麥爾。
+f_37277	役小角	ability2	沸血巨人召喚:每回合、周囲1格内沸血(3/1/6/沸立血/底力)召喚。最大2體。捕食対象。	沸血巨人召喚:每回合，周囲1格内沸血(3/1/6/沸立血/底力)召喚。最大2體。捕食目標。
+f_37277	役小角	ability3	召喚者防衛:全友方士兵身辺警護賦予:戰場時、召喚者傷害代受到。	召喚者防衛:全友方士兵身辺警護獲得:戰場時、召喚者傷害代受到。
+f_37277	役小角	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:役小角。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:役小角。
+f_37283	渾沌	ability1	沌誕6:全友方士兵混沌芽6賦予:死亡時、1度混沌(8/18/14/破甲/虚無障壁/炎上5/使役代償3/全反射)変。	沌誕6:全友方士兵混沌芽6獲得:死亡時、1度混沌(8/18/14/破甲/虚無障壁/炎上5/使役代償3/全反射)変。
+f_37283	渾沌	ability2	穢4:每回合、敵英雄1人暗黒傷害4。	穢4:每回合，敵英雄1人暗黒傷害4。
+f_37283	渾沌	ability3	穢4:每回合、敵英雄1人暗黒傷害4。	穢4:每回合，敵英雄1人暗黒傷害4。
+f_37283	渾沌	ability4	穢4:每回合、敵英雄1人暗黒傷害4。	穢4:每回合，敵英雄1人暗黒傷害4。
+f_37283	渾沌	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:渾沌。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:渾沌。
+f_37253	ケルス改	ability2	恐:傷害対象士兵敵前逃亡賦予:攻擊不能。敵控制。2回合持續。	恐:受傷士兵敵前逃亡獲得:攻擊不能。敵控制。2回合持續。
+f_37253	ケルス改	ability3	魍魎:全友方士兵吸血状態賦予:攻擊時、傷害同量自分治療。	魍魎:全友方士兵吸血状態獲得:攻擊時、傷害同量自分治療。
+f_37253	ケルス改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_37247	雪女	ability1	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害対象後退2格。	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害目標後退2格。
+f_37247	雪女	ability3	聖療風:全友方士兵聖療状態賦予:傷害與時、召喚者傷害同数値治療。	聖療風:全友方士兵聖療状態獲得:傷害與時、召喚者傷害同数値治療。
+f_37247	雪女	ability4	薄魂5:每回合、神聖傷害5。	薄魂5:每回合，神聖傷害5。
+f_37247	雪女	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:雪女。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:雪女。
+f_37241	フルフル	ability1	射程+3、目標以及該十字内全敵士兵英雄攻擊。傷害対象次回合火炎傷害1。	射程+3、目標以及該十字内全敵士兵英雄攻擊。傷害目標次回合火炎傷害1。
+f_37241	フルフル	ability2	直撃4:每回合、敵英雄1人火炎傷害4。	直撃4:每回合，敵英雄1人火炎傷害4。
+f_37241	フルフル	ability3	火呪5:首次行動時、全敵士兵使役代償5賦予:每回合、召喚者火炎傷害5。3回合持續。	火呪5:首次行動時、全敵士兵使役代償5獲得:每回合，召喚者火炎傷害5。3回合持續。
+f_37241	フルフル	ability4	託宣2:每回合、召喚者準備欄内全技能卡牌待機値-2。	託宣2:每回合，召喚者準備欄内全技能卡牌待機値-2。
+f_37241	フルフル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37235	サンタブラッドリー	ability1	每回合、周囲1格内(1/0/1/壁/不思議卵)1體召喚。	每回合，周囲1格内(1/0/1/壁/不思議卵)1體召喚。
+f_37235	サンタブラッドリー	ability2	癒顔:周囲1格内停止敵士兵忘却賦予:全能力失。	癒顔:周囲1格内停止敵士兵忘却獲得:全能力失。
+f_37235	サンタブラッドリー	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_37235	サンタブラッドリー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37229	サンタポセイドン	ability1	邪念光3:味方全士兵邪念3賦予:死亡時、敵英雄暗黒傷害3。	邪念光3:味方全士兵邪念3獲得:死亡時、敵英雄暗黒傷害3。
+f_37229	サンタポセイドン	ability2	騎士召喚6:每回合、周囲1格内最後騎士(5/4/10/貫通/使役代償3/沸立血/洛基靴/重甲6)1體召喚。最大3體。	騎士召喚6:每回合，周囲1格内最後騎士(5/4/10/貫通/使役代償3/沸立血/洛基靴/重甲6)1體召喚。最大3體。
+f_37229	サンタポセイドン	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_37229	サンタポセイドン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37217	チョコスナックさん	ability2	力天使召喚:每回合、周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。	力天使召喚:每回合，周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。
+f_37217	チョコスナックさん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37211	けん玉ちゃん	ability2	守護崩:傷害対象士兵空賦予:被物理傷害×2。2回合持續。	守護崩:受傷士兵空獲得:被物理傷害×2。2回合持續。
+f_37211	けん玉ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:玉。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:玉。
+f_37199	クレヨンちゃん	ability1	私描最強6:首次行動時、周囲1格(悪魔形態)(★6)、王子喬(★6)、捕食者阿爾特娜(★6)、人工南瓜(★6)隨機1體召喚。捕食非対象。	私描最強6:首次行動時、周囲1格(悪魔形態)(★6)、王子喬(★6)、捕食者阿爾特娜(★6)、人工南瓜(★6)隨機1體召喚。捕食非目標。
+f_37199	クレヨンちゃん	ability2	癒顔:周囲1格内停止敵士兵忘却賦予:全能力失。	癒顔:周囲1格内停止敵士兵忘却獲得:全能力失。
+f_37199	クレヨンちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36563	プリンス・ジョー	ability3	恋人:傷害対象魅了、恋人賦予。1回合持續。	恋人:傷害目標魅了、恋人獲得。1回合持續。
+f_36563	プリンス・ジョー	ability4	嫉妬:每回合、隨機射程内敵士兵1體嫉妬心賦予:[自身HP]1。5回合持續。	嫉妬:每回合，隨機射程内敵士兵1體嫉妬心獲得:[自身HP]1。5回合持續。
+f_36563	プリンス・ジョー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:王子喬。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:王子喬。
+f_37205	スピーカーちゃん	ability2	英雄躯2:每回合、周囲1格隊長(3/4/5/骸骨/邪念3)2體召喚。最大2體。捕食対象。	英雄躯2:每回合，周囲1格隊長(3/4/5/骸骨/邪念3)2體召喚。最大2體。捕食目標。
+f_37205	スピーカーちゃん	ability3	闘志2:冥霊:味方全冥霊士兵闘志2賦予:傷害與時攻擊力+2。	闘志2:冥霊:味方全冥霊士兵闘志2獲得:傷害與時攻擊+2。
+f_37205	スピーカーちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37222	イーナ改	ability2	物理護盾5:首次行動時、自身全友方士兵物理壁賦予:被物理傷害0減免。自身先於行動終士兵5回合持續。自身之後行動士兵4回合持續。	物理護盾5:首次行動時、自身全友方士兵物理壁獲得:被物理傷害0減免。自身先於行動終士兵5回合持續。自身之後行動士兵4回合持續。
+f_37222	イーナ改	ability3	精神支配2:100%機率傷害対象士兵魅了。2回合持續。	精神支配2:100%機率受傷士兵魅了。2回合持續。
+f_37222	イーナ改	ability4	震撃:傷害対象後退7格。	震撃:傷害目標後退7格。
+f_37222	イーナ改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_37169	砂場ちゃん	ability1	熱風:射程+2、敵方傷害減免無視。傷害対象後退2格。傷害対象次回合火炎傷害1。	熱風:射程+2、敵方傷害減免無視。傷害目標後退2格。傷害目標次回合火炎傷害1。
+f_37169	砂場ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:砂場。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:砂場。
+f_37163	はさみちゃん	ability2	水晶爪:敵英雄場召喚士兵対、重傷賦予:全被傷害×2。5回合持續。	水晶爪:敵英雄場召喚士兵対、重傷獲得:全被傷害×2。5回合持續。
+f_37163	はさみちゃん	ability3	斬捨3:自身召喚者味方英雄場召喚士兵最強賦予:士兵對傷害與敵方致死傷害受到。3回合持續。	斬捨3:自身召喚者味方英雄場召喚士兵最強獲得:士兵對傷害與敵方致死傷害受到。3回合持續。
+f_37163	はさみちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37175	三角フラスコさん	ability3	7:首次行動時、敵英雄1名牌庫機械塔(2/0/2/硬度10壁/再編成/代償召喚)7枚賦予。	7:首次行動時、敵英雄1名牌庫機械塔(2/0/2/硬度10壁/再編成/代償召喚)7枚獲得。
+f_37175	三角フラスコさん	ability4	節制3:每回合近接傷害3。傷害受到時、攻擊力+3。	節制3:每回合近接傷害3。傷害受傷時、攻擊+3。
+f_37175	三角フラスコさん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:三角。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:三角。
+f_37181	機械塔	ability1	硬度10壁:移動不能、攻擊不能。壁系。非対象。	硬度10壁:移動不能、攻擊不能。壁系。非目標。
+f_37181	機械塔	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:機械塔。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:機械塔。
+f_37187	ポークビーンズさん	ability1	火炎弾:射程+2、傷害対象次回合火炎傷害1。	火炎弾:射程+2、傷害目標次回合火炎傷害1。
+f_37187	ポークビーンズさん	ability2	癒顔:周囲1格内停止敵士兵忘却賦予:全能力失。	癒顔:周囲1格内停止敵士兵忘却獲得:全能力失。
+f_37187	ポークビーンズさん	ability3	滋養強壮:每回合、全友方士兵弱體状態解除。	滋養強壮:每回合，全友方士兵弱體状態解除。
+f_37187	ポークビーンズさん	ability4	主君10:每回合、召喚者傷害10治療。	主君10:每回合，召喚者傷害10治療。
+f_37187	ポークビーンズさん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37192	邪教徒シン	ability2	説得:傷害対象士兵生贄祭祀賦予:每回合、友方士兵1體生贄賦予。3回合持續。	説得:受傷士兵生贄祭祀獲得:每回合，友方士兵1體生贄獲得。3回合持續。
+f_37192	邪教徒シン	ability3	擊退4:傷害対象後退4格。	擊退4:傷害目標後退4格。
+f_37192	邪教徒シン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:邪教徒。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:邪教徒。
+f_37145	ゴム飛びちゃん	ability3	自暴自棄:全敵士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。	自暴自棄:全敵士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。
+f_37145	ゴム飛びちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:飛。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:飛。
+f_37133	黒板消しちゃん	ability2	增加效果破壊:每回合、100%機率隨機敵1體補助效果一打消。	增加效果破壊:每回合，100%機率隨機敵1體補助效果一打消。
+f_37133	黒板消しちゃん	ability3	緊張5:首次行動時、全敵士兵石化。石化士兵全基本能力失、HP+14。壁属性賦予:移動以及攻擊不能。5回合持續。	緊張5:首次行動時、全敵士兵石化。石化士兵全基本能力失、HP+14。壁属性獲得:移動以及攻擊不能。5回合持續。
+f_37133	黒板消しちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:黒板消。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:黒板消。
+f_37151	マイコ改	ability1	蛇鞭:射程+1。友方士兵数敵士兵数多時、攻擊力+3。	蛇鞭:射程+1。友方士兵数敵士兵数多時、攻擊+3。
+f_37151	マイコ改	ability2	下僕召喚6:每回合、周囲1格狂気騎士(1/14/5/疾駆/喪心5)1體召喚。最大1體。捕食非対象。	下僕召喚6:每回合，周囲1格狂気騎士(1/14/5/疾駆/喪心5)1體召喚。最大1體。捕食非目標。
+f_37151	マイコ改	ability3	生血3:士兵死亡時、攻擊力+3。	生血3:士兵死亡時、攻擊+3。
+f_37151	マイコ改	ability4	竜変化2改:死亡時、改(竜形態)(13/6/21/火竜召喚/首領:竜族/落雷光10/闘志2:竜族)変。	竜変化2改:死亡時、改(竜形態)(13/6/21/火竜召喚/Boss:竜族/落雷光10/闘志2:竜族)変。
+f_37151	マイコ改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_37157	マイコ改(竜形態)	ability1	火竜召喚:每回合、周囲1格★2炎幼竜、★3炎竜人、★4火炎翼竜、★5炎側近隨機1體召喚。捕食対象。	火竜召喚:每回合，周囲1格★2炎幼竜、★3炎竜人、★4火炎翼竜、★5炎側近隨機1體召喚。捕食目標。
+f_37157	マイコ改(竜形態)	ability2	首領:竜族:戰場内味方竜族士兵1體存在毎、攻擊力+1、HP+3。	Boss:竜族:戰場内味方竜族士兵1體存在毎、攻擊力+1、HP+3。
+f_37157	マイコ改(竜形態)	ability3	落雷光10:味方全士兵落雷10賦予:每回合、隨機1名敵方士兵或英雄雷傷害10。	落雷光10:味方全士兵落雷10獲得:每回合，隨機1名敵方士兵或英雄雷傷害10。
+f_37157	マイコ改(竜形態)	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改(竜形態)。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改(竜形態)。
+f_37139	算数セットちゃん	ability1	射程+4。目標以及該後方1格敵士兵英雄攻擊。傷害対象治療受。10回合持續。	射程+4。目標以及該後方1格敵士兵英雄攻擊。傷害目標治療受。10回合持續。
+f_37139	算数セットちゃん	ability2	落日時2:2回合1回、隨機敵士兵1體残酷運命賦予:行動結束時死亡。2回合持續。	落日時2:2回合1回、隨機敵士兵1體残酷運命獲得:行動結束時死亡。2回合持續。
+f_37139	算数セットちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:算数。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:算数。
+f_37127	鉛筆HBちゃん	ability1	魔法護盾4:首次行動時、自身全友方士兵魔法壁賦予:被魔法傷害0減免。自身先於行動終士兵5回合持續。自身之後行動士兵4回合持續。	魔法護盾4:首次行動時、自身全友方士兵魔法壁獲得:被魔法傷害0減免。自身先於行動終士兵5回合持續。自身之後行動士兵4回合持續。
+f_37127	鉛筆HBちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:鉛筆HB。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:鉛筆HB。
+f_36997	消しゴムちゃん	ability1	封殺剣蒼:敵方傷害減免無視。傷害対象士兵忘却賦予:全能力失。1回合持續。	封殺剣蒼:敵方傷害減免無視。受傷士兵忘却獲得:全能力失。1回合持續。
+f_36997	消しゴムちゃん	ability2	消去:敵英雄場召喚士兵戦闘放棄賦予:全所持能力失。壁属性賦予移動以及攻擊不能。自身行動開始時召喚者準備欄返回。2回合持續。	消去:敵英雄場召喚士兵戦闘放棄獲得:全所持能力失。壁属性獲得移動以及攻擊不能。自身行動開始時召喚者準備欄返回。2回合持續。
+f_36997	消しゴムちゃん	ability4	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36997	消しゴムちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:消。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:消。
+f_37103	プロフィール帳さん	ability3	傷害対象士兵魅了。1回合持續。傷害受到時、攻擊者魅了。2回合持續。傷害受到時、攻擊者同数値傷害與。	受傷士兵魅了。1回合持續。傷害受傷時、攻擊者魅了。2回合持續。傷害受傷時、攻擊者同数値傷害與。
+f_37103	プロフィール帳さん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:帳。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:帳。
+f_37120	グルナラEX	ability1	毒矢3:射程+3。傷害対象毒状態、每回合暗黒傷害3。5回合持續。弓矢系。	毒矢3:射程+3。傷害目標毒状態、每回合暗黒傷害3。5回合持續。弓矢系。
+f_37120	グルナラEX	ability2	陣:每回合、周囲1格★3小悪魔、★3、★3邪眼魔、★3山羊頭魔兵隨機1體召喚。捕食非対象。	陣:每回合，周囲1格★3小悪魔、★3、★3邪眼魔、★3山羊頭魔兵隨機1體召喚。捕食非目標。
+f_37120	グルナラEX	ability4	闘志2:悪魔:味方全悪魔士兵闘志2賦予:傷害與時攻擊力+2。	闘志2:悪魔:味方全悪魔士兵闘志2獲得:傷害與時攻擊+2。
+f_37120	グルナラEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_37115	サインペンちゃん	ability2	雷閃:傷害対象無法行動。1回合持續。	雷閃:傷害目標無法行動，持續1回合。
+f_37115	サインペンちゃん	ability3	使役5:首次行動時、全敵士兵使役代償5賦予:每回合、召喚者火炎傷害5。5回合持續。	使役5:首次行動時、全敵士兵使役代償5獲得:每回合，召喚者火炎傷害5。5回合持續。
+f_37115	サインペンちゃん	ability4	減速2:每回合、敵英雄準備欄内卡牌中隨機待機値+2。	減速2:每回合，敵英雄準備欄内卡牌中隨機待機値+2。
+f_37115	サインペンちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_37109	黒板ちゃん	ability2	指名:傷害対象士兵致命一撃賦予:下一次行動結束時死亡。	指名:受傷士兵致命一撃獲得:下一次行動結束時死亡。
+f_37109	黒板ちゃん	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_37109	黒板ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:黒板。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:黒板。
+f_36979	コンパスちゃん	ability2	死神:周囲1格内停止敵士兵死相賦予:[自身HP]1。	死神:周囲1格内停止敵士兵死相獲得:[自身HP]1。
+f_36979	コンパスちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36967	不死身のジェラルド	ability1	闘神斬:目標以及該後方2×1内全敵士兵英雄攻擊。傷害対象後退2格。	闘神斬:目標以及該後方2×1内全敵士兵英雄攻擊。傷害目標後退2格。
+f_36967	不死身のジェラルド	ability3	冥想:每回合、自分傷害99治療。	冥想:每回合，自分傷害99治療。
+f_36967	不死身のジェラルド	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:不死身。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:不死身。
+f_36985	ラブレターちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36973	血まみれシャリー	ability2	秘策3:自身召喚者味方英雄場召喚士兵秘術賦予:每回合、召喚者牌庫卡牌1枚抽取。3回合持續。	秘策3:自身召喚者味方英雄場召喚士兵秘術獲得:每回合，召喚者牌庫卡牌1枚抽取。3回合持續。
+f_36973	血まみれシャリー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:血。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:血。
+f_36990	ダース改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_36955	ラジカセちゃん	ability2	智計:傷害対象移動不能。1回合持續。	智計:傷害目標移動不能。1回合持續。
+f_36955	ラジカセちゃん	ability4	自己暗示2:召喚時、自身攻擊4賦予:攻擊力+4。3回合持續。	自己暗示2:召喚時、自身攻擊4獲得:攻擊力+4。3回合持續。
+f_36955	ラジカセちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36943	小さな魔法使いアリー	ability2	力天使召喚:每回合、周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。	力天使召喚:每回合，周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。
+f_36943	小さな魔法使いアリー	ability3	信仰3:治療行自身HP+3、攻擊力+3。	信仰3:治療行自身HP+3、攻擊+3。
+f_36943	小さな魔法使いアリー	ability4	全體治療10:每回合、自身全友方士兵傷害10治療。	全體治療10:每回合，自身全友方士兵傷害10治療。
+f_36943	小さな魔法使いアリー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:小魔法使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:小魔法使。
+f_36960	イブラ改	ability1	水晶爪:敵英雄場召喚士兵対、重傷賦予:全被傷害×2。5回合持續。	水晶爪:敵英雄場召喚士兵対、重傷獲得:全被傷害×2。5回合持續。
+f_36960	イブラ改	ability2	落雷光1:味方全士兵落雷1賦予:每回合、隨機1名敵方士兵或英雄雷傷害1。	落雷光1:味方全士兵落雷1獲得:每回合，隨機1名敵方士兵或英雄雷傷害1。
+f_36960	イブラ改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:伊布拉改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:伊布拉改。
+f_36949	體育館靴ちゃん	ability1	擊退4:傷害対象後退4格。	擊退4:傷害目標後退4格。
+f_36949	體育館靴ちゃん	ability2	無双模式8:召喚時、自身攻擊8賦予:攻擊力+8。3回合持續。	無双模式8:召喚時、自身攻擊8獲得:攻擊力+8。3回合持續。
+f_36949	體育館靴ちゃん	ability3	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36949	體育館靴ちゃん	ability4	追風3:全友方士兵「射程+3」賦予。全敵士兵「射程-3」賦予。	追風3:全友方士兵「射程+3」獲得。全敵士兵「射程-3」獲得。
+f_36949	體育館靴ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:體育館靴。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:體育館靴。
+f_36937	精霊族の恋人ゲオルゲ	ability3	闘志2:精霊:味方全精霊士兵闘志2賦予:傷害與時攻擊力+2。	闘志2:精霊:味方全精霊士兵闘志2獲得:傷害與時攻擊+2。
+f_36937	精霊族の恋人ゲオルゲ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:精霊族恋人。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:精霊族恋人。
+f_36913	地鬼姫リスベット	ability1	宝剣:召喚時、自身反射聖印賦予:被傷害反射。反射傷害減免不可。3回合持續。	宝剣:召喚時、自身反射聖印獲得:被傷害反射。反射傷害減免不可。3回合持續。
+f_36913	地鬼姫リスベット	ability3	落雷11:每回合、隨機1名敵方士兵或英雄雷傷害11與。	落雷11:每回合，隨機1名敵方士兵或英雄雷傷害11與。
+f_36913	地鬼姫リスベット	ability4	落雷11:每回合、隨機1名敵方士兵或英雄雷傷害11與。	落雷11:每回合，隨機1名敵方士兵或英雄雷傷害11與。
+f_36913	地鬼姫リスベット	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:地鬼姫。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:地鬼姫。
+f_36931	学院特待生サラ	ability1	雷撃爆破:射程+3。目標以及十字格内敵全員英雄攻擊。傷害対象25%機率無法行動。1回合持續。	雷撃爆破:射程+3。目標以及十字格内敵全員英雄攻擊。傷害目標25%機率無法行動，持續1回合。
+f_36931	学院特待生サラ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:学院特待生。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:学院特待生。
+f_36919	竜使いブラッドリー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:竜使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:竜使。
+f_36925	黃金竜	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:黃金竜。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:黃金竜。
+f_36907	魔術学院教師メル	ability1	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害対象後退2格。	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害目標後退2格。
+f_36907	魔術学院教師メル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:魔術学院教師。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:魔術学院教師。
+f_36889	獣人姫ローサ	ability1	戦闘拒否:全敵士兵盲目賦予:攻擊不能。	戦闘拒否:全敵士兵盲目獲得:攻擊不能。
+f_36889	獣人姫ローサ	ability2	癒顔:周囲1格内停止敵士兵忘却賦予:全能力失。	癒顔:周囲1格内停止敵士兵忘却獲得:全能力失。
+f_36889	獣人姫ローサ	ability3	擊退4:傷害対象後退4格。	擊退4:傷害目標後退4格。
+f_36889	獣人姫ローサ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:獣人姫。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:獣人姫。
+f_36895	薄幸の術師ブリー	ability1	甦生:每回合、周囲1格内召喚者墓地士兵卡牌1枚復活。	甦生:每回合，周囲1格内召喚者墓地士兵卡牌1枚復活。
+f_36895	薄幸の術師ブリー	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36895	薄幸の術師ブリー	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:薄幸術師。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:薄幸術師。
+f_36883	ナオミ(着物姿)	ability2	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36883	ナオミ(着物姿)	ability3	不滅5:自身召喚者味方英雄場召喚士兵回歸魂賦予。5回合持續。	不滅5:自身召喚者味方英雄場召喚士兵回歸魂獲得。5回合持續。
+f_36883	ナオミ(着物姿)	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:直美(着物姿)。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:直美(着物姿)。
+f_36900	菓子職人アリソン	ability2	嫉妬:每回合、隨機射程内敵士兵1體嫉妬心賦予:[自身HP]1。5回合持續。	嫉妬:每回合，隨機射程内敵士兵1體嫉妬心獲得:[自身HP]1。5回合持續。
+f_36900	菓子職人アリソン	ability4	必殺剣召喚2:每回合、周囲1格内必殺剣(1/5/1/飛翔/破甲/貫通/剣呪2/無欠盾):1體召喚。最大4體。	必殺剣召喚2:每回合，周囲1格内必殺剣(1/5/1/飛翔/破甲/貫通/剣呪2/無欠盾):1體召喚。最大4體。
+f_36900	菓子職人アリソン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:菓子職人。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:菓子職人。
+f_36877	ドルーガ改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:德魯迦改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:德魯迦改。
+f_36853	獣人姫ブリアン	ability3	潜入2:傷害與時、周囲1格内貓人(2/4/9/減速1)1體召喚。最大4體。捕食対象。	潜入2:傷害與時、周囲1格内貓人(2/4/9/減速1)1體召喚。最大4體。捕食目標。
+f_36853	獣人姫ブリアン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:獣人姫。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:獣人姫。
+f_36864	ラシル改	ability2	樹雫5:自身召喚者味方英雄場召喚士兵清潔感賦予:減少效果影響受。5回合持續。	樹雫5:自身召喚者味方英雄場召喚士兵清潔感獲得:減少效果影響受。5回合持續。
+f_36864	ラシル改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_36841	ロレン(着物姿)	ability2	根性5:首次行動時、全友方士兵月光賦予:死亡時、100%機率1度該場復活。5回合持續。	根性5:首次行動時、全友方士兵月光獲得:死亡時、100%機率1度該場復活。5回合持續。
+f_36841	ロレン(着物姿)	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:洛倫(着物姿)。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:洛倫(着物姿)。
+f_36859	どりす	ability1	暗器1:每回合、敵英雄1人物理傷害1。	暗器1:每回合，敵英雄1人物理傷害1。
+f_36859	どりす	ability2	暗器1:每回合、敵英雄1人物理傷害1。	暗器1:每回合，敵英雄1人物理傷害1。
+f_36859	どりす	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36859	どりす	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36870	セイレーン改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:海妖改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:海妖改。
+f_36847	酔剣伝承者ムサシ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:酔剣伝承者。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:酔剣伝承者。
+f_36805	ヒミコ	ability2	女王呪:近接傷害受到時、攻擊者(士兵)残酷運命賦予:行動結束時死亡、1回合持續。	女王呪:近接傷害受傷時、攻擊者(士兵)残酷運命獲得:行動結束時死亡、1回合持續。
+f_36805	ヒミコ	ability3	生贄末路2:每回合、周囲1格生贄骨(1/0/4/壁/減速2/炎獄/憎悪3/返撃:毒3)2體召喚。最大4體。	生贄末路2:每回合，周囲1格生贄骨(1/0/4/壁/減速2/炎獄/憎悪3/返撃:毒3)2體召喚。最大4體。
+f_36805	ヒミコ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36834	メタトロンEX	ability1	火炎弾:射程+2、傷害対象次回合火炎傷害1。	火炎弾:射程+2、傷害目標次回合火炎傷害1。
+f_36834	メタトロンEX	ability2	冥想:每回合、自分傷害99治療。	冥想:每回合，自分傷害99治療。
+f_36834	メタトロンEX	ability3	火舞3:每回合、敵英雄1人隨機敵英雄1人敵士兵1體火炎傷害3。	火舞3:每回合，敵英雄1人隨機敵英雄1人敵士兵1體火炎傷害3。
+f_36834	メタトロンEX	ability4	火舞3:每回合、敵英雄1人隨機敵英雄1人敵士兵1體火炎傷害3。	火舞3:每回合，敵英雄1人隨機敵英雄1人敵士兵1體火炎傷害3。
+f_36834	メタトロンEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36829	配達人ダニエラ	ability3	届物5:敵方傷害減免無視。傷害対象士兵使役代償5賦予:每回合、召喚者火炎傷害5。5回合持續。英雄對傷害與、牌庫卡牌隨機2枚墓地送。	届物5:敵方傷害減免無視。受傷士兵使役代償5獲得:每回合，召喚者火炎傷害5。5回合持續。英雄對傷害與、牌庫卡牌隨機2枚墓地送。
+f_36829	配達人ダニエラ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:配達人。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:配達人。
+f_36799	精霊の踊り子ハル	ability1	投:射程+2。50%機率傷害対象士兵魅了。1回合持續。	投:射程+2。50%機率受傷士兵魅了。1回合持續。
+f_36799	精霊の踊り子ハル	ability2	強化舞3:自身召喚者味方英雄場召喚士兵生命20、闘志2賦予。10回合持續。	強化舞3:自身召喚者味方英雄場召喚士兵生命20、闘志2獲得。10回合持續。
+f_36799	精霊の踊り子ハル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:精霊踊子。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:精霊踊子。
+f_36817	祈祷師ナオミ	ability1	電撃球:射程+2、傷害対象25%機率無法行動。1回合持續。	電撃球:射程+2、傷害目標25%機率無法行動，持續1回合。
+f_36817	祈祷師ナオミ	ability4	反乱扇動5:首次行動時、敵英雄1名牌庫(1/1/6)5枚賦予。	反乱扇動5:首次行動時、敵英雄1名牌庫(1/1/6)5枚獲得。
+f_36817	祈祷師ナオミ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:祈祷師直美。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:祈祷師直美。
+f_36781	チョコイルザ	ability2	目:傷害対象50%機率無法行動。1回合持續。	目:傷害目標50%機率無法行動，持續1回合。
+f_36781	チョコイルザ	ability3	背信:首次行動時、全敵士兵魅了賦予。1回合持續。	背信:首次行動時、全敵士兵魅了獲得。1回合持續。
+f_36781	チョコイルザ	ability4	憑依10:死亡時、士兵倒士兵魅了賦予。10回合持續。	憑依10:死亡時、士兵倒士兵魅了獲得。10回合持續。
+f_36781	チョコイルザ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36775	チョコリヒャルダ	ability1	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害対象後退2格。	白銀嵐:全敵士兵敵英雄攻擊。敵方傷害減免無視。傷害目標後退2格。
+f_36775	チョコリヒャルダ	ability2	恐:傷害対象士兵敵前逃亡賦予:攻擊不能。敵控制。2回合持續。	恐:受傷士兵敵前逃亡獲得:攻擊不能。敵控制。2回合持續。
+f_36775	チョコリヒャルダ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36769	チョコロビン	ability2	魅了:每回合、射程内敵士兵1體魅了。1回合持續。	魅了:每回合，射程内敵士兵1體魅了。1回合持續。
+f_36769	チョコロビン	ability3	絶対美人:召喚時、全敵士兵魅了賦予。3回合持續。敵英雄場召喚士兵魅了賦予。3回合持續。	絶対美人:召喚時、全敵士兵魅了獲得。3回合持續。敵英雄場召喚士兵魅了獲得。3回合持續。
+f_36769	チョコロビン	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36769	チョコロビン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36745	捕食者アルテナ	ability1	来:召喚時、自身「技受到」賦予:戰場時、友方士兵味方英雄傷害代受到。5回合持續。	来:召喚時、自身「技受到」獲得:戰場時、友方士兵味方英雄傷害代受到。5回合持續。
+f_36745	捕食者アルテナ	ability4	補足:敵英雄場召喚士兵対、残酷運命賦予:行動結束時死亡。自身敵士兵1體倒毎自身HP+10。	補足:敵英雄場召喚士兵対、残酷運命獲得:行動結束時死亡。自身敵士兵1體倒毎自身HP+10。
+f_36745	捕食者アルテナ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:捕食者阿爾特娜。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:捕食者阿爾特娜。
+f_36763	斧使いアビゲイル	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:斧使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:斧使。
+f_36757	獣使いダーリーン	ability1	蛇鞭:射程+1。友方士兵数敵士兵数多時、攻擊力+3。	蛇鞭:射程+1。友方士兵数敵士兵数多時、攻擊+3。
+f_36757	獣使いダーリーン	ability2	血税3:全友方士兵血税3賦予:死亡時、敵英雄暗黒傷害3、召喚者傷害3治療。	血税3:全友方士兵血税3獲得:死亡時、敵英雄暗黒傷害3、召喚者傷害3治療。
+f_36757	獣使いダーリーン	ability3	物深手2:傷害対象士兵被物理傷害+2。5回合持續。	物深手2:受傷士兵被物理傷害+2。5回合持續。
+f_36757	獣使いダーリーン	ability4	猛獣4:每回合、周囲1格鋭牙狂虎(4/5/8/速歩/流血攻擊/破甲)4體召喚。最大4體。捕食対象。	猛獣4:每回合，周囲1格鋭牙狂虎(4/5/8/速歩/流血攻擊/破甲)4體召喚。最大4體。捕食目標。
+f_36757	獣使いダーリーン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:獣使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:獣使。
+f_36750	精霊軍師カナリア	ability1	烈風:射程+2、傷害対象後退2格。	烈風:射程+2、傷害目標後退2格。
+f_36750	精霊軍師カナリア	ability2	召精:每回合、周囲1格小妖精（1/1/1）一體召喚。	召精:每回合，周囲1格小妖精（1/1/1）一體召喚。
+f_36750	精霊軍師カナリア	ability3	足封:全敵士兵足賦予:移動力-1。	足封:全敵士兵足獲得:移動力-1。
+f_36750	精霊軍師カナリア	ability4	妖精魂芽:全友方士兵妖精化賦予:死亡時、妖精魂(1/2/1/虚無障壁/貴様連行/減速1/使役代償5)変。	妖精魂芽:全友方士兵妖精化獲得:死亡時、妖精魂(1/2/1/虚無障壁/貴様連行/減速1/使役代償5)変。
+f_36750	精霊軍師カナリア	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:精霊軍師。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:精霊軍師。
+f_36715	二槍使いルカ	ability2	清光:全友方士兵無欠賦予:減少效果影響受。	清光:全友方士兵無欠獲得:減少效果影響受。
+f_36715	二槍使いルカ	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36715	二槍使いルカ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:二槍使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:二槍使。
+f_36721	神殺しキリアン	ability2	暗黒剣:10×1全敵士兵同列英雄攻擊力傷害與。傷害対象士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。	暗黒剣:10×1全敵士兵同列英雄攻擊力傷害與。受傷士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。
+f_36721	神殺しキリアン	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36721	神殺しキリアン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:神殺。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:神殺。
+f_36709	学院劣等生イルザ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:学院劣等生。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:学院劣等生。
+f_36703	学院首席サンドラ	ability1	熱風:射程+2、敵方傷害減免無視。傷害対象後退2格。傷害対象次回合火炎傷害1。	熱風:射程+2、敵方傷害減免無視。傷害目標後退2格。傷害目標次回合火炎傷害1。
+f_36703	学院首席サンドラ	ability2	変化魔法2:全友方士兵剣化2賦予:死亡時、飛刀(1/3/1/疾走/消滅/無欠盾)変	変化魔法2:全友方士兵剣化2獲得:死亡時、飛刀(1/3/1/疾走/消滅/無欠盾)変
+f_36703	学院首席サンドラ	ability3	眷属盟約:友方士兵死亡時、HP+1、攻擊力+1。	眷属盟約:友方士兵死亡時、HP+1、攻擊+1。
+f_36703	学院首席サンドラ	ability4	飛剣舞2:每回合、周囲1格飛剣(1/3/1/疾走/消滅)2體召還。（場味方飛剣2體以下時召喚）	飛剣舞2:每回合，周囲1格飛剣(1/3/1/疾走/消滅)2體召還。（場味方飛剣2體以下時召喚）
+f_36703	学院首席サンドラ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:学院首席。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:学院首席。
+f_36727	おーがたんEX	ability2	反撃:射程内攻擊受到時、反撃。	反撃:射程内攻擊受傷時、反撃。
+f_36727	おーがたんEX	ability3	主君5:每回合、召喚者傷害5治療。	主君5:每回合，召喚者傷害5治療。
+f_36727	おーがたんEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36734	ゼクエ改	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36734	ゼクエ改	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:改。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:改。
+f_36696	ミストEX	ability2	薄魂5:每回合、神聖傷害5。	薄魂5:每回合，神聖傷害5。
+f_36696	ミストEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36679	隻眼のウィルマ	ability1	闘神斬:目標以及該後方2×1内全敵士兵英雄攻擊。傷害対象後退2格。	闘神斬:目標以及該後方2×1内全敵士兵英雄攻擊。傷害目標後退2格。
+f_36679	隻眼のウィルマ	ability2	圧:同列内全敵士兵麻痺賦予:無法行動。	圧:同列内全敵士兵麻痺獲得:無法行動。
+f_36679	隻眼のウィルマ	ability4	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36679	隻眼のウィルマ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:隻眼。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:隻眼。
+f_36673	双刀使いドミニカ	ability1	無双模式8:召喚時、自身攻擊8賦予:攻擊力+8。3回合持續。	無双模式8:召喚時、自身攻擊8獲得:攻擊力+8。3回合持續。
+f_36673	双刀使いドミニカ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:双刀使。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:双刀使。
+f_36685	死體製造機ロレン	ability3	周囲1格内停止全士兵残酷運命賦予:行動結束時死亡。	周囲1格内停止全士兵残酷運命獲得:行動結束時死亡。
+f_36685	死體製造機ロレン	ability4	生血3:士兵死亡時、攻擊力+3。	生血3:士兵死亡時、攻擊+3。
+f_36685	死體製造機ロレン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:死體製造機洛倫。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:死體製造機洛倫。
+f_36690	タマモEX	ability1	烈風:射程+2、傷害対象後退2格。	烈風:射程+2、傷害目標後退2格。
+f_36690	タマモEX	ability3	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36690	タマモEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36667	ポセイドン	ability1	冥想:每回合、自分傷害99治療。	冥想:每回合，自分傷害99治療。
+f_36667	ポセイドン	ability3	青雷4:每回合、戰場内味方異界士兵1體4點數氷結傷害全敵英雄與。	青雷4:每回合，戰場内味方異界士兵1體4點數氷結傷害全敵英雄與。
+f_36667	ポセイドン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36649	スルト	ability3	炎剣20:每回合、敵味方両方全士兵火炎傷害20。	炎剣20:每回合，敵味方両方全士兵火炎傷害20。
+f_36649	スルト	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36643	ヘラの影	ability1	暗影波:射程+2。傷害対象士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。	暗影波:射程+2。受傷士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。
+f_36643	ヘラの影	ability3	穢5:每回合、敵英雄1人暗黒傷害5。	穢5:每回合，敵英雄1人暗黒傷害5。
+f_36643	ヘラの影	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:赫拉影。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:赫拉影。
+f_36637	地獄の女王ヘラ	ability1	玉砕:全友方士兵執念賦予:射程内攻擊受到時、反撃。致死傷害受到時、HP1残生残。效果発動時、下一次行動結束時残傷害受到。	玉砕:全友方士兵執念獲得:射程内攻擊受傷時、反撃。致死傷害受傷時、HP1残生残。效果発動時、下一次行動結束時残傷害受到。
+f_36637	地獄の女王ヘラ	ability3	必殺剣召喚2:每回合、周囲1格内必殺剣(1/5/1/飛翔/破甲/貫通/剣呪2/無欠盾):1體召喚。最大4體。	必殺剣召喚2:每回合，周囲1格内必殺剣(1/5/1/飛翔/破甲/貫通/剣呪2/無欠盾):1體召喚。最大4體。
+f_36637	地獄の女王ヘラ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:地獄女王赫拉。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:地獄女王赫拉。
+f_36655	弓の達人ロビン	ability1	名人芸:射程+4、攻擊時、一次2本矢放。傷害対象士兵毒4炎上4賦予、2回合持續。弓矢系。	名人芸:射程+4、攻擊時、一次2本矢放。受傷士兵毒4炎上4獲得、2回合持續。弓矢系。
+f_36655	弓の達人ロビン	ability3	首領:精霊:戰場内味方精霊士兵1體存在毎、攻擊力+1、HP+3。	Boss:精霊:戰場内味方精霊士兵1體存在毎、攻擊力+1、HP+3。
+f_36655	弓の達人ロビン	ability4	森番人6:每回合、周囲1格狩人(3/7/4/弓矢)2體召喚。最大4體。捕食対象。	森番人6:每回合，周囲1格狩人(3/7/4/弓矢)2體召喚。最大4體。捕食目標。
+f_36655	弓の達人ロビン	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:弓達人。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:弓達人。
+f_18559	獅子王リヒャルダ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:獅子王。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:獅子王。
+f_36625	鉄棒さん	ability1	恐:傷害対象士兵敵前逃亡賦予:攻擊不能。敵控制。2回合持續。	恐:受傷士兵敵前逃亡獲得:攻擊不能。敵控制。2回合持續。
+f_36625	鉄棒さん	ability2	戦車:戰場内友方士兵1體存在毎、攻擊力+2。	戦車:戰場内友方士兵1體存在毎、攻擊+2。
+f_36625	鉄棒さん	ability3	飼犬5:每回合、周囲1格狂乱(3/2/10/速歩/反撃/憤怒1)2體召喚。最大4體。捕食対象。	飼犬5:每回合，周囲1格狂乱(3/2/10/速歩/反撃/憤怒1)2體召喚。最大4體。捕食目標。
+f_36625	鉄棒さん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:鉄棒。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:鉄棒。
+f_36630	鉄棒しゃん	ability1	癒顔:周囲1格内停止敵士兵忘却賦予:全能力失。	癒顔:周囲1格内停止敵士兵忘却獲得:全能力失。
+f_36630	鉄棒しゃん	ability4	太鼓名人5:每回合、周囲1格皮太鼓(3/0/15/壁/加速1)2體召喚。最大4體。捕食対象。	太鼓名人5:每回合，周囲1格皮太鼓(3/0/15/壁/加速1)2體召喚。最大4體。捕食目標。
+f_36630	鉄棒しゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:鉄棒。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:鉄棒。
+f_36582	カセットテープさん	ability2	絡:首次行動時、隨機友方士兵1體残酷運命賦予:行動結束時死亡。2回合持續。	絡:首次行動時、隨機友方士兵1體残酷運命獲得:行動結束時死亡。2回合持續。
+f_36582	カセットテープさん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36589	體操服ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:體操服。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:體操服。
+f_36577	豚貯金箱ちゃん	ability1	反間:射程+2。弓矢系。傷害対象士兵買収賦予:敵控制、攻擊力+2。1回合持續。	反間:射程+2。弓矢系。受傷士兵買収獲得:敵控制、攻擊+2。1回合持續。
+f_36577	豚貯金箱ちゃん	ability3	粉飾決算4:召喚時、全敵士兵安賦予:[自身攻擊力]0。4回合持續。	粉飾決算4:召喚時、全敵士兵安獲得:[自身攻擊力]0。4回合持續。
+f_36577	豚貯金箱ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:豚貯金箱。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:豚貯金箱。
+f_36571	通学鞄ちゃん	ability3	力天使召喚:每回合、周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。	力天使召喚:每回合，周囲1格内光力天使(1/4/2/天使/長槍/自己犠牲)1體召喚。最大1體。
+f_36571	通学鞄ちゃん	ability4	青春3:每回合、隨機友方士兵1體絶対防御賦予:被物理傷害被魔法傷害0減免。3回合持續。	青春3:每回合，隨機友方士兵1體絶対防御獲得:被物理傷害被魔法傷害0減免。3回合持續。
+f_36571	通学鞄ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:通学鞄。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:通学鞄。
+f_36595	復讐のポティ	ability1	貫通式連続魔法:射程+2。攻擊時、一次2回魔法攻擊。目標以及該後方1格敵士兵英雄攻擊。傷害対象次回合火炎傷害1。	貫通式連続魔法:射程+2。攻擊時、一次2回魔法攻擊。目標以及該後方1格敵士兵英雄攻擊。傷害目標次回合火炎傷害1。
+f_36595	復讐のポティ	ability3	6:首次行動時、敵英雄1名牌庫人工南瓜(8/0/8/壁/獅子身中虫/加速2/大崩落8)6枚賦予。	6:首次行動時、敵英雄1名牌庫人工南瓜(8/0/8/壁/獅子身中虫/加速2/大崩落8)6枚獲得。
+f_36595	復讐のポティ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:復讐。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:復讐。
+f_36607	ラダマンティス	ability2	生贄祭祀:每回合、友方士兵1體生贄賦予:行動結束時死亡。生贄持續回合5。	生贄祭祀:每回合，友方士兵1體生贄獲得:行動結束時死亡。生贄持續回合5。
+f_36607	ラダマンティス	ability4	全盛期4:召喚時、自身最強賦予:士兵對傷害與敵方致死傷害受到。4回合持續。	全盛期4:召喚時、自身最強獲得:士兵對傷害與敵方致死傷害受到。4回合持續。
+f_36607	ラダマンティス	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36497	ランドグリーズⅡ	ability3	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36497	ランドグリーズⅡ	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:Ⅱ。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:Ⅱ。
+f_36491	ルシフェルEX	ability2	降注光20:每回合、隨機1名敵方士兵或英雄神聖傷害20與。敵方傷害減免無視。死亡士兵再生、回歸、骸骨不可。	降注光20:每回合，隨機1名敵方士兵或英雄神聖傷害20與。敵方傷害減免無視。死亡士兵再生、回歸、骸骨不可。
+f_36491	ルシフェルEX	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36491	ルシフェルEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36485	Pナイフちゃん	ability2	生贄祭祀:每回合、友方士兵1體生贄賦予:行動結束時死亡。生贄持續回合5。	生贄祭祀:每回合，友方士兵1體生贄獲得:行動結束時死亡。生贄持續回合5。
+f_36485	Pナイフちゃん	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36485	Pナイフちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:P。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:P。
+f_36478	注射器ペンちゃん	ability2	滋養強壮:每回合、全友方士兵弱體状態解除。	滋養強壮:每回合，全友方士兵弱體状態解除。
+f_36478	注射器ペンちゃん	ability4	使役代償3:每回合、召喚者火炎傷害3。	使役代償3:每回合，召喚者火炎傷害3。
+f_36478	注射器ペンちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:注射器。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:注射器。
+f_36467	ミルクチョコちゃん	ability1	伊達女:敵全獣人士兵盲目賦予:攻擊不能。	伊達女:敵全獣人士兵盲目獲得:攻擊不能。
+f_36467	ミルクチョコちゃん	ability2	聖者聖句5:每回合、最多傷害受味方英雄5治療。	聖者聖句5:每回合，最多傷害受味方英雄5治療。
+f_36467	ミルクチョコちゃん	ability3	聖者聖句5:每回合、最多傷害受味方英雄5治療。	聖者聖句5:每回合，最多傷害受味方英雄5治療。
+f_36467	ミルクチョコちゃん	ability4	粋2:每回合、周囲1格内白黒（5/2/8/癒顔/疾駆/重甲4/聖療遺言4/命6:隣接）2體召喚。最大4體。	粋2:每回合，周囲1格内白黒（5/2/8/癒顔/疾駆/重甲4/聖療遺言4/命6:隣接）2體召喚。最大4體。
+f_36467	ミルクチョコちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36461	しかけ絵本ちゃん	ability4	冥想:每回合、自分傷害99治療。	冥想:每回合，自分傷害99治療。
+f_36461	しかけ絵本ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:絵本。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:絵本。
+f_36442	クリーナーちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36449	交換日記ちゃん	ability3	還:味方全獣人魔獣士兵野生賦予:移動力+2。2格移動攻擊力+1。行動終了後、元値返回。弓矢系傷害×2。	還:味方全獣人魔獣士兵野生獲得:移動力+2。2格移動攻擊+1。行動終了後、元値返回。弓矢系傷害×2。
+f_36449	交換日記ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:交換日記。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:交換日記。
+f_36431	あぶらねんどちゃん	ability3	後退:射程内攻擊受到時、向後移動。攻擊範囲外移動若可、該攻擊回避可能。	後退:射程内攻擊受傷時、向後移動。攻擊範囲外移動若可、該攻擊回避可能。
+f_36431	あぶらねんどちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36436	ゲーム電卓ちゃん	ability1	全敵士兵英雄攻擊。傷害対象攻擊不能。1回合持續。	全敵士兵英雄攻擊。傷害目標攻擊不能。1回合持續。
+f_36436	ゲーム電卓ちゃん	ability3	薄魂3:每回合、神聖傷害3。	薄魂3:每回合，神聖傷害3。
+f_36436	ゲーム電卓ちゃん	ability4	雷盾3:物理傷害受到時、攻擊者対雷傷害3與、同時無法行動。1回合持續。	雷盾3:物理傷害受傷時、攻擊者対雷傷害3與、同時無法行動，持續1回合。
+f_36436	ゲーム電卓ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:電卓。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:電卓。
+f_36406	ちりとりちゃん	ability1	反撃:射程内攻擊受到時、反撃。	反撃:射程内攻擊受傷時、反撃。
+f_36406	ちりとりちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36413	はたきちゃん	ability3	生贄祭祀:每回合、友方士兵1體生贄賦予:行動結束時死亡。生贄持續回合5。	生贄祭祀:每回合，友方士兵1體生贄獲得:行動結束時死亡。生贄持續回合5。
+f_36413	はたきちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36388	鉄棒ちゃん	ability1	流血攻擊:傷害対象治療受。5回合持續。	流血攻擊:傷害目標治療受。5回合持續。
+f_36388	鉄棒ちゃん	ability2	不倶戴天:友方士兵死亡時、攻擊力+1。	不倶戴天:友方士兵死亡時、攻擊+1。
+f_36388	鉄棒ちゃん	ability4	遊具設置2:每回合、周囲1格内大型遊具（5/0/20/壁/通坊/3/焦眉）2體召喚。最大2體。	遊具設置2:每回合，周囲1格内大型遊具（5/0/20/壁/通坊/3/焦眉）2體召喚。最大2體。
+f_36388	鉄棒ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:鉄棒。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:鉄棒。
+f_36401	レコードちゃん	ability2	全友方士兵一緒賦予:死亡時、隨機敵士兵1體倒。	全友方士兵一緒獲得:死亡時、隨機敵士兵1體倒。
+f_36401	レコードちゃん	ability3	呪:傷害対象士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。	呪:受傷士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。
+f_36401	レコードちゃん	ability4	死亡:敵士兵死亡時、攻擊力+2。	死亡:敵士兵死亡時、攻擊+2。
+f_36401	レコードちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36425	ナディEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36419	モニカEX	ability3	不倶戴天:友方士兵死亡時、攻擊力+1。	不倶戴天:友方士兵死亡時、攻擊+1。
+f_36419	モニカEX	ability4	闘志3:傷害與時攻擊力+3。	闘志3:傷害與時攻擊+3。
+f_36419	モニカEX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36376	ほうきちゃん	ability2	焦眉:周囲1格内停止敵士兵弱点暴露賦予:受到全傷害×2。	焦眉:周囲1格内停止敵士兵弱点暴露獲得:受到全傷害×2。
+f_36376	ほうきちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36358	カレーライスちゃん	ability2	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36358	カレーライスちゃん	ability3	8:每回合、自身全友方士兵傷害8治療。	8:每回合，自身全友方士兵傷害8治療。
+f_36358	カレーライスちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36364	ラインカーちゃん	ability3	友達召喚5:每回合、周囲1格内妖精球（4/8/8/友達/反撃/擊退4/雷閃/使役代償3）1體召喚。最大1體。	友達召喚5:每回合，周囲1格内妖精球（4/8/8/友達/反撃/擊退4/雷閃/使役代償3）1體召喚。最大1體。
+f_36364	ラインカーちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36382	ヨーヨーちゃん	ability3	闘志2:傷害與時攻擊力+2。	闘志2:傷害與時攻擊+2。
+f_36382	ヨーヨーちゃん	ability4	4:每回合、敵英雄1人遠距離傷害4。	4:每回合，敵英雄1人遠距離傷害4。
+f_36382	ヨーヨーちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36334	金色折り紙ちゃん	ability2	挑発:優先的周囲1格後方敵士兵攻擊。周囲1格以内停止敵士兵挑発賦予:優先的周囲1格後方敵士兵攻擊。	挑発:優先的周囲1格後方敵士兵攻擊。周囲1格以内停止敵士兵挑発獲得:優先的周囲1格後方敵士兵攻擊。
+f_36334	金色折り紙ちゃん	ability3	金盾:每回合、隨機友方士兵1體物理反射賦予。2回合持續。	金盾:每回合，隨機友方士兵1體物理反射獲得。2回合持續。
+f_36334	金色折り紙ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:金色折紙。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:金色折紙。
+f_36328	銀色折り紙ちゃん	ability1	挑発:優先的周囲1格後方敵士兵攻擊。周囲1格以内停止敵士兵挑発賦予:優先的周囲1格後方敵士兵攻擊。	挑発:優先的周囲1格後方敵士兵攻擊。周囲1格以内停止敵士兵挑発獲得:優先的周囲1格後方敵士兵攻擊。
+f_36328	銀色折り紙ちゃん	ability3	銀盾:每回合、隨機友方士兵1體魔法反射賦予。2回合持續。	銀盾:每回合，隨機友方士兵1體魔法反射獲得。2回合持續。
+f_36328	銀色折り紙ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:銀色折紙。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:銀色折紙。
+f_36341	貞德EX	ability2	首領:異界:戰場内味方異界士兵1體存在毎、攻擊力+1、HP+3。	Boss:異界:戰場内味方異界士兵1體存在毎、攻擊力+1、HP+3。
+f_36341	貞德EX	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:EX。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:EX。
+f_36352	ヒュプノス	ability1	暗影波:射程+2。傷害対象士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。	暗影波:射程+2。受傷士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。
+f_36352	ヒュプノス	ability2	冬眠:敵英雄場召喚士兵対、凍結賦予:移動不能。3回合持續。	冬眠:敵英雄場召喚士兵対、凍結獲得:移動不能。3回合持續。
+f_36352	ヒュプノス	ability4	減速2:每回合、敵英雄準備欄内卡牌中隨機待機値+2。	減速2:每回合，敵英雄準備欄内卡牌中隨機待機値+2。
+f_36352	ヒュプノス	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36316	ふでばこちゃん	ability1	烈風:射程+2、傷害対象後退2格。	烈風:射程+2、傷害目標後退2格。
+f_36316	ふでばこちゃん	ability2	鋭爪3:敵英雄場召喚士兵対、全深手3賦予:全被傷害+3。5回合持續。	鋭爪3:敵英雄場召喚士兵対、全深手3獲得:全被傷害+3。5回合持續。
+f_36316	ふでばこちゃん	ability3	高機能筆箱6:同列内全敵士兵衰弱6賦予:HP-6。同列内全友方士兵生命6賦予:HP+6。	高機能筆箱6:同列内全敵士兵衰弱6獲得:HP-6。同列内全友方士兵生命6獲得:HP+6。
+f_36316	ふでばこちゃん	ability4	晶化皮膚5:物理傷害受到時、自身重甲5賦予。魔法傷害受到時、自身魔甲5賦予。1回合持續。	晶化皮膚5:物理傷害受傷時、自身重甲5獲得。魔法傷害受傷時、自身魔甲5獲得。1回合持續。
+f_36316	ふでばこちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36322	独楽ちゃん	ability2	霊奏:每回合、隨機友方士兵1人弱體状態解除。	霊奏:每回合，隨機友方士兵1人弱體状態解除。
+f_36322	独楽ちゃん	ability4	回転率UP8:首次行動時、全友方士兵回復8賦予:每回合、自分傷害8治療。3回合持續。	回転率UP8:首次行動時、全友方士兵回復8獲得:每回合，自分傷害8治療。3回合持續。
+f_36322	独楽ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:独楽。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:独楽。
+f_36304	ものさしちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:。
+f_36310	顕微鏡ちゃん	ability1	射程+2、目標以及該十字内全敵士兵英雄攻擊。傷害対象次回合火炎傷害1。	射程+2、目標以及該十字内全敵士兵英雄攻擊。傷害目標次回合火炎傷害1。
+f_36310	顕微鏡ちゃん	ability4	召精:每回合、周囲1格小妖精（1/1/1）一體召喚。	召精:每回合，周囲1格小妖精（1/1/1）一體召喚。
+f_36310	顕微鏡ちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:顕微鏡。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:顕微鏡。
+f_36286	Cテープちゃん	ability1	秘技縛:射程+7。敵方傷害減免無視。傷害対象士兵引寄、100%機率攻擊不能。2回合持續。弓矢系。	秘技縛:射程+7。敵方傷害減免無視。受傷士兵引寄、100%機率攻擊不能。2回合持續。弓矢系。
+f_36286	Cテープちゃん	ability3	自己暗示2:召喚時、自身攻擊4賦予:攻擊力+4。3回合持續。	自己暗示2:召喚時、自身攻擊4獲得:攻擊力+4。3回合持續。
+f_36286	Cテープちゃん	ability4	全深手3:傷害対象士兵全被傷害+3。5回合持續。	全深手3:受傷士兵全被傷害+3。5回合持續。
+f_36286	Cテープちゃん	description	從:immortalchicks:card_viewer 匯入（elite=1, group=new）。原始卡名:C。	從:immortalchicks:card_viewer 匯入（elite=1，group=new）。原始卡名:C。
+f_36280	鉛筆Bちゃん	ability1	暗影波:射程+2。傷害対象士兵呪賦予:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。	暗影波:射程+2。受傷士兵呪獲得:傷害與時、自分自身[自身攻擊力]1回攻擊。1回合持續。
+f_36280	鉛筆Bちゃん	ability2	士兵:每回合、敵英雄1人準備欄内全士兵卡牌待機値+99。	士兵:每回合，敵英雄1人準備欄内全士兵卡牌待機値+99。

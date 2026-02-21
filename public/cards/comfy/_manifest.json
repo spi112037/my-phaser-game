@@ -1,0 +1,72 @@
+[
+  {
+    "id": "f_64001",
+    "name": "%s的要塞",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\未知\\f_64001_%s的要塞.png",
+    "webPath": "/cards/comfy/未知/f_64001_%s的要塞.png"
+  },
+  {
+    "id": "f_21147",
+    "name": "Lucid",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_21147_Lucid.png",
+    "webPath": "/cards/comfy/異界/f_21147_Lucid.png"
+  },
+  {
+    "id": "f_21153",
+    "name": "Nereis",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_21153_Nereis.png",
+    "webPath": "/cards/comfy/異界/f_21153_Nereis.png"
+  },
+  {
+    "id": "f_65001",
+    "name": "“快手”大衛",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\未知\\f_65001_“快手”大衛.png",
+    "webPath": "/cards/comfy/未知/f_65001_“快手”大衛.png"
+  },
+  {
+    "id": "f_65101",
+    "name": "“剧毒之吻”维诺",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\未知\\f_65101_“剧毒之吻”维诺.png",
+    "webPath": "/cards/comfy/未知/f_65101_“剧毒之吻”维诺.png"
+  },
+  {
+    "id": "f_65411",
+    "name": "“锐眼”麦格林",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\未知\\f_65411_“锐眼”麦格林.png",
+    "webPath": "/cards/comfy/未知/f_65411_“锐眼”麦格林.png"
+  },
+  {
+    "id": "f_21006",
+    "name": "20E之星小天使",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_21006_20E之星小天使.png",
+    "webPath": "/cards/comfy/異界/f_21006_20E之星小天使.png"
+  },
+  {
+    "id": "f_21012",
+    "name": "20E之星小惡魔",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_21012_20E之星小惡魔.png",
+    "webPath": "/cards/comfy/異界/f_21012_20E之星小惡魔.png"
+  },
+  {
+    "id": "f_20018",
+    "name": "ARK工匠",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_20018_ARK工匠.png",
+    "webPath": "/cards/comfy/異界/f_20018_ARK工匠.png"
+  },
+  {
+    "id": "f_20012",
+    "name": "ARK幻魔",
+    "status": "ok",
+    "file": "D:\\pray\\my-phaser-game\\public\\cards\\comfy\\異界\\f_20012_ARK幻魔.png",
+    "webPath": "/cards/comfy/異界/f_20012_ARK幻魔.png"
+  }
+]
