@@ -421,14 +421,17 @@ export default class DeckScene extends Phaser.Scene {
     const raceTags = document.createElement("div");
     raceTags.style.position = "relative";
     raceTags.style.display = "flex";
-    raceTags.style.flexDirection = "column";
+    raceTags.style.flexDirection = "row";
+    raceTags.style.flexWrap = "wrap";
     raceTags.style.gap = "6px";
-    raceTags.style.alignItems = "stretch";
+    raceTags.style.alignItems = "center";
     raceTags.style.flexShrink = "0";
-    raceTags.style.minWidth = "48px";
-    raceTags.style.maxHeight = "128px";
-    raceTags.style.overflowY = "auto";
-    raceTags.style.padding = "2px";
+    raceTags.style.minWidth = "0";
+    raceTags.style.maxWidth = "320px";
+    raceTags.style.maxHeight = "none";
+    raceTags.style.overflowX = "auto";
+    raceTags.style.overflowY = "hidden";
+    raceTags.style.padding = "4px 6px";
     raceTags.style.background = "rgba(9,22,38,0.68)";
     raceTags.style.border = "1px solid rgba(86,124,165,0.65)";
     raceTags.style.borderRadius = "10px";
@@ -442,11 +445,10 @@ export default class DeckScene extends Phaser.Scene {
         const b = document.createElement("button");
         b.type = "button";
         const full = it.label.replace(/^種族:\s*/, "");
-        const short = full.length > 2 ? full.slice(0, 2) : full;
-        b.textContent = short;
+        b.textContent = full;
         b.title = full;
-        b.style.height = "30px";
-        b.style.minWidth = "40px";
+        b.style.height = "28px";
+        b.style.minWidth = "0";
         b.style.padding = "0 6px";
         b.style.border = "1px solid #5f7fa6";
         b.style.borderRadius = "7px";
@@ -559,8 +561,8 @@ export default class DeckScene extends Phaser.Scene {
       this.effectSelectEl.style.width = `${effectW}px`;
     }
     if (this.raceTagsRootEl) {
-      const h = Math.max(96, Math.min(180, Math.floor(this.scale.height * 0.22)));
-      this.raceTagsRootEl.style.maxHeight = `${h}px`;
+      const tagsW = Math.max(160, Math.min(420, Math.floor(avail * 0.4)));
+      this.raceTagsRootEl.style.maxWidth = `${tagsW}px`;
     }
   }
 
