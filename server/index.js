@@ -41,6 +41,7 @@ const PYTHON_CANDIDATES = [
   "C:\\Users\\user\\Documents\\ComfyUI\\.venv\\Scripts\\python.exe",
   "python"
 ].filter(Boolean);
+const COMFY_AUTO_START_DEFAULT = /^(1|true|yes|on)$/i.test(String(process.env.COMFY_AUTO_START || "false"));
 
 let managedComfyProcess = null;
 let managedComfyApiBase = "";
@@ -663,6 +664,17 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
+    if (req.method === "GET" && reqPath === "/api/comfy/health") {
+      const apiBase = detectComfyApiBase(url.searchParams.get("apiBase"));
+      const online = await isComfyOnline(apiBase);
+      return sendJson(req, res, online ? 200 : 503, {
+        ok: online,
+        apiBase,
+        managedComfyAlive: Boolean(managedComfyProcess && !managedComfyProcess.killed),
+        managedComfyApiBase: managedComfyApiBase || ""
+      });
+    }
+
     if (req.method === "POST" && reqPath === "/api/rooms") {
       let code = genRoomCode();
       while (rooms.has(code)) code = genRoomCode();
@@ -745,7 +757,7 @@ const server = http.createServer(async (req, res) => {
       const abilityText = String(body?.abilityText || "").trim();
       const styleMode = LOCKED_IMAGE_STYLE_MODE;
       const styleRefPath = resolveStyleRefFile(LOCKED_IMAGE_STYLE_REF_WEB_PATH);
-      const autoStart = body?.autoStart !== false;
+      const autoStart = body?.autoStart === undefined ? COMFY_AUTO_START_DEFAULT : body?.autoStart !== false;
       const autoShutdown = body?.autoShutdown !== false;
       const apiBase = detectComfyApiBase(body?.apiBase);
 
@@ -813,7 +825,7 @@ const server = http.createServer(async (req, res) => {
       const frames = Number(body?.frames || 16);
       const size = Number(body?.size || 512);
       const workflow = String(body?.workflow || "").trim();
-      const autoStart = body?.autoStart !== false;
+      const autoStart = body?.autoStart === undefined ? COMFY_AUTO_START_DEFAULT : body?.autoStart !== false;
       const autoShutdown = body?.autoShutdown !== false;
       const apiBase = detectComfyApiBase(body?.apiBase);
 
