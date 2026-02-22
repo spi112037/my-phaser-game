@@ -31,6 +31,15 @@ function resolveEditorAssetUrl(v) {
   return s;
 }
 
+function toFullDisplayPath(v) {
+  const s = String(v || "").trim();
+  if (!s) return "";
+  if (/^https?:\/\//i.test(s)) return s;
+  if (s.startsWith("data:image/")) return "[data:image]";
+  if (s.startsWith("/")) return `${EDITOR_API_BASE}${s}`;
+  return s;
+}
+
 function escHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -592,6 +601,15 @@ export default class CardEditorScene extends Phaser.Scene {
     previewSaveBtn.style.color = "#eaf4ff";
     previewSaveBtn.style.cursor = "pointer";
 
+    const previewUploadBtn = document.createElement("button");
+    previewUploadBtn.textContent = "上傳圖片";
+    previewUploadBtn.style.padding = "7px 10px";
+    previewUploadBtn.style.borderRadius = "8px";
+    previewUploadBtn.style.border = "1px solid #35577a";
+    previewUploadBtn.style.background = "#173452";
+    previewUploadBtn.style.color = "#eaf4ff";
+    previewUploadBtn.style.cursor = "pointer";
+
     const previewApplyBtn = document.createElement("button");
     previewApplyBtn.textContent = "套用覆蓋";
     previewApplyBtn.style.padding = "7px 10px";
@@ -639,6 +657,7 @@ export default class CardEditorScene extends Phaser.Scene {
     previewBackBtn.style.marginLeft = "auto";
 
     previewToolRow.appendChild(previewSaveBtn);
+    previewToolRow.appendChild(previewUploadBtn);
     previewToolRow.appendChild(previewApplyBtn);
     previewToolRow.appendChild(previewGenerateBtn);
     previewToolRow.appendChild(previewGenerateAttackBtn);
@@ -822,6 +841,7 @@ export default class CardEditorScene extends Phaser.Scene {
     };
 
     const saveBtn = mkBtn("儲存草稿");
+    const uploadBtn = mkBtn("上傳圖片");
     const createBtn = mkBtn("新增卡片");
     const exportBtn = mkBtn("下載 JSON");
     const comfyGenerateBtn = mkBtn("依照描述生產適合的圖片");
@@ -833,6 +853,7 @@ export default class CardEditorScene extends Phaser.Scene {
     const clearBtn = mkBtn("清空重填");
 
     btnRow.appendChild(saveBtn);
+    btnRow.appendChild(uploadBtn);
     btnRow.appendChild(createBtn);
     btnRow.appendChild(exportBtn);
     btnRow.appendChild(comfyGenerateBtn);
@@ -1144,7 +1165,7 @@ export default class CardEditorScene extends Phaser.Scene {
       try {
         appendEventLog("寫入圖片到本機硬碟");
         data.image = await persistCardImageToDisk(data.id, data.name, data.image);
-        appendEventLog(`圖片寫入成功：${data.image}`);
+        appendEventLog(`圖片寫入成功：${toFullDisplayPath(data.image)}`);
       } catch (err) {
         appendEventLog(`失敗：圖片寫入失敗 -> ${String(err?.message || err)}`);
         diskWriteFailed = true;
@@ -1193,7 +1214,7 @@ export default class CardEditorScene extends Phaser.Scene {
       } else if (diskWriteFailed) {
         msg.textContent = `已儲存草稿與覆蓋（本機模式，圖片未寫入伺服器硬碟）；AI 新增 ${aiResult.added} 條效果規則。`;
       } else {
-        msg.textContent = `已儲存並套用新卡：${data.id}；AI 新增 ${aiResult.added} 條效果規則。`;
+        msg.textContent = `已儲存並套用新卡：${data.id}；存檔路徑：${toFullDisplayPath(data.image)}；AI 新增 ${aiResult.added} 條效果規則。`;
       }
 
       this.cardPool = CardFactory.getAllCardDefs();
@@ -1246,7 +1267,7 @@ export default class CardEditorScene extends Phaser.Scene {
       } else if (diskWriteFailed) {
         msg.textContent = `已套用本機覆蓋：${data.id}（本機模式，圖片未寫入伺服器硬碟）；AI 新增 ${aiResult.added} 條效果規則。`;
       } else {
-        msg.textContent = `已套用本機覆蓋：${data.id}（返回戰鬥/牌組頁會讀到新值），AI 新增 ${aiResult.added} 條效果規則。`;
+        msg.textContent = `已套用本機覆蓋：${data.id}；存檔路徑：${toFullDisplayPath(data.image)}；AI 新增 ${aiResult.added} 條效果規則。`;
       }
 
       this.cardPool = CardFactory.getAllCardDefs();
@@ -1300,8 +1321,14 @@ export default class CardEditorScene extends Phaser.Scene {
 
     window.addEventListener("paste", handlePasteImage);
 
+    const openFilePicker = () => {
+      fileInput.click();
+    };
+
     saveBtn.addEventListener("click", doSaveDraft);
     previewSaveBtn.addEventListener("click", doSaveDraft);
+    uploadBtn.addEventListener("click", openFilePicker);
+    previewUploadBtn.addEventListener("click", openFilePicker);
 
     createBtn.addEventListener("click", () => {
       const d = this._defaultData();
@@ -1403,8 +1430,8 @@ export default class CardEditorScene extends Phaser.Scene {
         const imagePath = String(result?.imageUrl || result?.imagePath || "");
         this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(imagePath))}?v=${Date.now()}`;
         renderPreview();
-        msg.textContent = `生成成功：${imagePath}`;
-        appendEventLog(`成功：插圖生成完成 -> ${imagePath}`);
+        msg.textContent = `生成成功：${toFullDisplayPath(imagePath)}`;
+        appendEventLog(`成功：插圖生成完成 -> ${toFullDisplayPath(imagePath)}`);
         if (result?.usedPrompt) appendEventLog(`本次使用提示詞：${result.usedPrompt}`);
         finishProgress(true);
         return true;
@@ -1472,8 +1499,8 @@ export default class CardEditorScene extends Phaser.Scene {
         const previewFramePath = String(result?.previewFrameUrl || result?.previewFramePath || "");
         this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(previewFramePath))}?v=${Date.now()}`;
         renderPreview();
-        msg.textContent = `攻擊動畫生成成功：${result.sequenceDir}（${result.frameCount} 幀）`;
-        appendEventLog(`成功：動畫輸出 -> ${result.sequenceDir}，幀數=${result.frameCount}`);
+        msg.textContent = `攻擊動畫生成成功：${toFullDisplayPath(result.sequenceDir)}（${result.frameCount} 幀）`;
+        appendEventLog(`成功：動畫輸出 -> ${toFullDisplayPath(result.sequenceDir)}，預覽幀=${toFullDisplayPath(previewFramePath)}，幀數=${result.frameCount}`);
         finishProgress(true);
         return true;
       } catch (err) {
