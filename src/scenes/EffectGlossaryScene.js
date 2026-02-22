@@ -189,6 +189,7 @@ export default class EffectGlossaryScene extends Phaser.Scene {
 
     this.selected = { type: "all", damage: "all", assist: "all", polarity: "all" };
     this._textureLoading = false;
+    this.chipViews = [];
   }
 
   create() {
@@ -341,11 +342,13 @@ export default class EffectGlossaryScene extends Phaser.Scene {
         cy += 40;
       }
 
-      const isOn = this.selected[group.key] === op.id;
-      const bg = this.add.rectangle(cx + bw / 2, cy, bw, 30, isOn ? 0x2d7dd2 : 0xffffff, isOn ? 0.5 : 0.14)
+      const bg = this.add.rectangle(cx + bw / 2, cy, bw, 30, 0xffffff, 0.14)
         .setStrokeStyle(1, 0xffffff, 0.25)
         .setInteractive({ useHandCursor: true });
       const t = this.add.text(cx + bw / 2, cy, op.label, { fontSize: "18px", color: "#ffffff" }).setOrigin(0.5);
+      const chip = { groupKey: group.key, optionId: op.id, bg, t };
+      this.chipViews.push(chip);
+      this._applyChipStyle(chip, false);
 
       bg.on("pointerup", () => {
         this.selected[group.key] = op.id;
@@ -353,14 +356,33 @@ export default class EffectGlossaryScene extends Phaser.Scene {
         this._refresh();
       });
 
-      bg.on("pointerover", () => bg.setFillStyle(isOn ? 0x2d7dd2 : 0x9ddcff, isOn ? 0.55 : 0.2));
-      bg.on("pointerout", () => bg.setFillStyle(isOn ? 0x2d7dd2 : 0xffffff, isOn ? 0.5 : 0.14));
+      bg.on("pointerover", () => this._applyChipStyle(chip, true));
+      bg.on("pointerout", () => this._applyChipStyle(chip, false));
 
       this.rowViews.push(bg, t);
       cx += bw + 10;
     }
 
     return cy + 18;
+  }
+
+  _applyChipStyle(chip, hover = false) {
+    const isOn = this.selected[chip.groupKey] === chip.optionId;
+    if (isOn) {
+      chip.bg.setFillStyle(0x2d7dd2, hover ? 0.75 : 0.62);
+      chip.bg.setStrokeStyle(2, 0x9ddcff, 0.95);
+      chip.t.setColor("#ffffff");
+      return;
+    }
+    chip.bg.setFillStyle(hover ? 0x9ddcff : 0xffffff, hover ? 0.24 : 0.14);
+    chip.bg.setStrokeStyle(1, 0xffffff, 0.25);
+    chip.t.setColor("#d9e7f8");
+  }
+
+  _refreshChipStyles() {
+    for (let i = 0; i < this.chipViews.length; i += 1) {
+      this._applyChipStyle(this.chipViews[i], false);
+    }
   }
 
   _match(item) {
@@ -673,6 +695,7 @@ export default class EffectGlossaryScene extends Phaser.Scene {
   }
 
   _refresh() {
+    this._refreshChipStyles();
     this.filtered = this.index.filter((x) => this._match(x));
 
     const rowStep = 62;
