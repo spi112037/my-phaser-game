@@ -1,4 +1,4 @@
-import http from "node:http";
+﻿import http from "node:http";
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
@@ -150,7 +150,7 @@ function roomState(room) {
 function sanitizePart(v) {
   return String(v || "")
     .trim()
-    .replace(/[^\p{L}\p{N}_-]+/gu, "_")
+    .replace(/[^A-Za-z0-9_-]+/g, "_")
     .replace(/_+/g, "_")
     .slice(0, 60);
 }
@@ -177,8 +177,7 @@ async function saveCardImageFromDataUrl({ cardId, cardName, dataUrl }) {
   if (!parsed) return { ok: false, error: "invalid_image_data_url" };
 
   const idSafe = sanitizePart(cardId || "custom_card");
-  const nameSafe = sanitizePart(cardName || "card");
-  const fileName = `${idSafe}_${nameSafe}${parsed.ext}`;
+  const fileName = `${idSafe}${parsed.ext}`;
   const abs = path.join(CARD_CUSTOM_DIR, fileName);
 
   await fs.mkdir(CARD_CUSTOM_DIR, { recursive: true });
@@ -214,6 +213,41 @@ async function sendPublicFile(req, res, reqPath) {
   }
 
   if (!fsSync.existsSync(abs) || !fsSync.statSync(abs).isFile()) {
+    const trySendAbs = async (candidateAbs) => {
+      if (!candidateAbs) return false;
+      if (!fsSync.existsSync(candidateAbs) || !fsSync.statSync(candidateAbs).isFile()) return false;
+      const fbMime = getMimeByExt(candidateAbs);
+      const fbBuf = await fs.readFile(candidateAbs);
+      res.writeHead(200, {
+        "Content-Type": fbMime,
+        "Cache-Control": "public, max-age=60",
+        ...buildCorsHeaders(req)
+      });
+      res.end(fbBuf);
+      return true;
+    };
+
+    // 1) Legacy named path: /cards/custom/f_12_xxx.jpg -> /cards/custom/f_12.jpg
+    const legacy = String(reqPath || "").match(/^\/cards\/custom\/(f_\d+)_.*(\.[a-zA-Z0-9]+)$/);
+    if (legacy) {
+      const fallbackPath = `/cards/custom/${legacy[1]}${String(legacy[2] || "").toLowerCase()}`;
+      const fallbackAbs = path.resolve(PUBLIC_ROOT, fallbackPath.replace(/^\/+/, ""));
+      // eslint-disable-next-line no-await-in-loop
+      if (await trySendAbs(fallbackAbs)) return null;
+    }
+
+    // 2) Cross-extension fallback: /cards/custom/f_12*.ext -> try f_12.png/jpg/jpeg/webp/gif
+    const idHit = String(reqPath || "").match(/^\/cards\/custom\/(f_\d+)(?:_[^\/]+)?(?:\.[a-zA-Z0-9]+)?$/);
+    if (idHit?.[1]) {
+      const idOnly = String(idHit[1]);
+      const exts = [".png", ".jpg", ".jpeg", ".webp", ".gif"];
+      for (let i = 0; i < exts.length; i += 1) {
+        const p = `/cards/custom/${idOnly}${exts[i]}`;
+        const candidateAbs = path.resolve(PUBLIC_ROOT, p.replace(/^\/+/, ""));
+        // eslint-disable-next-line no-await-in-loop
+        if (await trySendAbs(candidateAbs)) return null;
+      }
+    }
     return sendJson(req, res, 404, { error: "file_not_found" });
   }
 
@@ -607,7 +641,8 @@ async function pickNewestImageFrom(dir) {
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url || "/", `http://${req.headers.host}`);
-  const reqPath = url.pathname;
+  let reqPath = url.pathname;
+  try { reqPath = decodeURIComponent(reqPath); } catch {}
 
   if (req.method === "OPTIONS") return sendJson(req, res, 204, {});
 
@@ -851,3 +886,6 @@ server.listen(PORT, HOST, () => {
   console.log(`[mock-api] listening on http://${HOST}:${PORT}`);
   console.log(`[mock-api] cors allow origins: ${corsText}`);
 });
+
+
+
