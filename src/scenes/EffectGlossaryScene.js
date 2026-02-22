@@ -42,17 +42,25 @@ function collectEffects(card) {
 function classifyEffect(raw) {
   const s = normalizeEffectText(raw);
   const tags = new Set();
+  const sNoSummoner = s.replace(/召唤者|召喚者/g, "");
 
   const isSummonByAround =
     /在周围.*召唤/.test(s) ||
+    /在周圍.*召喚/.test(s) ||
     /在.*周围.*召唤/.test(s) ||
-    /周围.*召唤/.test(s);
+    /在.*周圍.*召喚/.test(s) ||
+    /周围.*召唤/.test(s) ||
+    /周圍.*召喚/.test(s);
 
   const isSummonByTransform =
-    /(我方|敌方|友方).*(死亡|阵亡).*(转化|召唤)/.test(s) ||
-    /(死亡|阵亡).*(转化|召唤).*(我方|敌方|友方)/.test(s);
+    /(我方|敌方|友方|我方其他|敌方其他).*(死亡|阵亡|死亡時|陣亡時).*(转化|轉化|召唤|召喚|变成|變成|生成)/.test(sNoSummoner) ||
+    /(死亡|阵亡|死亡時|陣亡時).*(转化|轉化|召唤|召喚|变成|變成|生成).*(我方|敌方|友方|我方其他|敌方其他)/.test(sNoSummoner);
 
-  if (isSummonByAround || isSummonByTransform) tags.add("type_summon");
+  const isGeneralSummon =
+    /(召唤|召喚|生成|衍生|召出|喚出|變成|变成|分身|幻影|傀儡|token)/i.test(sNoSummoner) &&
+    !/(仅召唤者|僅召喚者|召唤者抽取|召喚者抽取|召唤者准备|召喚者準備)/.test(s);
+
+  if (isSummonByAround || isSummonByTransform || isGeneralSummon) tags.add("type_summon");
 
   if (/光环|在场上存在|场上每有|全体友方|其他友方士兵获得/.test(s)) tags.add("type_aura");
 
