@@ -81,8 +81,14 @@ function classifyEffect(raw) {
     tags.add("dmg_physical");
   }
 
-  if (/召唤者|我方英雄|我方牌库|自己牌库|自己准备栏|抽取|返回牌库/.test(s)) tags.add("assist_player");
-  if (/敌方|敌方英雄|敌方牌库|敌方准备栏/.test(s)) tags.add("assist_enemy");
+  if (/召唤者|召喚者|我方英雄|我方牌库|我方牌庫|自己牌库|自己牌庫|自己准备栏|自己準備欄|抽取|返回牌库|返回牌庫/.test(s)) {
+    tags.add("assist_player");
+  }
+  if (
+    /(敌方|敵方|对敌方|對敵方|敌军|敵軍|对手|對手|敵人|敌人|敵軍英雄|敌军英雄|敵方英雄|敌方英雄|敵方士兵|敌方士兵|敌方牌库|敵方牌庫|敌方准备栏|敵方準備欄)/.test(s)
+  ) {
+    tags.add("assist_enemy");
+  }
   if (/士兵|单位|友方其他士兵|敌方士兵/.test(s)) tags.add("assist_soldier");
   if (/准备栏|准备值/.test(s)) tags.add("assist_ready");
 
