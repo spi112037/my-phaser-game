@@ -268,6 +268,13 @@ export default class BattleScene extends Phaser.Scene {
     if (getCardCost(card) !== 0) return;
     this.removeMode = false;
     this.selectedCard = card;
+    this.onBattleState({
+      left: this.leftHero,
+      right: this.rightHero,
+      turnSide: this.combat?.turnSide || "L",
+      turnCount: this.combat?.turnCount || 1,
+      logs: this.combat?.logs || []
+    });
   }
 
   _onToggleRemoveMode() {
@@ -299,7 +306,18 @@ export default class BattleScene extends Phaser.Scene {
 
   _onToggleAutoPlayer() {
     if (!this._isMyTurn()) return;
-    if (!this.combat || this._isOnlineMode()) return;
+    if (!this.combat) return;
+    if (this._isOnlineMode()) {
+      this.combat._log("連線模式目前停用我方自動AI。");
+      this.onBattleState({
+        left: this.leftHero,
+        right: this.rightHero,
+        turnSide: this.combat.turnSide,
+        turnCount: this.combat.turnCount,
+        logs: this.combat.logs
+      });
+      return;
+    }
     this.autoPlayerEnabled = !this.autoPlayerEnabled;
     this.combat.setAutoAiForSide("L", this.autoPlayerEnabled);
     this.combat._log(`我方自動AI：${this.autoPlayerEnabled ? "開啟" : "關閉"}`);
@@ -542,7 +560,10 @@ export default class BattleScene extends Phaser.Scene {
     const left = state.left;
     const right = state.right;
 
-    const turnStr = `回合 ${state.turnCount} | ${state.turnSide === "L" ? "我方回合" : "敵方回合"}`;
+    const isMyTurn = this._isOnlineMode()
+      ? state.turnSide === this.mySide
+      : state.turnSide === "L";
+    const turnStr = `回合 ${state.turnCount} | ${isMyTurn ? "我方回合" : "敵方回合"}`;
 
     const leftPlayable = countPlayable(left);
     const rightPlayable = countPlayable(right);
