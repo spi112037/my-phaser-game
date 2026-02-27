@@ -5,7 +5,7 @@ import fsSync from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
-
+import { lookup as dnsLookup } from "node:dns/promises";
 const PORT = Number(process.env.PORT || 8787);
 const HOST = String(process.env.HOST || "0.0.0.0").trim() || "0.0.0.0";
 const CORS_ALLOW_ORIGINS = String(process.env.CORS_ALLOW_ORIGINS || "*")
@@ -382,6 +382,75 @@ function isComfyOnline(apiBase, timeoutMs = 2500) {
   });
 }
 
+
+async function checkComfyHealth(apiBase, timeoutMs = 3500) {
+  const base = String(apiBase || "").trim();
+  const startedAt = Date.now();
+  const detail = {
+    ok: false,
+    apiBase: base,
+    dnsOk: false,
+    httpsOk: false,
+    apiOk: false,
+    statusCode: 0,
+    latencyMs: 0,
+    lastError: "",
+    resolvedAddress: ""
+  };
+
+  let u;
+  try {
+    u = new URL(base);
+  } catch {
+    detail.lastError = "invalid_api_base";
+    detail.latencyMs = Date.now() - startedAt;
+    return detail;
+  }
+
+  const host = String(u.hostname || "").trim();
+  if (!host) {
+    detail.lastError = "invalid_hostname";
+    detail.latencyMs = Date.now() - startedAt;
+    return detail;
+  }
+
+  const isIpHost = /^\d+\.\d+\.\d+\.\d+$/.test(host) || host === "localhost";
+  if (isIpHost) {
+    detail.dnsOk = true;
+    detail.resolvedAddress = host;
+  } else {
+    try {
+      const dns = await dnsLookup(host);
+      detail.dnsOk = Boolean(dns?.address);
+      detail.resolvedAddress = String(dns?.address || "");
+    } catch (err) {
+      detail.lastError = `dns_lookup_failed:${String(err?.code || err?.message || err)}`;
+      detail.latencyMs = Date.now() - startedAt;
+      return detail;
+    }
+  }
+
+  const target = `${base.replace(/\/+$/, "")}/object_info`;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), Math.max(500, Number(timeoutMs || 3500)));
+
+  try {
+    const res = await fetch(target, { method: "GET", signal: ctrl.signal });
+    detail.statusCode = Number(res.status || 0);
+    detail.httpsOk = u.protocol === "https:" ? true : true;
+    detail.apiOk = detail.statusCode >= 200 && detail.statusCode < 300;
+    detail.ok = detail.apiOk;
+    if (!detail.apiOk) detail.lastError = `bad_status:${detail.statusCode}`;
+  } catch (err) {
+    const msg = String(err?.cause?.code || err?.code || err?.message || err);
+    detail.lastError = `request_failed:${msg}`;
+  } finally {
+    clearTimeout(timer);
+    detail.latencyMs = Date.now() - startedAt;
+  }
+
+  return detail;
+}
 async function waitForComfyOnline(apiBase, timeoutMs = 60000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
@@ -665,11 +734,33 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && reqPath === "/api/comfy/health") {
-      const apiBase = detectComfyApiBase(url.searchParams.get("apiBase"));
-      const online = await isComfyOnline(apiBase);
-      return sendJson(req, res, online ? 200 : 503, {
-        ok: online,
+      const queryApiBase = String(url.searchParams.get("apiBase") || "").trim();
+      const apiBase = detectComfyApiBase(queryApiBase);
+      const detail = await checkComfyHealth(apiBase);
+      const envApiBase = String(process.env.COMFY_API_BASE || "").trim();
+      const apiBaseSource = queryApiBase
+        ? "query"
+        : envApiBase
+          ? "env.COMFY_API_BASE"
+          : "fallback_default";
+
+      return sendJson(req, res, detail.ok ? 200 : 503, {
+        ok: detail.ok,
         apiBase,
+        apiBaseSource,
+        checks: {
+          dnsOk: detail.dnsOk,
+          httpsOk: detail.httpsOk,
+          apiOk: detail.apiOk,
+          statusCode: detail.statusCode,
+          latencyMs: detail.latencyMs,
+          resolvedAddress: detail.resolvedAddress,
+          lastError: detail.lastError
+        },
+        hints: {
+          expectedForCloud: "Set COMFY_API_BASE=https://comfy.your-domain.com on Railway",
+          avoidLocalhostOnCloud: apiBaseSource === "fallback_default"
+        },
         managedComfyAlive: Boolean(managedComfyProcess && !managedComfyProcess.killed),
         managedComfyApiBase: managedComfyApiBase || ""
       });
@@ -898,6 +989,10 @@ server.listen(PORT, HOST, () => {
   console.log(`[mock-api] listening on http://${HOST}:${PORT}`);
   console.log(`[mock-api] cors allow origins: ${corsText}`);
 });
+
+
+
+
 
 
 

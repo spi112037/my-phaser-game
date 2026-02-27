@@ -1,10 +1,13 @@
-function resolveApiBase() {
+﻿function resolveApiBase() {
   const envBase = String(import.meta.env.VITE_API_BASE || "").trim();
   if (envBase) return envBase.replace(/\/$/, "");
 
   const host = String(globalThis?.location?.hostname || "").toLowerCase();
   const proto = String(globalThis?.location?.protocol || "https:");
   if (!host || host === "localhost" || host === "127.0.0.1") return "http://localhost:8787";
+
+  // Vercel preview domain usually has no matching api.<host>; require explicit env.
+  if (host.endsWith(".vercel.app")) return "https://api.flamejourneygame.com";
 
   if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
   if (host.startsWith("api.")) return `${proto}//${host}`;
@@ -45,3 +48,4 @@ export default class ApiClient {
     return request(`/api/rooms/${encodeURIComponent(roomCode)}/state`, { method: "GET" });
   }
 }
+

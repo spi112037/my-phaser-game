@@ -15,6 +15,9 @@ function resolveEditorApiBase() {
   const proto = String(globalThis?.location?.protocol || "https:");
   if (!host || host === "localhost" || host === "127.0.0.1") return "http://localhost:8787";
 
+  // Vercel preview domain usually has no matching api.<host>; require explicit env.
+  if (host.endsWith(".vercel.app")) return "https://api.flamejourneygame.com";
+
   if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
   if (host.startsWith("api.")) return `${proto}//${host}`;
   return `${proto}//api.${host}`;
@@ -1653,4 +1656,5 @@ export default class CardEditorScene extends Phaser.Scene {
     this.root = null;
   }
 }
+
 
