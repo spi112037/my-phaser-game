@@ -5,8 +5,6 @@ const STORAGE_KEY = "my-phaser-game.card-editor.draft.v1";
 const OVERRIDE_KEY = "my-phaser-game.card-overrides.v1";
 const EFFECT_RULE_OVERRIDE_KEY = "my-phaser-game.effect-rule-overrides.v1";
 const IMAGE_STORE_MAX_BYTES = 160 * 1024;
-const LOCKED_IMAGE_STYLE_MODE = "bright";
-const LOCKED_IMAGE_STYLE_REF = "/cards/style/style_reference.png";
 function resolveEditorApiBase() {
   const envBase = String(import.meta.env.VITE_API_BASE || "").trim();
   if (envBase) return envBase.replace(/\/$/, "");
@@ -238,111 +236,6 @@ async function persistCardImageToDisk(cardId, cardName, imageValue) {
   const imagePath = String(data?.imagePath || "");
   if (!imagePath.startsWith("/cards/")) throw new Error("invalid_image_path");
   return imagePath;
-}
-
-async function generateImageFromDescription(cardId, cardName, description, abilityText, options = {}) {
-  const styleMode = String(options?.styleMode || "bright").trim().toLowerCase();
-  const styleRefPath = String(options?.styleRefPath || "").trim();
-  const cost = Number(options?.cost || 0);
-  const atk = Number(options?.atk || 0);
-  const hp = Number(options?.hp || 0);
-  const resp = await fetch(`${EDITOR_API_BASE}/api/comfy/generate-from-description`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      cardId: String(cardId || "custom_card"),
-      cardName: String(cardName || "card"),
-      description: String(description || ""),
-      abilityText: String(abilityText || ""),
-      cost,
-      atk,
-      hp,
-      styleMode,
-      styleRefPath
-    })
-  });
-
-  let data = null;
-  try {
-    data = await resp.json();
-  } catch {
-    data = null;
-  }
-
-  if (!resp.ok) {
-    const reason = String(data?.error || data?.hint || `http_${resp.status}`);
-    const stderr = String(data?.stderr || "");
-    const stdout = String(data?.stdout || "");
-    const attemptedCommand = String(data?.attemptedCommand || "");
-    const attempts = Array.isArray(data?.attempts) ? data.attempts : [];
-    const tried = attempts
-      .map((a) => String(a?.cmd || "").trim())
-      .filter((x) => x)
-      .join(" -> ");
-    const detail = [
-      attemptedCommand ? `cmd: ${attemptedCommand}` : "",
-      stderr ? `stderr: ${stderr}` : "",
-      stdout ? `stdout: ${stdout}` : "",
-      tried ? `tried: ${tried}` : ""
-    ].filter((x) => x).join(" | ");
-    throw new Error(detail ? `${reason} | ${detail}` : reason);
-  }
-
-  const imagePath = String(data?.imagePath || "");
-  const usedPrompt = String(data?.usedPrompt || "");
-  if (!imagePath.startsWith("/cards/")) throw new Error("invalid_image_path");
-  return { imagePath, usedPrompt };
-}
-
-async function generateAttackFromDescription(cardId, cardName, description, abilityText, options = {}) {
-  const frames = Math.max(1, Number(options?.frames || 16));
-  const size = Math.max(128, Number(options?.size || 512));
-  const resp = await fetch(`${EDITOR_API_BASE}/api/comfy/generate-attack-from-description`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      cardId: String(cardId || "custom_card"),
-      cardName: String(cardName || "card"),
-      description: String(description || ""),
-      abilityText: String(abilityText || ""),
-      frames,
-      size,
-      autoStart: true,
-      autoShutdown: true
-    })
-  });
-
-  let data = null;
-  try {
-    data = await resp.json();
-  } catch {
-    data = null;
-  }
-
-  if (!resp.ok) {
-    const reason = String(data?.error || data?.hint || `http_${resp.status}`);
-    const stderr = String(data?.stderr || "");
-    const stdout = String(data?.stdout || "");
-    const attemptedCommand = String(data?.attemptedCommand || "");
-    const attempts = Array.isArray(data?.attempts) ? data.attempts : [];
-    const tried = attempts
-      .map((a) => String(a?.cmd || "").trim())
-      .filter((x) => x)
-      .join(" -> ");
-    const detail = [
-      attemptedCommand ? `cmd: ${attemptedCommand}` : "",
-      stderr ? `stderr: ${stderr}` : "",
-      stdout ? `stdout: ${stdout}` : "",
-      tried ? `tried: ${tried}` : ""
-    ].filter((x) => x).join(" | ");
-    throw new Error(detail ? `${reason} | ${detail}` : reason);
-  }
-
-  const previewFramePath = String(data?.previewFramePath || "");
-  const frameCount = Number(data?.frameCount || 0);
-  const sequenceDir = String(data?.sequenceDir || "");
-  if (!previewFramePath.startsWith("/cards/")) throw new Error("invalid_preview_frame_path");
-  return { previewFramePath, frameCount, sequenceDir };
 }
 
 export default class CardEditorScene extends Phaser.Scene {
@@ -622,33 +515,6 @@ export default class CardEditorScene extends Phaser.Scene {
     previewApplyBtn.style.color = "#eaf4ff";
     previewApplyBtn.style.cursor = "pointer";
 
-    const previewGenerateBtn = document.createElement("button");
-    previewGenerateBtn.textContent = "依照描述生產適合的圖片";
-    previewGenerateBtn.style.padding = "7px 10px";
-    previewGenerateBtn.style.borderRadius = "8px";
-    previewGenerateBtn.style.border = "1px solid #35577a";
-    previewGenerateBtn.style.background = "#173452";
-    previewGenerateBtn.style.color = "#eaf4ff";
-    previewGenerateBtn.style.cursor = "pointer";
-
-    const previewGenerateAttackBtn = document.createElement("button");
-    previewGenerateAttackBtn.textContent = "依照描述生產攻擊動畫";
-    previewGenerateAttackBtn.style.padding = "7px 10px";
-    previewGenerateAttackBtn.style.borderRadius = "8px";
-    previewGenerateAttackBtn.style.border = "1px solid #35577a";
-    previewGenerateAttackBtn.style.background = "#173452";
-    previewGenerateAttackBtn.style.color = "#eaf4ff";
-    previewGenerateAttackBtn.style.cursor = "pointer";
-
-    const previewAutoPipelineBtn = document.createElement("button");
-    previewAutoPipelineBtn.textContent = "一鍵造卡（全自動）";
-    previewAutoPipelineBtn.style.padding = "7px 10px";
-    previewAutoPipelineBtn.style.borderRadius = "8px";
-    previewAutoPipelineBtn.style.border = "1px solid #35577a";
-    previewAutoPipelineBtn.style.background = "#1d3f63";
-    previewAutoPipelineBtn.style.color = "#eaf4ff";
-    previewAutoPipelineBtn.style.cursor = "pointer";
-
     const previewBackBtn = document.createElement("button");
     previewBackBtn.textContent = "返回首頁";
     previewBackBtn.style.padding = "7px 10px";
@@ -662,9 +528,6 @@ export default class CardEditorScene extends Phaser.Scene {
     previewToolRow.appendChild(previewSaveBtn);
     previewToolRow.appendChild(previewUploadBtn);
     previewToolRow.appendChild(previewApplyBtn);
-    previewToolRow.appendChild(previewGenerateBtn);
-    previewToolRow.appendChild(previewGenerateAttackBtn);
-    previewToolRow.appendChild(previewAutoPipelineBtn);
     previewToolRow.appendChild(previewBackBtn);
 
     const previewContent = document.createElement("div");
@@ -797,34 +660,6 @@ export default class CardEditorScene extends Phaser.Scene {
     formBox.appendChild(mkField("上傳圖片", fileInput));
     formBox.appendChild(pasteHint);
 
-    const animOptWrap = document.createElement("div");
-    animOptWrap.style.display = "grid";
-    animOptWrap.style.gridTemplateColumns = "1fr 1fr";
-    animOptWrap.style.gap = "10px";
-    animOptWrap.style.marginTop = "8px";
-
-    const animFramesSelect = styleInput(document.createElement("select"));
-    [12, 16, 20, 24].forEach((n) => {
-      const op = document.createElement("option");
-      op.value = String(n);
-      op.textContent = `${n} 幀`;
-      if (n === 16) op.selected = true;
-      animFramesSelect.appendChild(op);
-    });
-
-    const animSizeSelect = styleInput(document.createElement("select"));
-    [384, 512].forEach((n) => {
-      const op = document.createElement("option");
-      op.value = String(n);
-      op.textContent = `${n} x ${n}`;
-      if (n === 512) op.selected = true;
-      animSizeSelect.appendChild(op);
-    });
-
-    animOptWrap.appendChild(mkField("攻擊動畫幀數", animFramesSelect));
-    animOptWrap.appendChild(mkField("攻擊動畫尺寸", animSizeSelect));
-    formBox.appendChild(animOptWrap);
-
     const btnRow = document.createElement("div");
     btnRow.style.display = "flex";
     btnRow.style.flexWrap = "wrap";
@@ -847,10 +682,6 @@ export default class CardEditorScene extends Phaser.Scene {
     const uploadBtn = mkBtn("上傳圖片");
     const createBtn = mkBtn("新增卡片");
     const exportBtn = mkBtn("下載 JSON");
-    const comfyGenerateBtn = mkBtn("依照描述生產適合的圖片");
-    const comfyGenerateAttackBtn = mkBtn("依照描述生產攻擊動畫");
-    const autoPipelineBtn = mkBtn("一鍵造卡（全自動）");
-    autoPipelineBtn.style.background = "#1d3f63";
     const applyBtn = mkBtn("套用為本機覆蓋");
     const clearOverrideBtn = mkBtn("清除此卡覆蓋");
     const clearBtn = mkBtn("清空重填");
@@ -859,9 +690,6 @@ export default class CardEditorScene extends Phaser.Scene {
     btnRow.appendChild(uploadBtn);
     btnRow.appendChild(createBtn);
     btnRow.appendChild(exportBtn);
-    btnRow.appendChild(comfyGenerateBtn);
-    btnRow.appendChild(comfyGenerateAttackBtn);
-    btnRow.appendChild(autoPipelineBtn);
     btnRow.appendChild(applyBtn);
     btnRow.appendChild(clearOverrideBtn);
     btnRow.appendChild(clearBtn);
@@ -1388,193 +1216,6 @@ export default class CardEditorScene extends Phaser.Scene {
       msg.textContent = "已下載 JSON，可再整合到卡池資料。";
     });
 
-    const doGenerateFromDescription = async () => {
-      openEventLog("依描述產生插圖");
-      startProgress("image");
-      const data = this._collectData({ idInput, nameInput, costInput, atkInput, hpInput, abilityInputs, descInput });
-      const effectText = data.abilities.join("；");
-      const desc = String(data.description || "").trim();
-      const styleMode = LOCKED_IMAGE_STYLE_MODE;
-      const styleRefPath = LOCKED_IMAGE_STYLE_REF;
-
-      if (!desc && !effectText) {
-        appendEventLog("中止：描述與效果都空白");
-        msg.textContent = "請先填寫描述或效果，再使用依照描述生產適合的圖片。";
-        return false;
-      }
-      appendEventLog("開始呼叫後端 API /api/comfy/generate-from-description");
-      appendEventLog(`生圖風格（鎖定）：${styleMode} | 基底圖（鎖定）：${styleRefPath}`);
-
-      const oldMainLabel = comfyGenerateBtn.textContent;
-      const oldPreviewLabel = previewGenerateBtn.textContent;
-      comfyGenerateBtn.disabled = true;
-      previewGenerateBtn.disabled = true;
-      comfyGenerateAttackBtn.disabled = true;
-      previewGenerateAttackBtn.disabled = true;
-      autoPipelineBtn.disabled = true;
-      previewAutoPipelineBtn.disabled = true;
-      comfyGenerateBtn.textContent = "生成中…";
-      previewGenerateBtn.textContent = "生成中…";
-      comfyGenerateBtn.style.opacity = "0.75";
-      previewGenerateBtn.style.opacity = "0.75";
-      comfyGenerateAttackBtn.style.opacity = "0.75";
-      previewGenerateAttackBtn.style.opacity = "0.75";
-      autoPipelineBtn.style.opacity = "0.75";
-      previewAutoPipelineBtn.style.opacity = "0.75";
-
-      try {
-        const result = await generateImageFromDescription(data.id, data.name, desc, effectText, {
-          styleMode,
-          styleRefPath,
-          cost: data.cost,
-          atk: data.atk,
-          hp: data.hp
-        });
-        const imagePath = String(result?.imageUrl || result?.imagePath || "");
-        this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(imagePath))}?v=${Date.now()}`;
-        renderPreview();
-        msg.textContent = `生成成功：${toFullDisplayPath(imagePath)}`;
-        appendEventLog(`成功：插圖生成完成 -> ${toFullDisplayPath(imagePath)}`);
-        if (result?.usedPrompt) appendEventLog(`本次使用提示詞：${result.usedPrompt}`);
-        finishProgress(true);
-        return true;
-      } catch (err) {
-        appendEventLog(`失敗：${String(err?.message || err)}`);
-        msg.textContent = `生成失敗：${String(err?.message || err)}。請確認 npm run dev:all、ComfyUI(:8000)、Python requests 已就緒。`;
-        finishProgress(false);
-        return false;
-      } finally {
-        comfyGenerateBtn.disabled = false;
-        previewGenerateBtn.disabled = false;
-        comfyGenerateAttackBtn.disabled = false;
-        previewGenerateAttackBtn.disabled = false;
-        autoPipelineBtn.disabled = false;
-        previewAutoPipelineBtn.disabled = false;
-        comfyGenerateBtn.textContent = oldMainLabel;
-        previewGenerateBtn.textContent = oldPreviewLabel;
-        comfyGenerateBtn.style.opacity = "1";
-        previewGenerateBtn.style.opacity = "1";
-        comfyGenerateAttackBtn.style.opacity = "1";
-        previewGenerateAttackBtn.style.opacity = "1";
-        autoPipelineBtn.style.opacity = "1";
-        previewAutoPipelineBtn.style.opacity = "1";
-      }
-    };
-
-    const doGenerateAttackFromDescription = async () => {
-      openEventLog("依描述產生攻擊動畫");
-      startProgress("attack");
-      const data = this._collectData({ idInput, nameInput, costInput, atkInput, hpInput, abilityInputs, descInput });
-      const effectText = data.abilities.join("；");
-      const desc = String(data.description || "").trim();
-      const animFrames = Number(animFramesSelect.value || 16);
-      const animSize = Number(animSizeSelect.value || 512);
-
-      if (!desc && !effectText) {
-        appendEventLog("中止：描述與效果都空白");
-        msg.textContent = "請先填寫描述或效果，再使用依照描述生產攻擊動畫。";
-        return false;
-      }
-      appendEventLog(`開始呼叫攻擊動畫 API，幀數=${animFrames}，尺寸=${animSize}`);
-
-      const oldMainLabel = comfyGenerateAttackBtn.textContent;
-      const oldPreviewLabel = previewGenerateAttackBtn.textContent;
-      comfyGenerateBtn.disabled = true;
-      previewGenerateBtn.disabled = true;
-      comfyGenerateAttackBtn.disabled = true;
-      previewGenerateAttackBtn.disabled = true;
-      autoPipelineBtn.disabled = true;
-      previewAutoPipelineBtn.disabled = true;
-      comfyGenerateAttackBtn.textContent = "動畫生成中…";
-      previewGenerateAttackBtn.textContent = "動畫生成中…";
-      comfyGenerateBtn.style.opacity = "0.75";
-      previewGenerateBtn.style.opacity = "0.75";
-      comfyGenerateAttackBtn.style.opacity = "0.75";
-      previewGenerateAttackBtn.style.opacity = "0.75";
-      autoPipelineBtn.style.opacity = "0.75";
-      previewAutoPipelineBtn.style.opacity = "0.75";
-
-      try {
-        const result = await generateAttackFromDescription(data.id, data.name, desc, effectText, {
-          frames: animFrames,
-          size: animSize
-        });
-        const previewFramePath = String(result?.previewFrameUrl || result?.previewFramePath || "");
-        this.imageDataUrl = `${encodeURI(resolveEditorAssetUrl(previewFramePath))}?v=${Date.now()}`;
-        renderPreview();
-        msg.textContent = `攻擊動畫生成成功：${toFullDisplayPath(result.sequenceDir)}（${result.frameCount} 幀）`;
-        appendEventLog(`成功：動畫輸出 -> ${toFullDisplayPath(result.sequenceDir)}，預覽幀=${toFullDisplayPath(previewFramePath)}，幀數=${result.frameCount}`);
-        finishProgress(true);
-        return true;
-      } catch (err) {
-        appendEventLog(`失敗：${String(err?.message || err)}`);
-        msg.textContent = `攻擊動畫生成失敗：${String(err?.message || err)}。`;
-        finishProgress(false);
-        return false;
-      } finally {
-        comfyGenerateBtn.disabled = false;
-        previewGenerateBtn.disabled = false;
-        comfyGenerateAttackBtn.disabled = false;
-        previewGenerateAttackBtn.disabled = false;
-        autoPipelineBtn.disabled = false;
-        previewAutoPipelineBtn.disabled = false;
-        comfyGenerateAttackBtn.textContent = oldMainLabel;
-        previewGenerateAttackBtn.textContent = oldPreviewLabel;
-        comfyGenerateBtn.style.opacity = "1";
-        previewGenerateBtn.style.opacity = "1";
-        comfyGenerateAttackBtn.style.opacity = "1";
-        previewGenerateAttackBtn.style.opacity = "1";
-        autoPipelineBtn.style.opacity = "1";
-        previewAutoPipelineBtn.style.opacity = "1";
-      }
-    };
-
-    const doAutoPipeline = async () => {
-      openEventLog("一鍵造卡（全自動）");
-      appendEventLog("步驟1/3：儲存卡片");
-      const oldMainLabel = autoPipelineBtn.textContent;
-      const oldPreviewLabel = previewAutoPipelineBtn.textContent;
-      autoPipelineBtn.textContent = "一鍵流程執行中…";
-      previewAutoPipelineBtn.textContent = "一鍵流程執行中…";
-
-      const saved = await doSaveDraft();
-      if (!saved) {
-        appendEventLog("流程中止：步驟1失敗");
-        autoPipelineBtn.textContent = oldMainLabel;
-        previewAutoPipelineBtn.textContent = oldPreviewLabel;
-        return;
-      }
-
-      appendEventLog("步驟2/3：依描述產生插圖");
-      const drew = await doGenerateFromDescription();
-      if (!drew) {
-        appendEventLog("流程中止：步驟2失敗");
-        autoPipelineBtn.textContent = oldMainLabel;
-        previewAutoPipelineBtn.textContent = oldPreviewLabel;
-        return;
-      }
-
-      appendEventLog("步驟3/3：依描述產生攻擊動畫");
-      const animated = await doGenerateAttackFromDescription();
-      if (!animated) {
-        appendEventLog("流程中止：步驟3失敗");
-        autoPipelineBtn.textContent = oldMainLabel;
-        previewAutoPipelineBtn.textContent = oldPreviewLabel;
-        return;
-      }
-
-      appendEventLog("流程完成：三步皆成功");
-      msg.textContent = "一鍵流程完成：已儲存卡片、產生插圖、產生攻擊動畫。";
-      autoPipelineBtn.textContent = oldMainLabel;
-      previewAutoPipelineBtn.textContent = oldPreviewLabel;
-    };
-
-    comfyGenerateBtn.addEventListener("click", doGenerateFromDescription);
-    previewGenerateBtn.addEventListener("click", doGenerateFromDescription);
-    comfyGenerateAttackBtn.addEventListener("click", doGenerateAttackFromDescription);
-    previewGenerateAttackBtn.addEventListener("click", doGenerateAttackFromDescription);
-    autoPipelineBtn.addEventListener("click", doAutoPipeline);
-    previewAutoPipelineBtn.addEventListener("click", doAutoPipeline);
     previewBackBtn.addEventListener("click", () => this.scene.start("MenuScene"));
 
     applyBtn.addEventListener("click", doApplyOverride);
