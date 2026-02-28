@@ -26,6 +26,7 @@ const LOCKED_IMAGE_STYLE_REF_WEB_PATH = "/cards/style/style_reference.png";
 
 const COMFY_API_CANDIDATES = [
   String(process.env.COMFY_API_BASE || "").trim(),
+  "http://127.0.0.1:8000",
   "http://127.0.0.1:8001",
   "http://127.0.0.1:8188"
 ].filter(Boolean);
@@ -266,7 +267,7 @@ async function sendPublicFile(req, res, reqPath) {
 function detectComfyApiBase(preferred) {
   const preferredBase = String(preferred || "").trim();
   if (preferredBase) return preferredBase;
-  return COMFY_API_CANDIDATES[0] || "http://127.0.0.1:8001";
+  return COMFY_API_CANDIDATES[0] || "http://127.0.0.1:8000";
 }
 
 function parseApiPort(apiBase) {
@@ -274,7 +275,7 @@ function parseApiPort(apiBase) {
     const u = new URL(apiBase);
     return Number(u.port || "80");
   } catch {
-    return 8001;
+    return 8000;
   }
 }
 
@@ -989,6 +990,8 @@ server.listen(PORT, HOST, () => {
   console.log(`[mock-api] listening on http://${HOST}:${PORT}`);
   console.log(`[mock-api] cors allow origins: ${corsText}`);
 });
+
+
 
 
 

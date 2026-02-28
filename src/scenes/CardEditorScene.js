@@ -1440,7 +1440,7 @@ export default class CardEditorScene extends Phaser.Scene {
         return true;
       } catch (err) {
         appendEventLog(`失敗：${String(err?.message || err)}`);
-        msg.textContent = `生成失敗：${String(err?.message || err)}。請確認 npm run dev:all、ComfyUI(:8188)、Python requests 已就緒。`;
+        msg.textContent = `生成失敗：${String(err?.message || err)}。請確認 npm run dev:all、ComfyUI(:8000)、Python requests 已就緒。`;
         finishProgress(false);
         return false;
       } finally {
@@ -1656,5 +1656,6 @@ export default class CardEditorScene extends Phaser.Scene {
     this.root = null;
   }
 }
+
 
 
