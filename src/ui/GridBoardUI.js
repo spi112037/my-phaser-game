@@ -56,7 +56,8 @@ export default class GridBoardUI {
           const key = `${cell.r},${cell.c}`;
           if (this.pendingTargets.has(key)) return;
           if (this.canDeployCellFn && !this.canDeployCellFn(cell.r, cell.c)) return;
-          rect.setFillStyle(0x9ddcff, 0.16);
+          rect.setFillStyle(0x1a2a3f, 0.32);
+          rect.setStrokeStyle(2, 0x000000, 0.95);
         });
 
         rect.on("pointerout", () => {
@@ -152,15 +153,23 @@ export default class GridBoardUI {
       const cell = this.cells[i];
       const key = `${cell.r},${cell.c}`;
       if (this.pendingTargets.has(key)) {
-        cell.rect.setFillStyle(0xffc26b, 0.18);
+        cell.rect.setFillStyle(0xffc26b, 0.24);
+        cell.rect.setStrokeStyle(2, 0x000000, 0.95);
         continue;
       }
       if (!this.deployEnabled) {
         cell.rect.setFillStyle(0xffffff, 0.03);
+        cell.rect.setStrokeStyle(1, 0xffffff, 0.04);
         continue;
       }
       const can = this.canDeployCellFn ? Boolean(this.canDeployCellFn(cell.r, cell.c)) : true;
-      cell.rect.setFillStyle(can ? 0x9ddcff : 0xffffff, can ? 0.1 : 0.03);
+      if (can) {
+        cell.rect.setFillStyle(0x13253a, 0.26);
+        cell.rect.setStrokeStyle(2, 0x000000, 0.92);
+      } else {
+        cell.rect.setFillStyle(0xffffff, 0.03);
+        cell.rect.setStrokeStyle(1, 0xffffff, 0.04);
+      }
     }
   }
 
