@@ -478,8 +478,6 @@ export default class DeckScene extends Phaser.Scene {
     leftWrap.style.flex = "1 1 auto";
     leftWrap.style.minWidth = "0";
     leftWrap.appendChild(searchInput);
-    leftWrap.appendChild(typeSel);
-    leftWrap.appendChild(raceSel);
     leftWrap.appendChild(effectSel);
     leftWrap.appendChild(typeTags);
 
@@ -552,10 +550,7 @@ export default class DeckScene extends Phaser.Scene {
       const searchW = Math.max(140, Math.floor(avail * 0.34));
       this.searchInputEl.style.width = `${searchW}px`;
     }
-    if (this.typeSelectEl) this.typeSelectEl.style.width = "110px";
-    if (this.raceSelectEl) this.raceSelectEl.style.width = "130px";
-    if (this.typeSelectEl) this.typeSelectEl.style.display = "none";
-    if (this.raceSelectEl) this.raceSelectEl.style.display = "none";
+    
     if (this.effectSelectEl) {
       const effectW = Math.max(110, Math.min(170, avail - 300));
       this.effectSelectEl.style.width = `${effectW}px`;
@@ -1254,3 +1249,4 @@ export default class DeckScene extends Phaser.Scene {
     });
   }
 }
+
