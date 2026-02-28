@@ -1,5 +1,8 @@
 ﻿import Phaser from "phaser";
 
+const MENU_BGM_KEY = "menu_bgm_main";
+const MENU_BGM_PATH = "mv/我的錄音 8.m4a";
+
 export default class MenuScene extends Phaser.Scene {
   constructor() {
     super("MenuScene");
@@ -10,6 +13,13 @@ export default class MenuScene extends Phaser.Scene {
     this.leftStartHp = 30;
     this.rightStartHp = 30;
     this.autoPlayerEnabled = false;
+    this.menuBgm = null;
+  }
+
+  preload() {
+    if (!this.cache.audio.exists(MENU_BGM_KEY)) {
+      this.load.audio(MENU_BGM_KEY, [MENU_BGM_PATH]);
+    }
   }
 
   create() {
@@ -44,6 +54,37 @@ export default class MenuScene extends Phaser.Scene {
       const b = buttons[i];
       this._makeButton(w / 2, startY + i * gap, b.label, b.onClick, 320, 44, "28px");
     }
+
+    this._startMenuBgm();
+    this.events.once("shutdown", this._stopMenuBgm, this);
+    this.events.once("destroy", this._stopMenuBgm, this);
+  }
+
+  _startMenuBgm() {
+    if (!this.sound || !this.cache.audio.exists(MENU_BGM_KEY)) return;
+
+    const existing = this.sound.get(MENU_BGM_KEY);
+    if (existing) {
+      this.menuBgm = existing;
+      if (!existing.isPlaying) existing.play({ loop: true, volume: 0.22 });
+      return;
+    }
+
+    this.menuBgm = this.sound.add(MENU_BGM_KEY, { loop: true, volume: 0 });
+    this.menuBgm.play();
+    this.tweens.add({
+      targets: this.menuBgm,
+      volume: 0.22,
+      duration: 900,
+      ease: "Sine.easeOut"
+    });
+  }
+
+  _stopMenuBgm() {
+    if (!this.menuBgm) return;
+    this.menuBgm.stop();
+    this.menuBgm.destroy();
+    this.menuBgm = null;
   }
 
   _drawBackground(w, h) {
