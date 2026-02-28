@@ -122,15 +122,16 @@ export default class BattleScene extends Phaser.Scene {
 
   create() {
     const w = this.scale.width;
+    const h = this.scale.height;
 
     const bgIdx = Math.floor(this.rng() * BATTLEFIELD_BG_POOL.length);
     const bg = BATTLEFIELD_BG_POOL[Math.max(0, Math.min(BATTLEFIELD_BG_POOL.length - 1, bgIdx))];
-    const bgX = GRID_X + GRID_W / 2;
-    const bgY = GRID_Y + GRID_H / 2;
+    const bgX = w / 2;
+    const bgY = h / 2;
     if (this.textures.exists(bg.key)) {
-      this.add.image(bgX, bgY, bg.key).setDisplaySize(GRID_W, GRID_H).setDepth(-1000);
+      this.add.image(bgX, bgY, bg.key).setDisplaySize(w, h).setDepth(-2000);
     } else {
-      this.add.rectangle(bgX, bgY, GRID_W, GRID_H, 0x0b1935, 1).setDepth(-1000);
+      this.add.rectangle(bgX, bgY, w, h, 0x0b1935, 1).setDepth(-2000);
     }
 
     this.add
