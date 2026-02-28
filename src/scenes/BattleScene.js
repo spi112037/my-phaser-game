@@ -63,6 +63,7 @@ export default class BattleScene extends Phaser.Scene {
     this.pendingTargets = new Set();
     this.pendingCardUse = new Map();
     this.autoPlayerEnabled = false;
+    this.autoTurnPending = false;
     this.leftStartHp = 30;
     this.rightStartHp = 30;
     this.leftDeckIds = [];
@@ -95,6 +96,7 @@ export default class BattleScene extends Phaser.Scene {
     this.selectedCard = null;
     this.removeMode = false;
     this.autoPlayerEnabled = Boolean(data?.autoPlayerEnabled ?? false);
+    this.autoTurnPending = false;
     this.leftStartHp = Math.max(1, Number(data?.leftStartHp ?? 30));
     this.rightStartHp = Math.max(1, Number(data?.rightStartHp ?? 30));
     this.leftDeckIds = Array.isArray(data?.leftDeckIds)
@@ -307,8 +309,12 @@ export default class BattleScene extends Phaser.Scene {
   _onToggleAutoPlayer() {
     if (!this._isMyTurn()) return;
     if (!this.combat) return;
-    if (this._isOnlineMode()) {
-      this.combat._log("連線模式目前停用我方自動AI。");
+
+    this.autoPlayerEnabled = !this.autoPlayerEnabled;
+
+    if (!this._isOnlineMode()) {
+      this.combat.setAutoAiForSide("L", this.autoPlayerEnabled);
+      this.combat._log(`我方自動AI：${this.autoPlayerEnabled ? "開啟" : "關閉"}`);
       this.onBattleState({
         left: this.leftHero,
         right: this.rightHero,
@@ -316,11 +322,17 @@ export default class BattleScene extends Phaser.Scene {
         turnCount: this.combat.turnCount,
         logs: this.combat.logs
       });
+      if (this.autoPlayerEnabled && this.combat.turnSide === "L") {
+        this.time.delayedCall(220, () => {
+          if (this.combat && this.combat.turnSide === "L" && this.autoPlayerEnabled) {
+            this.combat.aiTakeTurn("L");
+          }
+        });
+      }
       return;
     }
-    this.autoPlayerEnabled = !this.autoPlayerEnabled;
-    this.combat.setAutoAiForSide("L", this.autoPlayerEnabled);
-    this.combat._log(`我方自動AI：${this.autoPlayerEnabled ? "開啟" : "關閉"}`);
+
+    this.combat._log(`連線自動戰鬥：${this.autoPlayerEnabled ? "開啟" : "關閉"}`);
     this.onBattleState({
       left: this.leftHero,
       right: this.rightHero,
@@ -328,13 +340,66 @@ export default class BattleScene extends Phaser.Scene {
       turnCount: this.combat.turnCount,
       logs: this.combat.logs
     });
-    if (this.autoPlayerEnabled && this.combat.turnSide === "L") {
-      this.time.delayedCall(220, () => {
-        if (this.combat && this.combat.turnSide === "L" && this.autoPlayerEnabled) {
-          this.combat.aiTakeTurn("L");
+
+    if (this.autoPlayerEnabled) this._runOnlineAutoTurn();
+  }
+
+  _runOnlineAutoTurn() {
+    if (!this._isOnlineMode()) return;
+    if (!this.autoPlayerEnabled) return;
+    if (!this._isMyTurn()) return;
+    if (this.autoTurnPending) return;
+
+    this.autoTurnPending = true;
+    this.time.delayedCall(260, async () => {
+      try {
+        if (!this._isOnlineMode() || !this.autoPlayerEnabled || !this._isMyTurn()) return;
+
+        this._clearTurnBuffer();
+        const side = this.mySide;
+        const hero = side === "R" ? this.rightHero : this.leftHero;
+        const hand = Array.isArray(hero?.ready) ? hero.ready : [];
+
+        for (let i = 0; i < hand.length; i += 1) {
+          const card = hand[i];
+          if (!card || String(card.type || "") !== "summon") continue;
+          if (!card.unit || getCardCost(card) !== 0) continue;
+          if (this._countAvailableCardUse(card.id) <= 0) continue;
+
+          const bounds = this._deployBoundsForCard(card);
+          let placed = false;
+          for (let row = 0; row < 4 && !placed; row += 1) {
+            if (side === "L") {
+              for (let col = bounds.minCol; col <= bounds.maxCol; col += 1) {
+                if (this.combat?.board?.[row]?.[col]) continue;
+                const key = `${row},${col}`;
+                if (this.pendingTargets.has(key)) continue;
+                this.turnActionBuffer.push({ type: "playCard", cardId: card.id, target: { row, col } });
+                this.pendingTargets.add(key);
+                this.pendingCardUse.set(card.id, (this.pendingCardUse.get(card.id) || 0) + 1);
+                placed = true;
+                break;
+              }
+            } else {
+              for (let col = bounds.maxCol; col >= bounds.minCol; col -= 1) {
+                if (this.combat?.board?.[row]?.[col]) continue;
+                const key = `${row},${col}`;
+                if (this.pendingTargets.has(key)) continue;
+                this.turnActionBuffer.push({ type: "playCard", cardId: card.id, target: { row, col } });
+                this.pendingTargets.add(key);
+                this.pendingCardUse.set(card.id, (this.pendingCardUse.get(card.id) || 0) + 1);
+                placed = true;
+                break;
+              }
+            }
+          }
         }
-      });
-    }
+
+        await this._onEndTurn();
+      } finally {
+        this.autoTurnPending = false;
+      }
+    });
   }
 
   _countAvailableCardUse(cardId) {
@@ -597,7 +662,12 @@ export default class BattleScene extends Phaser.Scene {
     });
 
     if (this.combat) this.boardUI.renderBoard(this.combat.board);
+
+    if (this._isOnlineMode() && this.autoPlayerEnabled && this._isMyTurn()) {
+      this._runOnlineAutoTurn();
+    }
   }
 }
+
 
 
