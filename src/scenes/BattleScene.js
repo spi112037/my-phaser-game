@@ -30,6 +30,12 @@ function countPlayable(actor) {
   return count;
 }
 
+const BATTLEFIELD_BG_POOL = [
+  { key: "bg_battlefield_01", path: "/cards/custom/bg_battlefield_01__.png" },
+  { key: "bg_battlefield_02", path: "/cards/custom/bg_battlefield_02__.png" },
+  { key: "bg_battlefield_03", path: "/cards/custom/bg_battlefield_03__.png" }
+];
+
 export default class BattleScene extends Phaser.Scene {
   constructor() {
     super("BattleScene");
@@ -78,8 +84,13 @@ export default class BattleScene extends Phaser.Scene {
     unique.forEach((id) => {
       const def = CardFactory.getCardDef(id);
       if (!def?.id || !def?.image) return;
-      this.load.image(`card_${def.id}`, def.image);
+      this.load.image(card_, def.image);
     });
+
+    for (let i = 0; i < BATTLEFIELD_BG_POOL.length; i += 1) {
+      const it = BATTLEFIELD_BG_POOL[i];
+      this.load.image(it.key, it.path);
+    }
   }
 
   init(data) {
@@ -111,6 +122,11 @@ export default class BattleScene extends Phaser.Scene {
 
   create() {
     const w = this.scale.width;
+    const h = this.scale.height;
+
+    const bgIdx = Math.floor(this.rng() * BATTLEFIELD_BG_POOL.length);
+    const bg = BATTLEFIELD_BG_POOL[Math.max(0, Math.min(BATTLEFIELD_BG_POOL.length - 1, bgIdx))];
+    this.add.image(w / 2, h / 2, bg.key).setDisplaySize(w, h).setDepth(-1000);
 
     this.add
       .text(w - 140, 12, "霑泌屓驕ｸ蝟ｮ", { fontSize: "18px", color: "#9ddcff" })
@@ -668,6 +684,8 @@ export default class BattleScene extends Phaser.Scene {
     }
   }
 }
+
+
 
 
 
