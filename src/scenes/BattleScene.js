@@ -84,7 +84,7 @@ export default class BattleScene extends Phaser.Scene {
     unique.forEach((id) => {
       const def = CardFactory.getCardDef(id);
       if (!def?.id || !def?.image) return;
-      this.load.image(card_, def.image);
+      this.load.image(`card_${def.id}`, def.image);
     });
 
     for (let i = 0; i < BATTLEFIELD_BG_POOL.length; i += 1) {
@@ -684,6 +684,7 @@ export default class BattleScene extends Phaser.Scene {
     }
   }
 }
+
 
 
 
