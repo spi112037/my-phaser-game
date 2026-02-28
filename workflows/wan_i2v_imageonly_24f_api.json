@@ -1,0 +1,9 @@
+﻿{
+  "1": {"class_type":"LoadImage","inputs":{"image":"mage_ref.png"}},
+  "4": {"class_type":"WanVideoVAELoader","inputs":{"model_name":"wan_2.1_vae.safetensors","precision":"bf16","use_cpu_cache":false,"verbose":false}},
+  "5": {"class_type":"WanVideoModelLoader","inputs":{"model":"wan2.1_i2v_480p_14B_fp16.safetensors","base_precision":"bf16","quantization":"disabled","load_device":"offload_device","attention_mode":"sdpa","rms_norm_function":"default"}},
+  "6": {"class_type":"WanVideoImageToVideoEncode","inputs":{"width":832,"height":480,"num_frames":24,"noise_aug_strength":0.02,"start_latent_strength":1.0,"end_latent_strength":0.9,"force_offload":true,"vae":["4",0],"start_image":["1",0],"fun_or_fl2v_model":true,"tiled_vae":false,"augment_empty_frames":0.0}},
+  "7": {"class_type":"WanVideoSampler","inputs":{"model":["5",0],"image_embeds":["6",0],"steps":16,"cfg":4.5,"shift":5.0,"seed":123456,"force_offload":true,"scheduler":"unipc","riflex_freq_index":0,"denoise_strength":1.0,"batched_cfg":false,"rope_function":"comfy","start_step":0,"end_step":-1,"add_noise_to_samples":false}},
+  "8": {"class_type":"WanVideoDecode","inputs":{"vae":["4",0],"samples":["7",0],"enable_vae_tiling":false,"tile_x":272,"tile_y":272,"tile_stride_x":144,"tile_stride_y":128,"normalization":"default"}},
+  "9": {"class_type":"SaveImage","inputs":{"images":["8",0],"filename_prefix":"mv/wan_mage_ref_imgonly"}}
+}
