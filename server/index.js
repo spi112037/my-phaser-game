@@ -312,7 +312,7 @@ function resolveStyleRefFile(candidate) {
 }
 
 function buildVisualPrompt({ cardName, description }) {
-  const name = String(cardName || "").trim() || "unknown heroine";
+  const name = String(cardName || "").trim() || "unknown character";
   const story = String(description || "").trim();
   const storyText = story
     .split(/\r?\n/)
@@ -320,15 +320,25 @@ function buildVisualPrompt({ cardName, description }) {
     .filter((x) => x)
     .join(" ");
 
+  const genderText = `${name} ${storyText}`;
+  const maleHint = /(男性|男角|男士|man|male|boy)/i.test(genderText);
+  const femaleHint = /(女性|女角|女士|woman|female|girl)/i.test(genderText);
+  const genderTag = maleHint ? "1boy, male character" : (femaleHint ? "1girl, female character" : "single character");
+
   const template = [
-    "1girl",
+    genderTag,
     "anime fantasy card illustration",
     "full body",
+    "combat-ready pose",
+    "profession-accurate weapon visible in hand",
+    "role-accurate armor and equipment",
     "clear face",
     "detailed eyes",
     "detailed hair",
     "clean lineart",
     "high detail",
+    "no bouquet",
+    "no idol stage",
     "no text",
     "no logo",
     "no watermark"
@@ -990,6 +1000,7 @@ server.listen(PORT, HOST, () => {
   console.log(`[mock-api] listening on http://${HOST}:${PORT}`);
   console.log(`[mock-api] cors allow origins: ${corsText}`);
 });
+
 
 
 
