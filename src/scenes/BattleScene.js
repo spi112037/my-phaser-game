@@ -11,7 +11,7 @@ import HeroHUD from "../ui/HeroHUD";
 import HandBar from "../ui/HandBar";
 import CardDetailModal from "../ui/CardDetailModal";
 
-import { DEPLOY_LEFT_COL_MAX, DEPLOY_RIGHT_COL_MIN } from "../config/constants";
+import { DEPLOY_LEFT_COL_MAX, DEPLOY_RIGHT_COL_MIN, GRID_X, GRID_Y, GRID_W, GRID_H } from "../config/constants";
 import { createRng } from "../engine/rng";
 import ApiClient from "../net/ApiClient";
 import TurnSync from "../net/TurnSync";
@@ -122,11 +122,16 @@ export default class BattleScene extends Phaser.Scene {
 
   create() {
     const w = this.scale.width;
-    const h = this.scale.height;
 
     const bgIdx = Math.floor(this.rng() * BATTLEFIELD_BG_POOL.length);
     const bg = BATTLEFIELD_BG_POOL[Math.max(0, Math.min(BATTLEFIELD_BG_POOL.length - 1, bgIdx))];
-    this.add.image(w / 2, h / 2, bg.key).setDisplaySize(w, h).setDepth(-1000);
+    const bgX = GRID_X + GRID_W / 2;
+    const bgY = GRID_Y + GRID_H / 2;
+    if (this.textures.exists(bg.key)) {
+      this.add.image(bgX, bgY, bg.key).setDisplaySize(GRID_W, GRID_H).setDepth(-1000);
+    } else {
+      this.add.rectangle(bgX, bgY, GRID_W, GRID_H, 0x0b1935, 1).setDepth(-1000);
+    }
 
     this.add
       .text(w - 140, 12, "霑泌屓驕ｸ蝟ｮ", { fontSize: "18px", color: "#9ddcff" })
@@ -684,6 +689,7 @@ export default class BattleScene extends Phaser.Scene {
     }
   }
 }
+
 
 
 
