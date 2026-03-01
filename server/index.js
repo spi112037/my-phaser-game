@@ -818,6 +818,14 @@ const server = http.createServer(async (req, res) => {
       if (!Number.isInteger(turnIndex) || turnIndex <= 0) return sendJson(res, 400, { error: "invalid_turn_index" });
       if (!turnAction || typeof turnAction !== "object") return sendJson(res, 400, { error: "invalid_turn_action" });
       if (turnIndex !== room.currentTurn + 1) return sendJson(res, 409, { error: "turn_conflict", currentTurn: room.currentTurn });
+      const expectedPlayerId = room.currentTurn % 2 === 0 ? "A" : "B";
+      if (playerId !== expectedPlayerId) {
+        return sendJson(res, 409, {
+          error: "turn_player_conflict",
+          currentTurn: room.currentTurn,
+          expectedPlayerId
+        });
+      }
 
       room.turns.set(turnIndex, turnAction);
       room.currentTurn = turnIndex;

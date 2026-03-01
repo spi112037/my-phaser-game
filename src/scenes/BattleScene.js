@@ -578,12 +578,11 @@ export default class BattleScene extends Phaser.Scene {
       actions: [...this.turnActionBuffer, { type: "endTurn" }]
     };
 
-    this.applyTurnAction(turnAction);
-    this.nextTurnIndex = turnIndex;
-    if (this.turnSync) this.turnSync.lastSeenTurn = turnIndex;
-
     try {
       await ApiClient.postTurn(this.roomCode, this.playerId, turnIndex, turnAction);
+      this.applyTurnAction(turnAction);
+      this.nextTurnIndex = turnIndex;
+      if (this.turnSync) this.turnSync.lastSeenTurn = turnIndex;
     } catch (err) {
       if (this.combat) {
         this.combat._log?.(`荳雁さ蝗槫粋螟ｱ謨暦ｼ・{String(err.message || err)}`);
