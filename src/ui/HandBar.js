@@ -334,8 +334,8 @@ export default class HandBar {
     this.endBtnText.setAlpha(this.canOperate ? 1 : 0.35);
     this.removeBtnBg.setAlpha(this.canOperate ? 1 : 0.35);
     this.removeBtnText.setAlpha(this.canOperate ? 1 : 0.35);
-    this.autoBtnBg.setAlpha(this.canOperate ? 1 : 0.35);
-    this.autoBtnText.setAlpha(this.canOperate ? 1 : 0.35);
+    this.autoBtnBg.setAlpha(1);
+    this.autoBtnText.setAlpha(1);
     if (this.removeMode && this.canOperate) {
       this.removeBtnBg.setFillStyle(0xb04040, 0.75);
       this.removeBtnText.setColor("#fff0f0");
@@ -344,7 +344,7 @@ export default class HandBar {
       this.removeBtnText.setColor("#ffffff");
     }
 
-    if (this.autoPlayerEnabled && this.canOperate) {
+    if (this.autoPlayerEnabled) {
       this.autoBtnBg.setFillStyle(0x2f7d4f, 0.75);
       this.autoBtnText.setColor("#e8ffef");
     } else {
@@ -489,6 +489,10 @@ export default class HandBar {
 
   clearSelection() {
     this.selectedId = null;
+  }
+
+  setSelectionById(cardId) {
+    this.selectedId = cardId ? String(cardId) : null;
   }
 
   destroy() {

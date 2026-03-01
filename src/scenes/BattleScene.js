@@ -76,6 +76,7 @@ export default class BattleScene extends Phaser.Scene {
     this.rightDeckIds = [];
     this.challengeLabel = "";
     this.currentTurnSide = "L";
+    this.lastAutoPromptKey = "";
   }
 
   preload() {
@@ -119,6 +120,7 @@ export default class BattleScene extends Phaser.Scene {
       : [];
     this.challengeLabel = String(data?.challengeLabel || "");
     this.currentTurnSide = "L";
+    this.lastAutoPromptKey = "";
     this._clearTurnBuffer();
   }
 
@@ -156,6 +158,7 @@ export default class BattleScene extends Phaser.Scene {
       (unit) => this._onInspectUnit(unit)
     );
     this.boardUI.setDeployRule((r, c) => this._canDeployAt(r, c));
+    this.boardUI.setDeploySide(this._isOnlineMode() ? this.mySide : "L");
     this.hud = new HeroHUD(this);
     this.hand = new HandBar(
       this,
@@ -509,6 +512,14 @@ export default class BattleScene extends Phaser.Scene {
       return;
     }
 
+    if (!this.selectedCard) {
+      const side = this._isOnlineMode() ? this.mySide : "L";
+      const fallback = this._findFirstPlayableSummon(side);
+      if (fallback) {
+        this.selectedCard = fallback;
+        this.hand?.setSelectionById?.(fallback.id);
+      }
+    }
     if (!this.selectedCard) return;
     if (getCardCost(this.selectedCard) !== 0) return;
 
@@ -666,11 +677,25 @@ export default class BattleScene extends Phaser.Scene {
     const leftStr = `L1 HP:${left.hp} | 可出牌:${leftPlayable} | 手:${left.ready.length} 牌庫:${left.deck.length} 墓:${left.grave.length}`;
     const rightStr = `R1 HP:${right.hp} | 可出牌:${rightPlayable} | 手:${right.ready.length} 牌庫:${right.deck.length} 墓:${right.grave.length}`;
 
+    const viewerLogs = this._formatLogsForViewer(state.logs);
     this.hud.setTop(leftStr, rightStr, turnStr);
-    this.hud.setLog(state.logs);
-    this.hand.setBattleLog(state.logs);
+    this.hud.setLog(viewerLogs);
+    this.hand.setBattleLog(viewerLogs);
+
+    if (this._isOnlineMode()) this._askAutoAtTurnStart(state);
 
     const canOperate = isMyTurn;
+    this.boardUI.setDeploySide(this._isOnlineMode() ? this.mySide : state.turnSide);
+
+    const isOnlineManual = this._isOnlineMode() && canOperate && !this.autoPlayerEnabled;
+    if (isOnlineManual && !this.removeMode && !this.selectedCard) {
+      const firstPlayable = this._findFirstPlayableSummon(this.mySide);
+      if (firstPlayable) {
+        this.selectedCard = firstPlayable;
+        this.hand?.setSelectionById?.(firstPlayable.id);
+      }
+    }
+
     this.boardUI.setDeployEnabled(canOperate && (this.removeMode || Boolean(this.selectedCard)));
     this.boardUI.setPendingTargets(this.pendingTargets);
     this.boardUI.setInspectEnabled(!this.removeMode);
@@ -683,7 +708,7 @@ export default class BattleScene extends Phaser.Scene {
 
     if (this._isOnlineMode()) {
       hint += ` | 房號:${this.roomCode} 玩家:${this.playerId} | 已暫存動作:${this.turnActionBuffer.length}`;
-      hint += " | 連線模式：我方自動AI停用";
+      hint += ` | 連線模式：本回合自動=${this.autoPlayerEnabled ? "開" : "關"}`;
     }
 
     const myHero = this._isOnlineMode() && this.mySide === "R" ? right : left;
@@ -696,6 +721,88 @@ export default class BattleScene extends Phaser.Scene {
     if (this._isOnlineMode() && this.autoPlayerEnabled && this._isMyTurn()) {
       this._runOnlineAutoTurn();
     }
+  }
+
+  _hasPlayableZeroSummon(hero) {
+    const hand = Array.isArray(hero?.ready) ? hero.ready : [];
+    for (let i = 0; i < hand.length; i += 1) {
+      const c = hand[i];
+      if (!c || String(c.type || "") !== "summon") continue;
+      if (!c.unit) continue;
+      if (getCardCost(c) !== 0) continue;
+      return true;
+    }
+    return false;
+  }
+
+  _findFirstPlayableSummon(side) {
+    const hero = side === "R" ? this.rightHero : this.leftHero;
+    const hand = Array.isArray(hero?.ready) ? hero.ready : [];
+    for (let i = 0; i < hand.length; i += 1) {
+      const c = hand[i];
+      if (!c || String(c.type || "") !== "summon") continue;
+      if (!c.unit) continue;
+      if (getCardCost(c) !== 0) continue;
+      if (this._countAvailableCardUse(c.id) <= 0) continue;
+      return c;
+    }
+    return null;
+  }
+
+  _askAutoAtTurnStart(state) {
+    if (!this._isOnlineMode()) return;
+    if (!this._isMyTurn()) return;
+    const key = `${state.turnCount}:${state.turnSide}`;
+    if (this.lastAutoPromptKey === key) return;
+    this.lastAutoPromptKey = key;
+
+    this.time.delayedCall(80, () => {
+      if (!this._isOnlineMode() || !this._isMyTurn()) return;
+      const phaseText = this.mySide === "L" ? "先攻（左側）" : "後攻（右側）";
+      const yes = window.confirm(`輪到你了：${phaseText}\n是否啟用本回合自動放置並自動結束回合？`);
+      this.autoPlayerEnabled = Boolean(yes);
+      this.combat?._log?.(`本回合自動：${this.autoPlayerEnabled ? "是" : "否"}`);
+      if (!this.autoPlayerEnabled) {
+        const firstPlayable = this._findFirstPlayableSummon(this.mySide);
+        if (firstPlayable) {
+          this.selectedCard = firstPlayable;
+          this.hand?.setSelectionById?.(firstPlayable.id);
+        } else {
+          this.selectedCard = null;
+          this.hand?.clearSelection?.();
+        }
+      }
+      if (this.autoPlayerEnabled) this._runOnlineAutoTurn();
+      this.onBattleState({
+        left: this.leftHero,
+        right: this.rightHero,
+        turnSide: this.combat?.turnSide || state.turnSide,
+        turnCount: this.combat?.turnCount || state.turnCount,
+        logs: this.combat?.logs || state.logs || []
+      });
+    });
+  }
+
+  _formatLogsForViewer(lines) {
+    const list = Array.isArray(lines) ? lines.map((x) => String(x || "")) : [];
+    if (!this._isOnlineMode() || this.mySide !== "R") return list;
+
+    return list.map((line) => {
+      let s = line;
+      s = s.replace(/^回合開始：我方/, "回合開始：__TMP__");
+      s = s.replace(/^回合開始：敵方/, "回合開始：我方");
+      s = s.replace(/^回合開始：__TMP__/, "回合開始：敵方");
+
+      s = s.replace(/^回合結束：我方/, "回合結束：__TMP__");
+      s = s.replace(/^回合結束：敵方/, "回合結束：我方");
+      s = s.replace(/^回合結束：__TMP__/, "回合結束：敵方");
+
+      s = s.replace(/^我方英雄倒下/, "__TMP__英雄倒下");
+      s = s.replace(/^敵方英雄倒下/, "我方英雄倒下");
+      s = s.replace(/^__TMP__英雄倒下/, "敵方英雄倒下");
+
+      return s;
+    });
   }
 }
 
