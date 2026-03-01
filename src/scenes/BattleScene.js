@@ -76,7 +76,7 @@ export default class BattleScene extends Phaser.Scene {
     this.rightDeckIds = [];
     this.challengeLabel = "";
     this.currentTurnSide = "L";
-    this.lastAutoPromptKey = "";
+    this.autoPromptAsked = false;
   }
 
   preload() {
@@ -120,7 +120,7 @@ export default class BattleScene extends Phaser.Scene {
       : [];
     this.challengeLabel = String(data?.challengeLabel || "");
     this.currentTurnSide = "L";
-    this.lastAutoPromptKey = "";
+    this.autoPromptAsked = false;
     this._clearTurnBuffer();
   }
 
@@ -752,9 +752,8 @@ export default class BattleScene extends Phaser.Scene {
   _askAutoAtTurnStart(state) {
     if (!this._isOnlineMode()) return;
     if (!this._isMyTurn()) return;
-    const key = `${state.turnCount}:${state.turnSide}`;
-    if (this.lastAutoPromptKey === key) return;
-    this.lastAutoPromptKey = key;
+    if (this.autoPromptAsked) return;
+    this.autoPromptAsked = true;
 
     this.time.delayedCall(80, () => {
       if (!this._isOnlineMode() || !this._isMyTurn()) return;
