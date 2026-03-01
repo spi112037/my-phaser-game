@@ -24,6 +24,7 @@ export default class GridBoardUI {
     this.unitViews = [];
     this.deployEnabled = false;
     this.inspectEnabled = true;
+    this.deploySide = "L";
     this.board = null;
     this.canDeployCellFn = null;
     this.pendingTargets = new Set();
@@ -138,6 +139,11 @@ export default class GridBoardUI {
     this.inspectEnabled = Boolean(enabled);
   }
 
+  setDeploySide(side) {
+    this.deploySide = String(side || "L") === "R" ? "R" : "L";
+    this._refreshCellHighlights();
+  }
+
   setDeployRule(fn) {
     this.canDeployCellFn = typeof fn === "function" ? fn : null;
     this._refreshCellHighlights();
@@ -164,8 +170,10 @@ export default class GridBoardUI {
       }
       const can = this.canDeployCellFn ? Boolean(this.canDeployCellFn(cell.r, cell.c)) : true;
       if (can) {
-        cell.rect.setFillStyle(0x13253a, 0.26);
-        cell.rect.setStrokeStyle(2, 0x000000, 0.92);
+        const fill = this.deploySide === "R" ? 0x3a1717 : 0x13253a;
+        const stroke = this.deploySide === "R" ? 0xff6b6b : 0x4db3ff;
+        cell.rect.setFillStyle(fill, 0.28);
+        cell.rect.setStrokeStyle(2, stroke, 0.95);
       } else {
         cell.rect.setFillStyle(0xffffff, 0.03);
         cell.rect.setStrokeStyle(1, 0xffffff, 0.04);
