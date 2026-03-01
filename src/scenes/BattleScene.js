@@ -225,10 +225,8 @@ export default class BattleScene extends Phaser.Scene {
         if (!turnAction) return;
         const idx = Number(turnAction.turnIndex ?? 0);
         if (idx <= this.nextTurnIndex) return;
-
-        if (String(turnAction.playerId) !== this.playerId) {
-          this.applyTurnAction(turnAction);
-        }
+        // Apply every unseen turn (including my own), so reconnect/late-join can reconstruct correctly.
+        this.applyTurnAction(turnAction);
         this.nextTurnIndex = idx;
       }
     });
@@ -580,9 +578,12 @@ export default class BattleScene extends Phaser.Scene {
 
     try {
       await ApiClient.postTurn(this.roomCode, this.playerId, turnIndex, turnAction);
-      this.applyTurnAction(turnAction);
-      this.nextTurnIndex = turnIndex;
-      if (this.turnSync) this.turnSync.lastSeenTurn = turnIndex;
+      // Poller may have already applied this turn; avoid double-apply.
+      if (this.nextTurnIndex < turnIndex) {
+        this.applyTurnAction(turnAction);
+        this.nextTurnIndex = turnIndex;
+      }
+      if (this.turnSync) this.turnSync.lastSeenTurn = Math.max(this.turnSync.lastSeenTurn || 0, turnIndex);
     } catch (err) {
       if (this.combat) {
         this.combat._log?.(`荳雁さ蝗槫粋螟ｱ謨暦ｼ・{String(err.message || err)}`);
