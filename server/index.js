@@ -145,8 +145,22 @@ function roomState(room) {
     status: room.status,
     currentTurn: room.currentTurn,
     lastTurnAction: room.turns.get(room.currentTurn) || null,
-    turns
+    turns,
+    liveActionSeq: Number(room?.liveActionSeq || 0),
+    liveActions: Array.isArray(room?.liveActions) ? room.liveActions.map((x) => ({ ...x })) : [],
+    decks: {
+      A: Array.isArray(room?.decks?.A) ? [...room.decks.A] : [],
+      B: Array.isArray(room?.decks?.B) ? [...room.decks.B] : []
+    }
   };
+}
+
+function normalizeDeckIds(input) {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map((x) => String(x || "").trim())
+    .filter((x) => x)
+    .slice(0, 30);
 }
 
 function sanitizePart(v) {
@@ -778,6 +792,8 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === "POST" && reqPath === "/api/rooms") {
+      const body = await parseBody(req).catch(() => ({}));
+      const deckIds = normalizeDeckIds(body?.deckIds);
       let code = genRoomCode();
       while (rooms.has(code)) code = genRoomCode();
       const room = {
@@ -785,11 +801,19 @@ const server = http.createServer(async (req, res) => {
         seed: genSeed(),
         status: "waiting",
         players: { A: randomUUID(), B: null },
+        decks: { A: deckIds, B: [] },
         currentTurn: 0,
-        turns: new Map()
+        turns: new Map(),
+        liveActionSeq: 0,
+        liveActions: []
       };
       rooms.set(code, room);
-      return sendJson(res, 200, { roomCode: code, seed: room.seed, playerId: "A" });
+      return sendJson(res, 200, {
+        roomCode: code,
+        seed: room.seed,
+        playerId: "A",
+        decks: { A: [...room.decks.A], B: [] }
+      });
     }
 
     const joinMatch = reqPath.match(/^\/api\/rooms\/([^/]+)\/join$/);
@@ -798,9 +822,19 @@ const server = http.createServer(async (req, res) => {
       const room = getRoom(code);
       if (!room) return sendJson(res, 404, { error: "room_not_found" });
       if (room.players.B) return sendJson(res, 409, { error: "room_full" });
+      const body = await parseBody(req).catch(() => ({}));
+      room.decks.B = normalizeDeckIds(body?.deckIds);
       room.players.B = randomUUID();
       room.status = "ready";
-      return sendJson(res, 200, { seed: room.seed, playerId: "B", status: room.status });
+      return sendJson(res, 200, {
+        seed: room.seed,
+        playerId: "B",
+        status: room.status,
+        decks: {
+          A: Array.isArray(room?.decks?.A) ? [...room.decks.A] : [],
+          B: Array.isArray(room?.decks?.B) ? [...room.decks.B] : []
+        }
+      });
     }
 
     const turnMatch = reqPath.match(/^\/api\/rooms\/([^/]+)\/turn$/);
@@ -831,6 +865,45 @@ const server = http.createServer(async (req, res) => {
       room.currentTurn = turnIndex;
       if (room.status === "ready") room.status = "playing";
       return sendJson(res, 200, { ok: true, currentTurn: room.currentTurn });
+    }
+
+    const actionMatch = reqPath.match(/^\/api\/rooms\/([^/]+)\/action$/);
+    if (req.method === "POST" && actionMatch) {
+      const code = decodeURIComponent(actionMatch[1]).toUpperCase();
+      const room = getRoom(code);
+      if (!room) return sendJson(res, 404, { error: "room_not_found" });
+
+      const body = await parseBody(req);
+      const playerId = String(body?.playerId || "");
+      const action = body?.action;
+
+      if (playerId !== "A" && playerId !== "B") return sendJson(res, 400, { error: "invalid_player_id" });
+      if (!action || typeof action !== "object" || !String(action.type || "").trim()) {
+        return sendJson(res, 400, { error: "invalid_action" });
+      }
+
+      const expectedPlayerId = room.currentTurn % 2 === 0 ? "A" : "B";
+      if (playerId !== expectedPlayerId) {
+        return sendJson(res, 409, {
+          error: "turn_player_conflict",
+          currentTurn: room.currentTurn,
+          expectedPlayerId
+        });
+      }
+
+      room.liveActionSeq = Number(room.liveActionSeq || 0) + 1;
+      room.liveActions.push({
+        seq: room.liveActionSeq,
+        playerId,
+        action,
+        at: Date.now()
+      });
+      if (room.liveActions.length > 300) {
+        room.liveActions = room.liveActions.slice(room.liveActions.length - 300);
+      }
+      if (room.status === "ready") room.status = "playing";
+
+      return sendJson(res, 200, { ok: true, seq: room.liveActionSeq });
     }
 
     const stateMatch = reqPath.match(/^\/api\/rooms\/([^/]+)\/state$/);

@@ -217,10 +217,65 @@ export default class BattleScene extends Phaser.Scene {
     return "L";
   }
 
+  _applyRealtimeActionBySide(side, action) {
+    if (!this.combat || !action || !action.type) return false;
+    const row = Number(action?.target?.row);
+    const col = Number(action?.target?.col);
+
+    if (action.type === "playCard") {
+      const card = this._findPlayableCardById(side, String(action.cardId || ""), "summon");
+      if (!card || !Number.isFinite(row) || !Number.isFinite(col)) return false;
+      const res = this.combat.trySummonBySide(side, card, row, col);
+      return Boolean(res?.ok);
+    }
+    if (action.type === "castSkill") {
+      const card = this._findPlayableCardById(side, String(action.cardId || ""), "skill");
+      if (!card || !Number.isFinite(row) || !Number.isFinite(col)) return false;
+      const res = this.combat.tryCastSkillBySide(side, card, row, col);
+      return Boolean(res?.ok);
+    }
+    if (action.type === "removeUnit") {
+      if (!Number.isFinite(row) || !Number.isFinite(col)) return false;
+      const res = this.combat.removeOwnUnitBySide(side, row, col);
+      return Boolean(res?.ok);
+    }
+    return false;
+  }
+
+  _postRealtimeAction(action) {
+    if (!this._isOnlineMode() || !action || !action.type) return;
+    ApiClient.postAction(this.roomCode, this.playerId, action).catch((err) => {
+      this.combat?._log?.(`即時同步失敗：${String(err?.message || err)}`);
+      this.onBattleState({
+        left: this.leftHero,
+        right: this.rightHero,
+        turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
+        turnCount: this.combat?.turnCount || 1,
+        logs: this.combat?.logs || []
+      });
+    });
+  }
+
+  _onRemoteRealtimeAction(entry) {
+    if (!entry || !entry.action) return;
+    const fromPlayer = String(entry.playerId || "");
+    if (!fromPlayer || fromPlayer === this.playerId) return;
+    const side = this._sideFromPlayerId(fromPlayer);
+    const ok = this._applyRealtimeActionBySide(side, entry.action);
+    if (!ok) return;
+    this.onBattleState({
+      left: this.leftHero,
+      right: this.rightHero,
+      turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
+      turnCount: this.combat?.turnCount || 1,
+      logs: this.combat?.logs || []
+    });
+  }
+
   _startOnlineSync() {
     this.turnSync = new TurnSync({
       roomCode: this.roomCode,
-      pollMs: 2000,
+      pollMs: 900,
       onRemoteTurn: (turnAction) => {
         if (!turnAction) return;
         const idx = Number(turnAction.turnIndex ?? 0);
@@ -228,9 +283,10 @@ export default class BattleScene extends Phaser.Scene {
         // Apply every unseen turn (including my own), so reconnect/late-join can reconstruct correctly.
         this.applyTurnAction(turnAction);
         this.nextTurnIndex = idx;
-      }
+      },
+      onRemoteAction: (entry) => this._onRemoteRealtimeAction(entry)
     });
-    this.turnSync.start(0);
+    this.turnSync.start(0, 0);
   }
 
   _stopSync() {
@@ -401,10 +457,11 @@ export default class BattleScene extends Phaser.Scene {
                 if (this.combat?.board?.[row]?.[col]) continue;
                 const key = `${row},${col}`;
                 if (this.pendingTargets.has(key)) continue;
-                this.turnActionBuffer.push({ type: "playCard", cardId: card.id, target: { row, col } });
-                this.pendingTargets.add(key);
-                this.pendingCardUse.set(card.id, (this.pendingCardUse.get(card.id) || 0) + 1);
-                placed = true;
+                const action = { type: "playCard", cardId: card.id, target: { row, col } };
+                if (this._applyRealtimeActionBySide(side, action)) {
+                  this._postRealtimeAction(action);
+                  placed = true;
+                }
                 break;
               }
             } else {
@@ -412,10 +469,11 @@ export default class BattleScene extends Phaser.Scene {
                 if (this.combat?.board?.[row]?.[col]) continue;
                 const key = `${row},${col}`;
                 if (this.pendingTargets.has(key)) continue;
-                this.turnActionBuffer.push({ type: "playCard", cardId: card.id, target: { row, col } });
-                this.pendingTargets.add(key);
-                this.pendingCardUse.set(card.id, (this.pendingCardUse.get(card.id) || 0) + 1);
-                placed = true;
+                const action = { type: "playCard", cardId: card.id, target: { row, col } };
+                if (this._applyRealtimeActionBySide(side, action)) {
+                  this._postRealtimeAction(action);
+                  placed = true;
+                }
                 break;
               }
             }
@@ -494,10 +552,13 @@ export default class BattleScene extends Phaser.Scene {
       } else {
         const unit = this.combat?.board?.[row]?.[col];
         if (!unit || unit.side !== this.mySide) return;
-        this.turnActionBuffer.push({
+        const action = {
           type: "removeUnit",
           target: { row, col }
-        });
+        };
+        const ok = this._applyRealtimeActionBySide(this.mySide, action);
+        if (!ok) return;
+        this._postRealtimeAction(action);
         this.removeMode = false;
       }
       this.onBattleState({
@@ -537,14 +598,15 @@ export default class BattleScene extends Phaser.Scene {
     if (!isSkill && !this._canDeployAt(row, col)) return;
     if (this._countAvailableCardUse(this.selectedCard.id) <= 0) return;
 
-    this.turnActionBuffer.push({
+    const action = {
       type: isSkill ? "castSkill" : "playCard",
       cardId: this.selectedCard.id,
       target: { row, col }
-    });
-    if (!isSkill) this.pendingTargets.add(`${row},${col}`);
-    this.pendingCardUse.set(this.selectedCard.id, (this.pendingCardUse.get(this.selectedCard.id) || 0) + 1);
-    this.combat?._log?.(`已暫存${isSkill ? "技能" : "召喚"}【${this.selectedCard.name}】@(${row + 1},${col + 1})，回合結束後送出`);
+    };
+    const ok = this._applyRealtimeActionBySide(this.mySide, action);
+    if (!ok) return;
+    this._postRealtimeAction(action);
+    this.combat?._log?.(`已同步${isSkill ? "技能" : "召喚"}【${this.selectedCard.name}】@(${row + 1},${col + 1})`);
 
     this.selectedCard = null;
     this.hand.clearSelection();
@@ -573,7 +635,7 @@ export default class BattleScene extends Phaser.Scene {
       roomCode: this.roomCode,
       playerId: this.playerId,
       turnIndex,
-      actions: [...this.turnActionBuffer, { type: "endTurn" }]
+      actions: [{ type: "endTurn" }]
     };
 
     try {

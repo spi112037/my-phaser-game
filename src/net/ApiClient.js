@@ -29,18 +29,31 @@ async function request(path, options = {}) {
 }
 
 export default class ApiClient {
-  static createRoom() {
-    return request("/api/rooms", { method: "POST" });
+  static createRoom(payload = {}) {
+    return request("/api/rooms", {
+      method: "POST",
+      body: JSON.stringify(payload || {})
+    });
   }
 
-  static joinRoom(roomCode) {
-    return request(`/api/rooms/${encodeURIComponent(roomCode)}/join`, { method: "POST" });
+  static joinRoom(roomCode, payload = {}) {
+    return request(`/api/rooms/${encodeURIComponent(roomCode)}/join`, {
+      method: "POST",
+      body: JSON.stringify(payload || {})
+    });
   }
 
   static postTurn(roomCode, playerId, turnIndex, turnAction) {
     return request(`/api/rooms/${encodeURIComponent(roomCode)}/turn`, {
       method: "POST",
       body: JSON.stringify({ playerId, turnIndex, turnAction })
+    });
+  }
+
+  static postAction(roomCode, playerId, action) {
+    return request(`/api/rooms/${encodeURIComponent(roomCode)}/action`, {
+      method: "POST",
+      body: JSON.stringify({ playerId, action })
     });
   }
 
