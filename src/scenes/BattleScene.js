@@ -75,6 +75,7 @@ export default class BattleScene extends Phaser.Scene {
     this.leftDeckIds = [];
     this.rightDeckIds = [];
     this.challengeLabel = "";
+    this.currentTurnSide = "L";
   }
 
   preload() {
@@ -117,6 +118,7 @@ export default class BattleScene extends Phaser.Scene {
       ? data.rightDeckIds.filter((id) => !!CardFactory.getCardDef(id)).map((id) => String(id))
       : [];
     this.challengeLabel = String(data?.challengeLabel || "");
+    this.currentTurnSide = "L";
     this._clearTurnBuffer();
   }
 
@@ -202,9 +204,9 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _isMyTurn() {
-    if (!this.combat) return false;
-    if (!this._isOnlineMode()) return this.combat.turnSide === "L";
-    return this.combat.turnSide === this.mySide;
+    const side = String(this.currentTurnSide || this.combat?.turnSide || "L");
+    if (!this._isOnlineMode()) return side === "L";
+    return side === this.mySide;
   }
 
   _sideFromPlayerId(playerId) {
@@ -288,7 +290,10 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _onSelectCard(card) {
-    if (!this._isMyTurn()) return;
+    if (!this._isMyTurn()) {
+      this.combat?._log?.("目前不是你的回合，暫時不能選牌。");
+      return;
+    }
     if (getCardCost(card) !== 0) return;
     this.removeMode = false;
     this.selectedCard = card;
@@ -329,7 +334,6 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _onToggleAutoPlayer() {
-    if (!this._isMyTurn()) return;
     if (!this.combat) return;
 
     this.autoPlayerEnabled = !this.autoPlayerEnabled;
@@ -477,7 +481,10 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _onCellClick(row, col) {
-    if (!this._isMyTurn()) return;
+    if (!this._isMyTurn()) {
+      this.combat?._log?.("目前不是你的回合，暫時不能放置或操作。");
+      return;
+    }
 
     if (this.removeMode) {
       if (!this._isOnlineMode()) {
@@ -646,6 +653,7 @@ export default class BattleScene extends Phaser.Scene {
   onBattleState(state) {
     const left = state.left;
     const right = state.right;
+    this.currentTurnSide = String(state?.turnSide || this.currentTurnSide || "L");
 
     const isMyTurn = this._isOnlineMode()
       ? state.turnSide === this.mySide
@@ -662,7 +670,7 @@ export default class BattleScene extends Phaser.Scene {
     this.hud.setLog(state.logs);
     this.hand.setBattleLog(state.logs);
 
-    const canOperate = this._isMyTurn();
+    const canOperate = isMyTurn;
     this.boardUI.setDeployEnabled(canOperate && (this.removeMode || Boolean(this.selectedCard)));
     this.boardUI.setPendingTargets(this.pendingTargets);
     this.boardUI.setInspectEnabled(!this.removeMode);

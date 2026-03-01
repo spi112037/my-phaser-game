@@ -38,7 +38,7 @@ export default class HandBar {
 
     this.container = scene.add.container(0, 0);
 
-    this.bg = scene.add.rectangle(w / 2, h - 95, w, 190, 0x000000, 0.34);
+    this.bg = scene.add.rectangle(w / 2, h - 95, w, 190, 0x000000, 0.56);
     this.container.add(this.bg);
 
     const bandTop = h - 178;
@@ -70,6 +70,12 @@ export default class HandBar {
 
     this.readyTitle = scene.add.text(438, bandTop + 8, "準備欄", { fontSize: "16px", color: "#ffdca8" });
     this.hint = scene.add.text(438, bandTop + 28, "", { fontSize: "12px", color: "#9dc4e6" });
+    const readyLeft = 430;
+    const readyRight = w - 150;
+    const readyWidth = Math.max(300, readyRight - readyLeft);
+    this.readyBandBg = scene.add.rectangle(readyLeft, bandTop + 42, readyWidth, 126, 0x0b1526, 0.82).setOrigin(0, 0);
+    this.readyBandBg.setStrokeStyle(1, 0x5f7da3, 0.68);
+    this.readyBandTopLine = scene.add.rectangle(readyLeft + 1, bandTop + 43, readyWidth - 2, 2, 0x8fb8ea, 0.32).setOrigin(0, 0);
 
     this.cards = [];
 
@@ -105,7 +111,6 @@ export default class HandBar {
       .setOrigin(0.5);
 
     this.autoBtnBg.on("pointerup", () => {
-      if (!this.canOperate) return;
       if (typeof this.onToggleAutoPlayer === "function") this.onToggleAutoPlayer();
     });
 
@@ -137,6 +142,8 @@ export default class HandBar {
       this.deckPanelBg,
       this.deckTitle,
       this.deckValue,
+      this.readyBandBg,
+      this.readyBandTopLine,
       this.readyTitle,
       this.hint,
       this.gravePanelBg,
@@ -373,9 +380,9 @@ export default class HandBar {
       const card = list[i] || null;
 
       const container = this.scene.add.container(x, y);
-      const bg = this.scene.add.rectangle(0, 0, cardW, cardH, 0xffffff, 0.08).setOrigin(0, 0);
+      const bg = this.scene.add.rectangle(0, 0, cardW, cardH, 0x132236, 0.72).setOrigin(0, 0);
       const border = this.scene.add.rectangle(0, 0, cardW, cardH, 0x000000, 0).setOrigin(0, 0);
-      border.setStrokeStyle(1, 0xffffff, 0.16);
+      border.setStrokeStyle(1, 0xa9c0df, 0.26);
       container.add([bg, border]);
 
       if (card) {
@@ -422,7 +429,13 @@ export default class HandBar {
         container.add([txt1, txt2, txt3]);
 
         const sel = this.selectedId && card.id === this.selectedId;
-        if (sel) border.setStrokeStyle(2, 0x9ddcff, 0.9);
+        if (sel) {
+          bg.setFillStyle(0x1b314d, 0.9);
+          border.setStrokeStyle(2, 0x9ddcff, 0.95);
+        } else if (canPlay) {
+          bg.setFillStyle(0x1a2c44, 0.84);
+          border.setStrokeStyle(1, 0x8fb8ea, 0.5);
+        }
 
         let holdTimer = null;
         let holdTriggered = false;
@@ -464,9 +477,9 @@ export default class HandBar {
           if (typeof this.onSelectCard === "function") this.onSelectCard(card);
         });
 
-        container.setAlpha(canPlay ? 1 : 0.35);
+        container.setAlpha(canPlay ? 1 : 0.6);
       } else {
-        container.setAlpha(0.2);
+        container.setAlpha(0.36);
       }
 
       this.container.add(container);
