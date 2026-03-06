@@ -6,7 +6,7 @@ export const RIGHT_ROLES = ["R1", "R2", "R3", "R4"];
 export const STORAGE_KEY_DECKS = "my-phaser-game.decks.v1";
 
 // ===== Grid battle rules (你要的 4×12 回合格子制) =====
-export const HERO_HP = 30;
+export const HERO_HP = 120;
 
 export const GRID_ROWS = 4;
 export const GRID_COLS = 12;

@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import GameState from "../core/GameState";
 import CardFactory from "../models/CardFactory";
 import { buildAllRaceChallengeDecks } from "../systems/ChallengeDeckBuilder";
+import { HERO_HP } from "../config/constants";
 
 function validDeckIds(ids) {
   if (!Array.isArray(ids)) return [];
@@ -107,8 +108,8 @@ export default class ChallengeScene extends Phaser.Scene {
       allies: 1,
       enemies: 1,
       autoPlayerEnabled: false,
-      leftStartHp: 30,
-      rightStartHp: 40,
+      leftStartHp: HERO_HP,
+      rightStartHp: HERO_HP,
       leftDeckIds: leftDeck,
       rightDeckIds: rightDeck,
       challengeLabel: `${challenge.label}副本`

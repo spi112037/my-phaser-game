@@ -11,7 +11,7 @@ import HeroHUD from "../ui/HeroHUD";
 import HandBar from "../ui/HandBar";
 import CardDetailModal from "../ui/CardDetailModal";
 
-import { DEPLOY_LEFT_COL_MAX, DEPLOY_RIGHT_COL_MIN, GRID_X, GRID_Y, GRID_W, GRID_H } from "../config/constants";
+import { DEPLOY_LEFT_COL_MAX, DEPLOY_RIGHT_COL_MIN, GRID_X, GRID_Y, GRID_W, GRID_H, HERO_HP } from "../config/constants";
 import { createRng } from "../engine/rng";
 import ApiClient from "../net/ApiClient";
 import TurnSync from "../net/TurnSync";
@@ -77,6 +77,8 @@ export default class BattleScene extends Phaser.Scene {
     this.challengeLabel = "";
     this.currentTurnSide = "L";
     this.autoPromptAsked = false;
+    this.leftPlayerName = "玩家A";
+    this.rightPlayerName = "玩家B";
   }
 
   preload() {
@@ -121,6 +123,8 @@ export default class BattleScene extends Phaser.Scene {
     this.challengeLabel = String(data?.challengeLabel || "");
     this.currentTurnSide = "L";
     this.autoPromptAsked = false;
+    this.leftPlayerName = String(data?.leftPlayerName || "玩家A");
+    this.rightPlayerName = String(data?.rightPlayerName || "玩家B");
     this._clearTurnBuffer();
   }
 
@@ -327,7 +331,7 @@ export default class BattleScene extends Phaser.Scene {
     return {
       id: roleKey,
       side,
-      hp: 30,
+      hp: HERO_HP,
       deck: finalIds.map((id) => CardFactory.create(id)),
       ready: [],
       grave: []
@@ -736,8 +740,8 @@ export default class BattleScene extends Phaser.Scene {
     const leftPlayable = countPlayable(left);
     const rightPlayable = countPlayable(right);
 
-    const leftStr = `L1 HP:${left.hp} | 可出牌:${leftPlayable} | 手:${left.ready.length} 牌庫:${left.deck.length} 墓:${left.grave.length}`;
-    const rightStr = `R1 HP:${right.hp} | 可出牌:${rightPlayable} | 手:${right.ready.length} 牌庫:${right.deck.length} 墓:${right.grave.length}`;
+    const leftStr = `${this.leftPlayerName} HP:${left.hp} | 可出牌:${leftPlayable} | 手:${left.ready.length} 牌庫:${left.deck.length} 墓:${left.grave.length}`;
+    const rightStr = `${this.rightPlayerName} HP:${right.hp} | 可出牌:${rightPlayable} | 手:${right.ready.length} 牌庫:${right.deck.length} 墓:${right.grave.length}`;
 
     const viewerLogs = this._formatLogsForViewer(state.logs);
     this.hud.setTop(leftStr, rightStr, turnStr);
@@ -866,6 +870,7 @@ export default class BattleScene extends Phaser.Scene {
     });
   }
 }
+
 
 
 
