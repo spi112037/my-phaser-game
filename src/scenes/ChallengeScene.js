@@ -15,6 +15,40 @@ export default class ChallengeScene extends Phaser.Scene {
     this.challengeDecks = [];
   }
 
+  _decorateDifficulty(rawDecks) {
+    const list = Array.isArray(rawDecks) ? rawDecks.map((x) => ({ ...x })) : [];
+    const sortedPowers = list.map((x) => Number(x?.avgPower || 0)).sort((a, b) => a - b);
+    if (sortedPowers.length === 0) return [];
+
+    const q = (ratio) => {
+      const idx = Math.min(sortedPowers.length - 1, Math.max(0, Math.floor((sortedPowers.length - 1) * ratio)));
+      return sortedPowers[idx];
+    };
+
+    const easyMax = q(0.33);
+    const hardMin = q(0.66);
+
+    return list.map((d) => {
+      const power = Number(d?.avgPower || 0);
+      let difficulty = "普通";
+      let bossHp = 140;
+
+      if (power <= easyMax) {
+        difficulty = "簡單";
+        bossHp = 120;
+      } else if (power >= hardMin) {
+        difficulty = "困難";
+        bossHp = 180;
+      }
+
+      return {
+        ...d,
+        difficulty,
+        bossHp
+      };
+    });
+  }
+
   create() {
     const w = this.scale.width;
     const h = this.scale.height;
@@ -32,7 +66,7 @@ export default class ChallengeScene extends Phaser.Scene {
       .setInteractive({ useHandCursor: true })
       .on("pointerup", () => this.scene.start("MenuScene"));
 
-    this.challengeDecks = buildAllRaceChallengeDecks();
+    this.challengeDecks = this._decorateDifficulty(buildAllRaceChallengeDecks());
     this._renderRaceButtons(w, h);
   }
 
@@ -85,7 +119,7 @@ export default class ChallengeScene extends Phaser.Scene {
         fontSize: "30px",
         color: "#ffffff"
       });
-      const sub = this.add.text(x - tileW / 2 + 16, y + 6, `卡池 ${d.poolCount} | 挑戰牌組 30 | 強度 ${d.avgPower}`, {
+      const sub = this.add.text(x - tileW / 2 + 16, y + 6, `難度 ${d.difficulty} | BOSS HP ${d.bossHp} | 強度 ${d.avgPower}`, {
         fontSize: "18px",
         color: "#d9efff"
       });
@@ -109,10 +143,10 @@ export default class ChallengeScene extends Phaser.Scene {
       enemies: 1,
       autoPlayerEnabled: false,
       leftStartHp: HERO_HP,
-      rightStartHp: HERO_HP,
+      rightStartHp: Number(challenge?.bossHp || HERO_HP),
       leftDeckIds: leftDeck,
       rightDeckIds: rightDeck,
-      challengeLabel: `${challenge.label}副本`
+      challengeLabel: `${challenge.label}副本（${challenge.difficulty}）`
     });
   }
 }
