@@ -69,7 +69,10 @@ export default class RoomScene extends Phaser.Scene {
       .rectangle(w / 2, 254, 360, 42, 0xffffff, 0.08)
       .setStrokeStyle(1, 0x9ddcff, 0.55)
       .setInteractive({ useHandCursor: true });
-    this.nameInputBg.on("pointerup", () => this._setInputFocus("name"));
+    this.nameInputBg.on("pointerup", () => {
+      this._setInputFocus("name");
+      this._openNamePrompt();
+    });
 
     this.displayName = this._loadLocalName();
     this.nameText = this.add.text(w / 2, 254, "", { fontSize: "20px", color: "#ffffff" }).setOrigin(0.5);
@@ -83,7 +86,7 @@ export default class RoomScene extends Phaser.Scene {
     this.codeInputBg.on("pointerup", () => this._setInputFocus("code"));
     this.codeText = this.add.text(w / 2, 338, "------", { fontSize: "24px", color: "#ffffff" }).setOrigin(0.5);
 
-    this.add.text(w / 2, 378, "先輸入名稱再建立/加入。Tab 切換輸入欄，Backspace 刪除", { fontSize: "16px", color: "#9dc4e6" }).setOrigin(0.5);
+    this.add.text(w / 2, 378, "先輸入名稱再建立/加入。名稱欄可點擊或按 Enter 輸入中文", { fontSize: "16px", color: "#9dc4e6" }).setOrigin(0.5);
 
     this.roomInfoText = this.add.text(w / 2, 418, "", { fontSize: "20px", color: "#ffdca8", align: "center" }).setOrigin(0.5);
     this.statusText = this.add.text(w / 2, 456, "尚未配對", { fontSize: "20px", color: "#ffffff", align: "center" }).setOrigin(0.5);
@@ -98,6 +101,11 @@ export default class RoomScene extends Phaser.Scene {
 
       if (evt.key === "Tab") {
         this._setInputFocus(this.activeInput === "name" ? "code" : "name");
+        return;
+      }
+
+      if (evt.key === "Enter" && this.activeInput === "name") {
+        this._openNamePrompt();
         return;
       }
 
@@ -318,6 +326,15 @@ export default class RoomScene extends Phaser.Scene {
     try {
       localStorage.setItem(LOCAL_NAME_KEY, String(v || "").slice(0, 24));
     } catch {}
+  }
+
+  _openNamePrompt() {
+    const current = String(this.displayName || "");
+    const input = window.prompt("請輸入使用者名稱（可輸入中文）", current);
+    if (input === null) return;
+    this.displayName = String(input || "").trim().slice(0, 24);
+    this._saveLocalName(this.displayName);
+    this._renderNameText();
   }
 
   _renderNameText() {
