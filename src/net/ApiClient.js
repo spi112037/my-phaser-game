@@ -4,13 +4,21 @@
 
   const host = String(globalThis?.location?.hostname || "").toLowerCase();
   const proto = String(globalThis?.location?.protocol || "https:");
-  if (!host || host === "localhost" || host === "127.0.0.1") return "http://localhost:8787";
 
-  // Vercel preview domain usually has no matching api.<host>; require explicit env.
+  if (!host || host === "localhost" || host === "127.0.0.1") {
+    return "http://localhost:8787";
+  }
+
+  // 正式網域固定走 API 子網域
+  if (host === "flamejourneygame.com" || host === "www.flamejourneygame.com") {
+    return "https://api.flamejourneygame.com";
+  }
+
+  // Vercel preview domain usually has no matching api.<host>; fallback to production api.
   if (host.endsWith(".vercel.app")) return "https://api.flamejourneygame.com";
 
-  if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
   if (host.startsWith("api.")) return `${proto}//${host}`;
+  if (host.startsWith("www.")) return `${proto}//api.${host.slice(4)}`;
   return `${proto}//api.${host}`;
 }
 

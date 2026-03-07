@@ -14,6 +14,8 @@ const CORS_ALLOW_ORIGINS = String(process.env.CORS_ALLOW_ORIGINS || "*")
   .map((s) => String(s || "").trim())
   .filter(Boolean);
 
+const API_VERSION = "battle-only-v1";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PROJECT_ROOT = path.resolve(__dirname, "..");
@@ -170,9 +172,11 @@ const server = http.createServer(async (req, res) => {
         ok: true,
         service: "battle-api",
         mode: "battle-only",
+        version: API_VERSION,
         uptimeSec: Math.floor((Date.now() - SERVER_STARTED_AT) / 1000),
         host: HOST,
-        port: PORT
+        port: PORT,
+        cors: CORS_ALLOW_ORIGINS
       });
     }
 
