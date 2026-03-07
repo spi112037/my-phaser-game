@@ -10,8 +10,8 @@ export default class MenuScene extends Phaser.Scene {
     this.modal = null;
     this.allies = 1;
     this.enemies = 1;
-    this.leftStartHp = 30;
-    this.rightStartHp = 30;
+    this.leftStartHp = 120;
+    this.rightStartHp = 120;
     this.autoPlayerEnabled = false;
     this.menuBgm = null;
   }

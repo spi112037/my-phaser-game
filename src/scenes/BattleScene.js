@@ -70,8 +70,8 @@ export default class BattleScene extends Phaser.Scene {
     this.pendingCardUse = new Map();
     this.autoPlayerEnabled = false;
     this.autoTurnPending = false;
-    this.leftStartHp = 30;
-    this.rightStartHp = 30;
+    this.leftStartHp = 120;
+    this.rightStartHp = 120;
     this.leftDeckIds = [];
     this.rightDeckIds = [];
     this.challengeLabel = "";
@@ -113,8 +113,8 @@ export default class BattleScene extends Phaser.Scene {
     this.removeMode = false;
     this.autoPlayerEnabled = Boolean(data?.autoPlayerEnabled ?? false);
     this.autoTurnPending = false;
-    this.leftStartHp = Math.max(1, Number(data?.leftStartHp ?? 30));
-    this.rightStartHp = Math.max(1, Number(data?.rightStartHp ?? 30));
+    this.leftStartHp = Math.max(1, Number(data?.leftStartHp ?? 120));
+    this.rightStartHp = Math.max(1, Number(data?.rightStartHp ?? 120));
     this.leftDeckIds = Array.isArray(data?.leftDeckIds)
       ? data.leftDeckIds.filter((id) => !!CardFactory.getCardDef(id)).map((id) => String(id))
       : [];
