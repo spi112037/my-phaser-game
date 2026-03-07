@@ -129,10 +129,10 @@ export default class RoomScene extends Phaser.Scene {
         return;
       }
 
-      if (!evt.ctrlKey && !evt.metaKey && evt.key.length === 1 && this.displayName.length < 24) {
-        this.displayName += evt.key;
-        this._saveLocalName(this.displayName);
-        this._renderNameText();
+      // 名稱欄位不再逐鍵寫入（避免 IME 中文輸入被拆成英文字母）
+      // 請使用：點名稱欄 / 按 Enter 呼叫輸入視窗。
+      if (this.activeInput === "name") {
+        return;
       }
     });
   }
