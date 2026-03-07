@@ -60,5 +60,15 @@ export default class ApiClient {
   static getState(roomCode) {
     return request(`/api/rooms/${encodeURIComponent(roomCode)}/state`, { method: "GET" });
   }
+
+  static listRooms(params = {}) {
+    const status = String(params?.status || "").trim();
+    const q = String(params?.q || "").trim();
+    const qs = new URLSearchParams();
+    if (status) qs.set("status", status);
+    if (q) qs.set("q", q);
+    const suffix = qs.toString() ? `?${qs.toString()}` : "";
+    return request(`/api/rooms${suffix}`, { method: "GET" });
+  }
 }
 

@@ -79,6 +79,7 @@ export default class BattleScene extends Phaser.Scene {
     this.autoPromptAsked = false;
     this.leftPlayerName = "玩家A";
     this.rightPlayerName = "玩家B";
+    this.gameOverHandled = false;
   }
 
   preload() {
@@ -125,6 +126,7 @@ export default class BattleScene extends Phaser.Scene {
     this.autoPromptAsked = false;
     this.leftPlayerName = String(data?.leftPlayerName || "玩家A");
     this.rightPlayerName = String(data?.rightPlayerName || "玩家B");
+    this.gameOverHandled = false;
     this._clearTurnBuffer();
   }
 
@@ -177,7 +179,7 @@ export default class BattleScene extends Phaser.Scene {
     this.combat = new GridCombatSystem(this, this.cardSystem, this.boardUI, this.rng);
     this.combat.setCombatants(this.leftHero, this.rightHero);
     this.combat.setInitialHeroHp(this.leftStartHp, this.rightStartHp);
-    if (this._isOnlineMode()) {
+    if (this._isOnlineMode() || this._isSpectatorMode()) {
       this.combat.setAutoAi(false);
       this.autoPlayerEnabled = false;
     } else {
@@ -199,7 +201,7 @@ export default class BattleScene extends Phaser.Scene {
     }
     this.boardUI.renderBoard(this.combat.board);
 
-    if (this._isOnlineMode()) this._startOnlineSync();
+    if (this._isOnlineMode() || this._isSpectatorMode()) this._startOnlineSync();
   }
 
   shutdown() {
@@ -210,7 +212,12 @@ export default class BattleScene extends Phaser.Scene {
     return this.mode === "online" && this.roomCode && this.playerId;
   }
 
+  _isSpectatorMode() {
+    return this.mode === "spectator" && Boolean(this.roomCode);
+  }
+
   _isMyTurn() {
+    if (this._isSpectatorMode()) return false;
     const side = String(this.currentTurnSide || this.combat?.turnSide || "L");
     if (!this._isOnlineMode()) return side === "L";
     return side === this.mySide;
@@ -227,20 +234,73 @@ export default class BattleScene extends Phaser.Scene {
     const col = Number(action?.target?.col);
 
     if (action.type === "playCard") {
-      const card = this._findPlayableCardById(side, String(action.cardId || ""), "summon");
-      if (!card || !Number.isFinite(row) || !Number.isFinite(col)) return false;
-      const res = this.combat.trySummonBySide(side, card, row, col);
+      if (!Number.isFinite(row) || !Number.isFinite(col)) return false;
+
+      let card = this._findPlayableCardById(side, String(action.cardId || ""), "summon");
+      // 容錯：若遠端已出牌但本地手牌不同步，改用卡片定義直接生成，避免畫面缺兵。
+      if (!card) {
+        const def = CardFactory.getCardDef(String(action.cardId || ""));
+        if (def) {
+          card = CardFactory.create(def.id);
+          card.cost = 0;
+        }
+      }
+      if (!card) return false;
+
+      let res = this.combat.trySummonBySide(side, card, row, col);
+      if (!res?.ok && res?.reason === "not_this_side_turn") {
+        // 容錯：若回合指標短暫不同步，直接以該側身份嘗試落地，優先保持棋盤一致。
+        const hero = side === "R" ? this.rightHero : this.leftHero;
+        if (this.combat && typeof this.combat._trySummon === "function") {
+          res = this.combat._trySummon(hero, side, card, row, col);
+        }
+      }
+      if (!res?.ok) {
+        this.combat?._log?.(`遠端召喚套用失敗：${String(action.cardId || "?")} @(${row + 1},${col + 1}) reason=${String(res?.reason || "unknown")}`);
+      }
       return Boolean(res?.ok);
     }
     if (action.type === "castSkill") {
-      const card = this._findPlayableCardById(side, String(action.cardId || ""), "skill");
-      if (!card || !Number.isFinite(row) || !Number.isFinite(col)) return false;
-      const res = this.combat.tryCastSkillBySide(side, card, row, col);
+      if (!Number.isFinite(row) || !Number.isFinite(col)) return false;
+
+      let card = this._findPlayableCardById(side, String(action.cardId || ""), "skill");
+      if (!card) {
+        const def = CardFactory.getCardDef(String(action.cardId || ""));
+        if (def) {
+          card = CardFactory.create(def.id);
+          card.cost = 0;
+          card.type = "skill";
+        }
+      }
+      if (!card) return false;
+
+      let res = this.combat.tryCastSkillBySide(side, card, row, col);
+      if (!res?.ok && res?.reason === "not_this_side_turn") {
+        const hero = side === "R" ? this.rightHero : this.leftHero;
+        if (this.combat && typeof this.combat._tryCastSkill === "function") {
+          res = this.combat._tryCastSkill(hero, side, card, row, col);
+        }
+      }
+      if (!res?.ok) {
+        this.combat?._log?.(`遠端技能套用失敗：${String(action.cardId || "?")} @(${row + 1},${col + 1}) reason=${String(res?.reason || "unknown")}`);
+      }
       return Boolean(res?.ok);
     }
     if (action.type === "removeUnit") {
       if (!Number.isFinite(row) || !Number.isFinite(col)) return false;
-      const res = this.combat.removeOwnUnitBySide(side, row, col);
+      let res = this.combat.removeOwnUnitBySide(side, row, col);
+      if (!res?.ok && res?.reason === "not_this_side_turn") {
+        const unit = this.combat?.board?.[row]?.[col];
+        if (unit && unit.side === side) {
+          this.combat._pushUnitToGrave?.(unit);
+          this.combat.board[row][col] = null;
+          this.combat._computeAllyCountAuras?.();
+          this.combat._refreshUnitStatusTags?.();
+          this.combat.boardUI?.renderBoard?.(this.combat.board);
+          this.combat._notifyFull?.();
+          res = { ok: true };
+        }
+      }
       return Boolean(res?.ok);
     }
     return false;
@@ -266,7 +326,17 @@ export default class BattleScene extends Phaser.Scene {
     if (!fromPlayer || fromPlayer === this.playerId) return;
     const side = this._sideFromPlayerId(fromPlayer);
     const ok = this._applyRealtimeActionBySide(side, entry.action);
-    if (!ok) return;
+    if (!ok) {
+      this.combat?._log?.(`遠端動作未套用：from=${fromPlayer} type=${String(entry?.action?.type || "?")} seq=${Number(entry?.seq || 0)}`);
+      this.onBattleState({
+        left: this.leftHero,
+        right: this.rightHero,
+        turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
+        turnCount: this.combat?.turnCount || 1,
+        logs: this.combat?.logs || []
+      });
+      return;
+    }
     this.onBattleState({
       left: this.leftHero,
       right: this.rightHero,
@@ -396,6 +466,7 @@ export default class BattleScene extends Phaser.Scene {
 
   _onToggleAutoPlayer() {
     if (!this.combat) return;
+    if (this._isSpectatorMode()) return;
 
     this.autoPlayerEnabled = !this.autoPlayerEnabled;
 
@@ -732,10 +803,35 @@ export default class BattleScene extends Phaser.Scene {
     const right = state.right;
     this.currentTurnSide = String(state?.turnSide || this.currentTurnSide || "L");
 
-    const isMyTurn = this._isOnlineMode()
-      ? state.turnSide === this.mySide
-      : state.turnSide === "L";
-    const turnStr = `回合 ${state.turnCount} | ${isMyTurn ? "我方回合" : "敵方回合"}`;
+    if ((this._isOnlineMode() || this._isSpectatorMode()) && !this.gameOverHandled) {
+      if (Number(left?.hp || 0) <= 0 || Number(right?.hp || 0) <= 0) {
+        this.gameOverHandled = true;
+        const winner = Number(left?.hp || 0) <= 0 ? this.rightPlayerName : this.leftPlayerName;
+        this.combat?._log?.(`對戰結束，勝者：${winner}。即將返回線上對戰大廳...`);
+
+        // 通知伺服器本房間已結束，讓大廳可顯示「已結束」並短暫保留。
+        if (this.roomCode) {
+          ApiClient.postAction(this.roomCode, this.playerId || "A", {
+            type: "gameOver",
+            winner: winner,
+            leftHp: Number(left?.hp || 0),
+            rightHp: Number(right?.hp || 0)
+          }).catch(() => {});
+        }
+
+        this._stopSync();
+        this.time.delayedCall(1300, () => {
+          this.scene.start("RoomScene");
+        });
+      }
+    }
+
+    const isMyTurn = this._isSpectatorMode()
+      ? false
+      : (this._isOnlineMode() ? state.turnSide === this.mySide : state.turnSide === "L");
+    const turnStr = this._isSpectatorMode()
+      ? `回合 ${state.turnCount} | 觀戰中（${state.turnSide === "L" ? this.leftPlayerName : this.rightPlayerName}行動）`
+      : `回合 ${state.turnCount} | ${isMyTurn ? "我方回合" : "敵方回合"}`;
 
     const leftPlayable = countPlayable(left);
     const rightPlayable = countPlayable(right);

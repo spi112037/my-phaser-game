@@ -143,6 +143,7 @@ function roomState(room) {
 
   return {
     status: room.status,
+    seed: String(room.seed || ""),
     currentTurn: room.currentTurn,
     lastTurnAction: room.turns.get(room.currentTurn) || null,
     turns,
@@ -151,6 +152,10 @@ function roomState(room) {
     decks: {
       A: Array.isArray(room?.decks?.A) ? [...room.decks.A] : [],
       B: Array.isArray(room?.decks?.B) ? [...room.decks.B] : []
+    },
+    names: {
+      A: String(room?.names?.A || "玩家A"),
+      B: String(room?.names?.B || "玩家B")
     }
   };
 }
@@ -161,6 +166,12 @@ function normalizeDeckIds(input) {
     .map((x) => String(x || "").trim())
     .filter((x) => x)
     .slice(0, 30);
+}
+
+function normalizeDisplayName(input, fallback = "玩家") {
+  const raw = String(input || "").replace(/\s+/g, " ").trim();
+  if (!raw) return fallback;
+  return raw.slice(0, 24);
 }
 
 function sanitizePart(v) {
@@ -791,9 +802,62 @@ const server = http.createServer(async (req, res) => {
       });
     }
 
+    if (req.method === "GET" && reqPath === "/api/rooms") {
+      const statusFilter = String(url.searchParams.get("status") || "").trim().toLowerCase();
+      const q = String(url.searchParams.get("q") || "").trim().toLowerCase();
+      const include = new Set(["waiting", "ready", "playing", "finished"]);
+      if (statusFilter) {
+        const requested = statusFilter
+          .split(",")
+          .map((s) => String(s || "").trim().toLowerCase())
+          .filter(Boolean);
+        const matched = requested.filter((s) => include.has(s));
+        if (matched.length > 0) {
+          include.clear();
+          for (let i = 0; i < matched.length; i += 1) include.add(matched[i]);
+        }
+      }
+
+      const list = [];
+      const now = Date.now();
+      for (const room of rooms.values()) {
+        if (!room) continue;
+
+        // 已結束房間只保留 3 分鐘，避免列表越積越多
+        if (String(room.status || "") === "finished") {
+          const finAt = Number(room.finishedAt || room.updatedAt || 0);
+          if (finAt > 0 && now - finAt > 3 * 60 * 1000) {
+            rooms.delete(String(room.code || ""));
+            continue;
+          }
+        }
+
+        if (!include.has(String(room.status || "waiting"))) continue;
+        const code = String(room.code || "");
+        const a = String(room?.names?.A || "玩家A");
+        const b = String(room?.names?.B || "玩家B");
+        const searchText = `${code} ${a} ${b}`.toLowerCase();
+        if (q && !searchText.includes(q)) continue;
+
+        list.push({
+          roomCode: code,
+          status: String(room.status || "waiting"),
+          currentTurn: Number(room.currentTurn || 0),
+          names: { A: a, B: b },
+          hasPlayerB: Boolean(room?.players?.B),
+          createdAt: Number(room.createdAt || 0),
+          updatedAt: Number(room.updatedAt || room.createdAt || 0)
+        });
+      }
+
+      list.sort((x, y) => Number(y.updatedAt || 0) - Number(x.updatedAt || 0));
+      return sendJson(res, 200, { rooms: list.slice(0, 200) });
+    }
+
     if (req.method === "POST" && reqPath === "/api/rooms") {
       const body = await parseBody(req).catch(() => ({}));
       const deckIds = normalizeDeckIds(body?.deckIds);
+      const displayName = normalizeDisplayName(body?.displayName, "玩家A");
       let code = genRoomCode();
       while (rooms.has(code)) code = genRoomCode();
       const room = {
@@ -802,17 +866,22 @@ const server = http.createServer(async (req, res) => {
         status: "waiting",
         players: { A: randomUUID(), B: null },
         decks: { A: deckIds, B: [] },
+        names: { A: displayName, B: "玩家B" },
         currentTurn: 0,
         turns: new Map(),
         liveActionSeq: 0,
-        liveActions: []
+        liveActions: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        finishedAt: 0
       };
       rooms.set(code, room);
       return sendJson(res, 200, {
         roomCode: code,
         seed: room.seed,
         playerId: "A",
-        decks: { A: [...room.decks.A], B: [] }
+        decks: { A: [...room.decks.A], B: [] },
+        names: { A: room.names.A, B: room.names.B }
       });
     }
 
@@ -823,9 +892,12 @@ const server = http.createServer(async (req, res) => {
       if (!room) return sendJson(res, 404, { error: "room_not_found" });
       if (room.players.B) return sendJson(res, 409, { error: "room_full" });
       const body = await parseBody(req).catch(() => ({}));
+      const displayName = normalizeDisplayName(body?.displayName, "玩家B");
       room.decks.B = normalizeDeckIds(body?.deckIds);
       room.players.B = randomUUID();
+      room.names.B = displayName;
       room.status = "ready";
+      room.updatedAt = Date.now();
       return sendJson(res, 200, {
         seed: room.seed,
         playerId: "B",
@@ -833,7 +905,8 @@ const server = http.createServer(async (req, res) => {
         decks: {
           A: Array.isArray(room?.decks?.A) ? [...room.decks.A] : [],
           B: Array.isArray(room?.decks?.B) ? [...room.decks.B] : []
-        }
+        },
+        names: { A: room.names.A, B: room.names.B }
       });
     }
 
@@ -864,7 +937,17 @@ const server = http.createServer(async (req, res) => {
       room.turns.set(turnIndex, turnAction);
       room.currentTurn = turnIndex;
       if (room.status === "ready") room.status = "playing";
-      return sendJson(res, 200, { ok: true, currentTurn: room.currentTurn });
+      room.updatedAt = Date.now();
+
+      // 若本回合是結束回合，標記房間為 finished（保留短時間供大廳顯示）
+      const acts = Array.isArray(turnAction?.actions) ? turnAction.actions : [];
+      const hasGameOver = acts.some((a) => String(a?.type || "") === "gameOver");
+      if (hasGameOver) {
+        room.status = "finished";
+        room.finishedAt = Date.now();
+      }
+
+      return sendJson(res, 200, { ok: true, currentTurn: room.currentTurn, status: room.status });
     }
 
     const actionMatch = reqPath.match(/^\/api\/rooms\/([^/]+)\/action$/);
@@ -883,7 +966,8 @@ const server = http.createServer(async (req, res) => {
       }
 
       const expectedPlayerId = room.currentTurn % 2 === 0 ? "A" : "B";
-      if (playerId !== expectedPlayerId) {
+      const isGameOverSignal = String(action?.type || "") === "gameOver";
+      if (!isGameOverSignal && playerId !== expectedPlayerId) {
         return sendJson(res, 409, {
           error: "turn_player_conflict",
           currentTurn: room.currentTurn,
@@ -898,10 +982,16 @@ const server = http.createServer(async (req, res) => {
         action,
         at: Date.now()
       });
+
+      if (String(action?.type || "") === "gameOver") {
+        room.status = "finished";
+        room.finishedAt = Date.now();
+      }
       if (room.liveActions.length > 300) {
         room.liveActions = room.liveActions.slice(room.liveActions.length - 300);
       }
       if (room.status === "ready") room.status = "playing";
+      room.updatedAt = Date.now();
 
       return sendJson(res, 200, { ok: true, seq: room.liveActionSeq });
     }
