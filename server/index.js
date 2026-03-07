@@ -965,15 +965,8 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 400, { error: "invalid_action" });
       }
 
-      const expectedPlayerId = room.currentTurn % 2 === 0 ? "A" : "B";
-      const isGameOverSignal = String(action?.type || "") === "gameOver";
-      if (!isGameOverSignal && playerId !== expectedPlayerId) {
-        return sendJson(res, 409, {
-          error: "turn_player_conflict",
-          currentTurn: room.currentTurn,
-          expectedPlayerId
-        });
-      }
+      // 即時動作改為事件流：允許雙端即時上報，客戶端以回合同步與本地規則做最終約束。
+      // 這樣可避免短暫回合不同步造成 action 被 409 擋掉，導致對端看不到召喚。
 
       room.liveActionSeq = Number(room.liveActionSeq || 0) + 1;
       room.liveActions.push({

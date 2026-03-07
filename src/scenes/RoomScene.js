@@ -64,7 +64,7 @@ export default class RoomScene extends Phaser.Scene {
     this._makeButton(w / 2, 160, "加入房間", () => this._joinRoom(), 200, 50);
     this._makeButton(w / 2 + 250, 160, "觀戰房間", () => this._spectateRoom(), 200, 50);
 
-    this.add.text(w / 2, 218, "使用者名稱", { fontSize: "18px", color: "#cfe8ff" }).setOrigin(0.5);
+    this.add.text(w / 2, 218, "使用者名稱（建立/加入房間都會使用）", { fontSize: "18px", color: "#cfe8ff" }).setOrigin(0.5);
     this.nameInputBg = this.add
       .rectangle(w / 2, 254, 360, 42, 0xffffff, 0.08)
       .setStrokeStyle(1, 0x9ddcff, 0.55)
@@ -83,7 +83,7 @@ export default class RoomScene extends Phaser.Scene {
     this.codeInputBg.on("pointerup", () => this._setInputFocus("code"));
     this.codeText = this.add.text(w / 2, 338, "------", { fontSize: "24px", color: "#ffffff" }).setOrigin(0.5);
 
-    this.add.text(w / 2, 378, "Tab 切換輸入欄，Backspace 刪除", { fontSize: "16px", color: "#9dc4e6" }).setOrigin(0.5);
+    this.add.text(w / 2, 378, "先輸入名稱再建立/加入。Tab 切換輸入欄，Backspace 刪除", { fontSize: "16px", color: "#9dc4e6" }).setOrigin(0.5);
 
     this.roomInfoText = this.add.text(w / 2, 418, "", { fontSize: "20px", color: "#ffdca8", align: "center" }).setOrigin(0.5);
     this.statusText = this.add.text(w / 2, 456, "尚未配對", { fontSize: "20px", color: "#ffffff", align: "center" }).setOrigin(0.5);
@@ -364,7 +364,11 @@ export default class RoomScene extends Phaser.Scene {
     try {
       this.statusText.setText("建立房間中...");
       const deckIds = this._getSelectedDeckIds();
-      const displayName = String(this.displayName || "").trim() || "玩家A";
+      const displayName = String(this.displayName || "").trim();
+      if (!displayName) {
+        this.statusText.setText("請先輸入你的名稱，再建立房間");
+        return;
+      }
       this._saveLocalName(displayName);
 
       const res = await ApiClient.createRoom({ deckIds, displayName });
@@ -399,7 +403,11 @@ export default class RoomScene extends Phaser.Scene {
     try {
       this.statusText.setText("加入房間中...");
       const deckIds = this._getSelectedDeckIds();
-      const displayName = String(this.displayName || "").trim() || "玩家B";
+      const displayName = String(this.displayName || "").trim();
+      if (!displayName) {
+        this.statusText.setText("請先輸入你的名稱，再加入房間");
+        return;
+      }
       this._saveLocalName(displayName);
 
       const res = await ApiClient.joinRoom(code, { deckIds, displayName });

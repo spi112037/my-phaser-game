@@ -327,7 +327,7 @@ export default class BattleScene extends Phaser.Scene {
     const side = this._sideFromPlayerId(fromPlayer);
     const ok = this._applyRealtimeActionBySide(side, entry.action);
     if (!ok) {
-      this.combat?._log?.(`遠端動作未套用：from=${fromPlayer} type=${String(entry?.action?.type || "?")} seq=${Number(entry?.seq || 0)}`);
+      this.combat?._log?.(`遠端動作未套用：from=${fromPlayer} type=${String(entry?.action?.type || "?")} card=${String(entry?.action?.cardName || entry?.action?.cardId || "?")} seq=${Number(entry?.seq || 0)}`);
       this.onBattleState({
         left: this.leftHero,
         right: this.rightHero,
@@ -532,7 +532,7 @@ export default class BattleScene extends Phaser.Scene {
                 if (this.combat?.board?.[row]?.[col]) continue;
                 const key = `${row},${col}`;
                 if (this.pendingTargets.has(key)) continue;
-                const action = { type: "playCard", cardId: card.id, target: { row, col } };
+                const action = { type: "playCard", cardId: card.id, cardName: String(card.name || card.id), target: { row, col } };
                 if (this._applyRealtimeActionBySide(side, action)) {
                   this._postRealtimeAction(action);
                   placed = true;
@@ -544,7 +544,7 @@ export default class BattleScene extends Phaser.Scene {
                 if (this.combat?.board?.[row]?.[col]) continue;
                 const key = `${row},${col}`;
                 if (this.pendingTargets.has(key)) continue;
-                const action = { type: "playCard", cardId: card.id, target: { row, col } };
+                const action = { type: "playCard", cardId: card.id, cardName: String(card.name || card.id), target: { row, col } };
                 if (this._applyRealtimeActionBySide(side, action)) {
                   this._postRealtimeAction(action);
                   placed = true;
@@ -676,6 +676,7 @@ export default class BattleScene extends Phaser.Scene {
     const action = {
       type: isSkill ? "castSkill" : "playCard",
       cardId: this.selectedCard.id,
+      cardName: String(this.selectedCard.name || this.selectedCard.id),
       target: { row, col }
     };
     const ok = this._applyRealtimeActionBySide(this.mySide, action);
