@@ -308,16 +308,23 @@ export default class BattleScene extends Phaser.Scene {
 
   _postRealtimeAction(action) {
     if (!this._isOnlineMode() || !action || !action.type) return;
-    ApiClient.postAction(this.roomCode, this.playerId, action).catch((err) => {
-      this.combat?._log?.(`即時同步失敗：${String(err?.message || err)}`);
-      this.onBattleState({
-        left: this.leftHero,
-        right: this.rightHero,
-        turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
-        turnCount: this.combat?.turnCount || 1,
-        logs: this.combat?.logs || []
+    ApiClient.postAction(this.roomCode, this.playerId, action)
+      .then(() => {
+        const cardName = String(action?.cardName || action?.cardId || "");
+        if (action.type === "playCard") this._showSyncToast(`已同步召喚：${cardName}`, "#9dffba");
+        else if (action.type === "castSkill") this._showSyncToast(`已同步技能：${cardName}`, "#aee8ff");
+      })
+      .catch((err) => {
+        this.combat?._log?.(`即時同步失敗：${String(err?.message || err)}`);
+        this._showSyncToast("同步失敗，請檢查連線", "#ff9d9d");
+        this.onBattleState({
+          left: this.leftHero,
+          right: this.rightHero,
+          turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
+          turnCount: this.combat?.turnCount || 1,
+          logs: this.combat?.logs || []
+        });
       });
-    });
   }
 
   _onRemoteRealtimeAction(entry) {
@@ -328,6 +335,7 @@ export default class BattleScene extends Phaser.Scene {
     const ok = this._applyRealtimeActionBySide(side, entry.action);
     if (!ok) {
       this.combat?._log?.(`遠端動作未套用：from=${fromPlayer} type=${String(entry?.action?.type || "?")} card=${String(entry?.action?.cardName || entry?.action?.cardId || "?")} seq=${Number(entry?.seq || 0)}`);
+      this._showSyncToast(`遠端同步失敗：${String(entry?.action?.cardName || entry?.action?.cardId || "未知")}`, "#ffb3b3");
       this.onBattleState({
         left: this.leftHero,
         right: this.rightHero,
@@ -337,12 +345,41 @@ export default class BattleScene extends Phaser.Scene {
       });
       return;
     }
+
+    const a = entry.action || {};
+    const cardName = String(a?.cardName || a?.cardId || "未知卡牌");
+    if (a.type === "playCard") this._showSyncToast(`對手召喚：${cardName}`, "#ffd39d");
+    else if (a.type === "castSkill") this._showSyncToast(`對手技能：${cardName}`, "#cbb9ff");
+
     this.onBattleState({
       left: this.leftHero,
       right: this.rightHero,
       turnSide: this.combat?.turnSide || this.currentTurnSide || "L",
       turnCount: this.combat?.turnCount || 1,
       logs: this.combat?.logs || []
+    });
+  }
+
+  _showSyncToast(text, color = "#ffffff") {
+    if (!text) return;
+    const x = this.scale.width / 2;
+    const y = 92;
+    const toast = this.add.text(x, y, String(text), {
+      fontSize: "22px",
+      color,
+      stroke: "#000000",
+      strokeThickness: 4
+    }).setOrigin(0.5).setDepth(9999).setAlpha(0);
+
+    this.tweens.add({ targets: toast, alpha: 1, y: y - 6, duration: 140, ease: "Sine.easeOut" });
+    this.tweens.add({
+      targets: toast,
+      alpha: 0,
+      y: y - 28,
+      delay: 900,
+      duration: 380,
+      ease: "Sine.easeIn",
+      onComplete: () => toast.destroy()
     });
   }
 
