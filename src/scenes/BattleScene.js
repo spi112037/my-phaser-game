@@ -387,6 +387,14 @@ export default class BattleScene extends Phaser.Scene {
     this.turnSync = new TurnSync({
       roomCode: this.roomCode,
       pollMs: 900,
+      onState: (state) => {
+        if (!state || typeof state !== "object") return;
+        const names = state?.names && typeof state.names === "object" ? state.names : null;
+        if (names) {
+          this.leftPlayerName = String(names?.A || this.leftPlayerName || "玩家A");
+          this.rightPlayerName = String(names?.B || this.rightPlayerName || "玩家B");
+        }
+      },
       onRemoteTurn: (turnAction) => {
         if (!turnAction) return;
         const idx = Number(turnAction.turnIndex ?? 0);
@@ -868,8 +876,8 @@ export default class BattleScene extends Phaser.Scene {
       ? false
       : (this._isOnlineMode() ? state.turnSide === this.mySide : state.turnSide === "L");
     const turnStr = this._isSpectatorMode()
-      ? `回合 ${state.turnCount} | 觀戰中（${state.turnSide === "L" ? this.leftPlayerName : this.rightPlayerName}行動）`
-      : `回合 ${state.turnCount} | ${isMyTurn ? "我方回合" : "敵方回合"}`;
+      ? `${this.leftPlayerName} vs ${this.rightPlayerName}｜回合 ${state.turnCount}｜觀戰中（${state.turnSide === "L" ? this.leftPlayerName : this.rightPlayerName}行動）`
+      : `${this.leftPlayerName} vs ${this.rightPlayerName}｜回合 ${state.turnCount}｜${isMyTurn ? "我方回合" : "敵方回合"}`;
 
     const leftPlayable = countPlayable(left);
     const rightPlayable = countPlayable(right);
