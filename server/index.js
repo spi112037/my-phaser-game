@@ -764,8 +764,15 @@ const server = http.createServer(async (req, res) => {
         uptimeSec: Math.floor((Date.now() - SERVER_STARTED_AT) / 1000),
         host: HOST,
         port: PORT,
-        managedComfyAlive: Boolean(managedComfyProcess && !managedComfyProcess.killed),
-        managedComfyApiBase: managedComfyApiBase || ""
+        imageGenerationEnabled: false
+      });
+    }
+
+    // 已停用 Comfy / 產圖相關 API（目前專注線上對戰）
+    if (reqPath.startsWith("/api/comfy") || reqPath === "/api/assets/save-card-image") {
+      return sendJson(req, res, 410, {
+        error: "image_generation_disabled",
+        message: "Image generation endpoints are disabled on this deployment."
       });
     }
 
