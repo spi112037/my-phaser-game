@@ -508,6 +508,15 @@ export default class CardEditorScene extends Phaser.Scene {
 
     const previewApplyBtn = document.createElement("button");
     previewApplyBtn.textContent = "套用覆蓋";
+
+    const previewTemplateBtn = document.createElement("button");
+    previewTemplateBtn.textContent = "打開自訂卡檔";
+    previewTemplateBtn.style.padding = "7px 10px";
+    previewTemplateBtn.style.borderRadius = "8px";
+    previewTemplateBtn.style.border = "1px solid #35577a";
+    previewTemplateBtn.style.background = "#234a2e";
+    previewTemplateBtn.style.color = "#eaf4ff";
+    previewTemplateBtn.style.cursor = "pointer";
     previewApplyBtn.style.padding = "7px 10px";
     previewApplyBtn.style.borderRadius = "8px";
     previewApplyBtn.style.border = "1px solid #35577a";
@@ -528,6 +537,7 @@ export default class CardEditorScene extends Phaser.Scene {
     previewToolRow.appendChild(previewSaveBtn);
     previewToolRow.appendChild(previewUploadBtn);
     previewToolRow.appendChild(previewApplyBtn);
+    previewToolRow.appendChild(previewTemplateBtn);
     previewToolRow.appendChild(previewBackBtn);
 
     const previewContent = document.createElement("div");
@@ -1214,6 +1224,10 @@ export default class CardEditorScene extends Phaser.Scene {
       URL.revokeObjectURL(a.href);
 
       msg.textContent = "已下載 JSON，可再整合到卡池資料。";
+    });
+
+    previewTemplateBtn.addEventListener("click", () => {
+      alert(`自訂特殊卡請直接編輯 src/data/customCards.json。\n\n我已先建立建御雷神範例卡（f_70001），之後你要做像神系、特殊能力、自訂效果卡，直接複製這份格式最快。\n\n另外我也加了 docs/custom-cards.md 說明檔。`);
     });
 
     previewBackBtn.addEventListener("click", () => this.scene.start("MenuScene"));

@@ -1,0 +1,53 @@
+[
+  {
+    "source": "custom_cards",
+    "sourceSheet": "customCards",
+    "sourceId": 70001,
+    "id": "f_70001",
+    "name": "建御雷神",
+    "type": "summon",
+    "quality": 6,
+    "cost": 5,
+    "phyle": 10,
+    "unique": true,
+    "description": "人設定位：高壓制型雷屬神格單位，擅長連鎖雷擊與持續控場。整體演出偏神威、迅疾、帶有電流與符雷殘光。\n外觀特徵：黑髮、金瞳、白金與赤紅相間的神官戰裝，姿態銳利。\n戰鬥定位：中高費核心輸出，透過連續雷擊與感電狀態逐步接管戰場。",
+    "ability1": "電擊2：每回合，對隨機1名敵軍造成2點雷屬性傷害，並附加1層感電。",
+    "ability2": "神罰雷印：攻擊命中時，若目標已有感電，額外造成2點傷害。",
+    "ability3": "雷護：受到物理傷害時，30%機率使攻擊者附加1層感電。",
+    "ability4": "雷鳴威：本單位在場時，我方所有雷屬性效果傷害+1。",
+    "ability5": "",
+    "abilities": [
+      "電擊2：每回合，對隨機1名敵軍造成2點雷屬性傷害，並附加1層感電。",
+      "神罰雷印：攻擊命中時，若目標已有感電，額外造成2點傷害。",
+      "雷護：受到物理傷害時，30%機率使攻擊者附加1層感電。",
+      "雷鳴威：本單位在場時，我方所有雷屬性效果傷害+1。"
+    ],
+    "image": "",
+    "unit": {
+      "name": "建御雷神",
+      "hp": 10,
+      "atk": 2,
+      "range": 160,
+      "speed": 36,
+      "atkCdMs": 980
+    },
+    "effectRuleMap": {
+      "電擊2": {
+        "tags": ["step_damage"],
+        "valueHint": 2
+      },
+      "神罰雷印": {
+        "tags": ["step_damage", "atk_up"],
+        "valueHint": 2
+      },
+      "雷護": {
+        "tags": ["reflect", "step_damage"],
+        "valueHint": 1
+      },
+      "雷鳴威": {
+        "tags": ["aura_buff", "step_damage"],
+        "valueHint": 1
+      }
+    }
+  }
+]

@@ -1,5 +1,6 @@
 ﻿import flameCardsBest from "../data/flameCardsBest.json";
 import skillsFromExcelQ56 from "../data/skills_from_excel_q56.json";
+import customCards from "../data/customCards.json";
 
 const OVERRIDE_KEY = "my-phaser-game.card-overrides.v1";
 const SKILL_TEXT_BY_SOURCE_ID = new Map();
@@ -309,7 +310,17 @@ const IMPORTED = importedSource.length > 0
       .filter((d) => d.id && d.name)
   : [];
 
-const ALL_BASE = [...STARTER, ...IMPORTED];
+const customSource = Array.isArray(customCards)
+  ? customCards
+  : (Array.isArray(customCards?.cards) ? customCards.cards : []);
+
+const CUSTOM = customSource.length > 0
+  ? customSource
+      .map((d) => normalizeCard(d))
+      .filter((d) => d.id && d.name)
+  : [];
+
+const ALL_BASE = [...STARTER, ...IMPORTED, ...CUSTOM];
 const BY_ID = new Map(ALL_BASE.map((c) => [c.id, c]));
 
 function cloneCard(card) {
