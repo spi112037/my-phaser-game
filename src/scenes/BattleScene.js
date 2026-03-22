@@ -80,6 +80,7 @@ export default class BattleScene extends Phaser.Scene {
     this.leftPlayerName = "玩家A";
     this.rightPlayerName = "玩家B";
     this.gameOverHandled = false;
+    this.leaveNotified = false;
   }
 
   preload() {
@@ -127,6 +128,7 @@ export default class BattleScene extends Phaser.Scene {
     this.leftPlayerName = String(data?.leftPlayerName || "玩家A");
     this.rightPlayerName = String(data?.rightPlayerName || "玩家B");
     this.gameOverHandled = false;
+    this.leaveNotified = false;
     this._clearTurnBuffer();
   }
 
@@ -144,13 +146,21 @@ export default class BattleScene extends Phaser.Scene {
       this.add.rectangle(bgX, bgY, w, h, 0x0b1935, 1).setDepth(-2000);
     }
 
-    this.add
-      .text(w - 140, 12, "霑泌屓驕ｸ蝟ｮ", { fontSize: "18px", color: "#9ddcff" })
-      .setInteractive({ useHandCursor: true })
-      .on("pointerup", () => {
-        this._stopSync();
-        this.scene.start("MenuScene");
-      });
+    this.add.rectangle(w / 2, h / 2, w, h, 0x08111f, 0.18).setDepth(-1995);
+    this.add.ellipse(w / 2, h * 0.5, w * 0.62, h * 0.56, 0x7fcfff, 0.05).setDepth(-1994);
+    this.add.ellipse(w / 2, h * 0.88, w * 0.96, 180, 0x8ed4ff, 0.05).setDepth(1800);
+
+    const backGlow = this.add.ellipse(w - 112, 26, 170, 42, 0x89d4ff, 0.08).setDepth(2300);
+    const backBg = this.add.rectangle(w - 112, 26, 148, 32, 0x0d223b, 0.82).setDepth(2301).setStrokeStyle(1.5, 0x9edaff, 0.55);
+    const backText = this.add
+      .text(w - 112, 26, "返回選單", { fontSize: "17px", color: "#e8f7ff", fontStyle: "bold", stroke: "#071019", strokeThickness: 3 })
+      .setOrigin(0.5)
+      .setDepth(2302);
+    backBg.setInteractive({ useHandCursor: true }).on("pointerup", () => {
+      this._notifyLeaveRoom();
+      this._stopSync();
+      this.scene.start("MenuScene");
+    });
 
     this.rng = this.seed ? createRng(this.seed) : Math.random;
     this.cardSystem = new CardSystem(this.rng);
@@ -205,6 +215,7 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   shutdown() {
+    this._notifyLeaveRoom();
     this._stopSync();
   }
 
@@ -406,6 +417,16 @@ export default class BattleScene extends Phaser.Scene {
       onRemoteAction: (entry) => this._onRemoteRealtimeAction(entry)
     });
     this.turnSync.start(0, 0);
+  }
+
+  _notifyLeaveRoom() {
+    if (!this._isOnlineMode()) return;
+    if (this.leaveNotified) return;
+    this.leaveNotified = true;
+
+    ApiClient.postAction(this.roomCode, this.playerId, {
+      type: "leaveRoom"
+    }).catch(() => {});
   }
 
   _stopSync() {
@@ -651,7 +672,11 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   _canDeployAt(row, col) {
-    const bounds = this._deployBoundsForCard(this.selectedCard);
+    const side = this._isOnlineMode() ? this.mySide : "L";
+    const effectiveCard = this.selectedCard || this._findFirstPlayableSummon(side);
+    if (!effectiveCard) return false;
+
+    const bounds = this._deployBoundsForCard(effectiveCard);
     if (col < bounds.minCol || col > bounds.maxCol) return false;
 
     if (this.combat?.board?.[row]?.[col]) return false;
@@ -867,6 +892,7 @@ export default class BattleScene extends Phaser.Scene {
 
         this._stopSync();
         this.time.delayedCall(1300, () => {
+          this._notifyLeaveRoom();
           this.scene.start("RoomScene");
         });
       }
@@ -904,7 +930,9 @@ export default class BattleScene extends Phaser.Scene {
       }
     }
 
-    this.boardUI.setDeployEnabled(canOperate && (this.removeMode || Boolean(this.selectedCard)));
+    const myHero = this._isOnlineMode() && this.mySide === "R" ? right : left;
+    const hasPlayable = this._hasPlayableZeroSummon(myHero);
+    this.boardUI.setDeployEnabled(canOperate && (this.removeMode || Boolean(this.selectedCard) || hasPlayable));
     this.boardUI.setPendingTargets(this.pendingTargets);
     this.boardUI.setInspectEnabled(!this.removeMode);
 
@@ -919,7 +947,6 @@ export default class BattleScene extends Phaser.Scene {
       hint += ` | 連線模式：本回合自動=${this.autoPlayerEnabled ? "開" : "關"}`;
     }
 
-    const myHero = this._isOnlineMode() && this.mySide === "R" ? right : left;
     this.hand.setState(myHero, canOperate, hint, this.removeMode, {
       autoPlayerEnabled: this.autoPlayerEnabled
     });

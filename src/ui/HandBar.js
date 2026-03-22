@@ -36,16 +36,23 @@ export default class HandBar {
     const w = scene.scale.width;
     const h = scene.scale.height;
 
-    this.container = scene.add.container(0, 0);
+    this.container = scene.add.container(0, 0).setDepth(2100);
 
-    this.bg = scene.add.rectangle(w / 2, h - 95, w, 190, 0x000000, 0.56);
-    this.container.add(this.bg);
+    this.bottomAura = scene.add.ellipse(w / 2, h - 80, w * 0.9, 180, 0x74c9ff, 0.07);
+    this.bottomShadow = scene.add.ellipse(w / 2, h - 24, w * 0.94, 96, 0x000000, 0.3);
+    this.bgShadow = scene.add.rectangle(w / 2, h - 95, w + 10, 204, 0x000000, 0.42);
+    this.bg = scene.add.rectangle(w / 2, h - 98, w, 196, 0x091120, 0.84).setStrokeStyle(2, 0x78bfff, 0.3);
+    this.bgInnerGlow = scene.add.rectangle(w / 2, h - 152, w - 140, 56, 0x96d8ff, 0.06);
+    this.bgTopEdge = scene.add.rectangle(w / 2, h - 190, w - 80, 2, 0xe7f4ff, 0.24);
+    this.container.add([this.bottomAura, this.bottomShadow, this.bgShadow, this.bg, this.bgInnerGlow, this.bgTopEdge]);
 
     const bandTop = h - 178;
 
-    this.logPanelBg = scene.add.rectangle(16, bandTop, 308, 150, 0x0a1628, 0.86).setOrigin(0, 0);
-    this.logPanelBg.setStrokeStyle(1, 0x3d5f87, 0.95);
-    this.logTitle = scene.add.text(26, bandTop + 8, "訊息欄", { fontSize: "16px", color: "#ffffff" });
+    this.logGlow = scene.add.rectangle(168, bandTop + 74, 322, 154, 0x7bc6ff, 0.05).setOrigin(0.5, 0.5);
+    this.logPanelBg = scene.add.rectangle(16, bandTop, 308, 150, 0x0a1628, 0.9).setOrigin(0, 0);
+    this.logPanelBg.setStrokeStyle(1, 0x5a88b8, 0.9);
+    this.logTopLine = scene.add.rectangle(170, bandTop + 10, 282, 2, 0xcdeaff, 0.26);
+    this.logTitle = scene.add.text(26, bandTop + 8, "戰場紀錄", { fontSize: "16px", color: "#ffffff", fontStyle: "bold" });
     this.logText = scene.add.text(26, bandTop + 30, "", {
       fontSize: "13px",
       color: "#cfe8ff",
@@ -54,36 +61,40 @@ export default class HandBar {
     });
     this.logPanelBg.setInteractive({ useHandCursor: true });
 
-    this.deckPanelBg = scene.add.rectangle(334, bandTop, 92, 150, 0x101b2c, 0.9)
+    this.deckPanelBg = scene.add.rectangle(334, bandTop, 92, 150, 0x131f33, 0.94)
       .setOrigin(0, 0)
       .setInteractive({ useHandCursor: true });
-    this.deckPanelBg.setStrokeStyle(1, 0x6e8db6, 0.95);
-    this.deckTitle = scene.add.text(380, bandTop + 12, "牌組", { fontSize: "15px", color: "#ffe3a7" }).setOrigin(0.5, 0);
-    this.deckValue = scene.add.text(380, bandTop + 62, "0", { fontSize: "28px", color: "#ffffff" }).setOrigin(0.5, 0);
+    this.deckPanelBg.setStrokeStyle(1.5, 0x88b8ea, 0.8);
+    this.deckTitle = scene.add.text(380, bandTop + 12, "牌組", { fontSize: "15px", color: "#ffe3a7", fontStyle: "bold" }).setOrigin(0.5, 0);
+    this.deckValue = scene.add.text(380, bandTop + 58, "0", { fontSize: "30px", color: "#ffffff", fontStyle: "bold" }).setOrigin(0.5, 0);
 
-    this.gravePanelBg = scene.add.rectangle(w - 136, bandTop, 92, 150, 0x101b2c, 0.9)
+    this.gravePanelBg = scene.add.rectangle(w - 136, bandTop, 92, 150, 0x201726, 0.94)
       .setOrigin(0, 0)
       .setInteractive({ useHandCursor: true });
-    this.gravePanelBg.setStrokeStyle(1, 0x6e8db6, 0.95);
-    this.graveTitle = scene.add.text(w - 90, bandTop + 12, "墓地", { fontSize: "15px", color: "#ffe3a7" }).setOrigin(0.5, 0);
-    this.graveValue = scene.add.text(w - 90, bandTop + 62, "0", { fontSize: "28px", color: "#ffffff" }).setOrigin(0.5, 0);
+    this.gravePanelBg.setStrokeStyle(1.5, 0xffb0cb, 0.76);
+    this.graveTitle = scene.add.text(w - 90, bandTop + 12, "墓地", { fontSize: "15px", color: "#ffd4df", fontStyle: "bold" }).setOrigin(0.5, 0);
+    this.graveValue = scene.add.text(w - 90, bandTop + 58, "0", { fontSize: "30px", color: "#ffffff", fontStyle: "bold" }).setOrigin(0.5, 0);
 
-    this.readyTitle = scene.add.text(438, bandTop + 8, "準備欄", { fontSize: "16px", color: "#ffdca8" });
-    this.hint = scene.add.text(438, bandTop + 28, "", { fontSize: "12px", color: "#9dc4e6" });
+    this.readyTitle = scene.add.text(438, bandTop + 8, "戰鬥手牌", { fontSize: "18px", color: "#ffdca8", fontStyle: "bold" });
+    this.hint = scene.add.text(438, bandTop + 30, "", { fontSize: "12px", color: "#9dc4e6" });
     const readyLeft = 430;
     const readyRight = w - 150;
     const readyWidth = Math.max(300, readyRight - readyLeft);
-    this.readyBandBg = scene.add.rectangle(readyLeft, bandTop + 42, readyWidth, 126, 0x0b1526, 0.82).setOrigin(0, 0);
-    this.readyBandBg.setStrokeStyle(1, 0x5f7da3, 0.68);
-    this.readyBandTopLine = scene.add.rectangle(readyLeft + 1, bandTop + 43, readyWidth - 2, 2, 0x8fb8ea, 0.32).setOrigin(0, 0);
+    this.readyGlow = scene.add.rectangle(readyLeft + readyWidth / 2, bandTop + 103, readyWidth + 12, 132, 0x8cd5ff, 0.05).setOrigin(0.5, 0.5);
+    this.readyBandBg = scene.add.rectangle(readyLeft, bandTop + 42, readyWidth, 126, 0x0b1526, 0.88).setOrigin(0, 0);
+    this.readyBandBg.setStrokeStyle(1.5, 0x74a7d8, 0.74);
+    this.readyBandTopLine = scene.add.rectangle(readyLeft + readyWidth / 2, bandTop + 44, readyWidth - 26, 2, 0xdbf1ff, 0.22);
 
     this.cards = [];
 
+    this.endBtnShadow = scene.add.rectangle(w - 88, bandTop - 16, 152, 46, 0x000000, 0.36);
     this.endBtnBg = scene.add
-      .rectangle(w - 90, bandTop - 20, 140, 40, 0xffffff, 0.12)
+      .rectangle(w - 90, bandTop - 20, 148, 42, 0x3e76b1, 0.95)
+      .setStrokeStyle(2, 0xf0fbff, 0.86)
       .setInteractive({ useHandCursor: true });
+    this.endBtnGlow = scene.add.ellipse(w - 90, bandTop - 20, 180, 58, 0x7ed4ff, 0.15);
     this.endBtnText = scene.add
-      .text(w - 90, bandTop - 20, "結束回合", { fontSize: "17px", color: "#ffffff" })
+      .text(w - 90, bandTop - 20, "結束回合", { fontSize: "18px", color: "#ffffff", fontStyle: "bold", stroke: "#16324d", strokeThickness: 3 })
       .setOrigin(0.5);
 
     this.endBtnBg.on("pointerup", () => {
@@ -92,10 +103,11 @@ export default class HandBar {
     });
 
     this.removeBtnBg = scene.add
-      .rectangle(w - 250, bandTop - 20, 140, 40, 0xffffff, 0.12)
+      .rectangle(w - 250, bandTop - 20, 140, 40, 0x4b2d34, 0.86)
+      .setStrokeStyle(2, 0xffc2cf, 0.62)
       .setInteractive({ useHandCursor: true });
     this.removeBtnText = scene.add
-      .text(w - 250, bandTop - 20, "剷除士兵", { fontSize: "17px", color: "#ffffff" })
+      .text(w - 250, bandTop - 20, "剷除士兵", { fontSize: "17px", color: "#ffffff", fontStyle: "bold" })
       .setOrigin(0.5);
 
     this.removeBtnBg.on("pointerup", () => {
@@ -104,10 +116,11 @@ export default class HandBar {
     });
 
     this.autoBtnBg = scene.add
-      .rectangle(w - 410, bandTop - 20, 140, 40, 0xffffff, 0.12)
+      .rectangle(w - 410, bandTop - 20, 140, 40, 0x2d3f5d, 0.86)
+      .setStrokeStyle(2, 0xcfe2ff, 0.58)
       .setInteractive({ useHandCursor: true });
     this.autoBtnText = scene.add
-      .text(w - 410, bandTop - 20, "我方自動:關", { fontSize: "17px", color: "#ffffff" })
+      .text(w - 410, bandTop - 20, "我方自動:關", { fontSize: "17px", color: "#ffffff", fontStyle: "bold" })
       .setOrigin(0.5);
 
     this.autoBtnBg.on("pointerup", () => {
@@ -136,12 +149,15 @@ export default class HandBar {
     scene.input.on("wheel", this._onWheel);
 
     this.container.add([
+      this.logGlow,
       this.logPanelBg,
+      this.logTopLine,
       this.logTitle,
       this.logText,
       this.deckPanelBg,
       this.deckTitle,
       this.deckValue,
+      this.readyGlow,
       this.readyBandBg,
       this.readyBandTopLine,
       this.readyTitle,
@@ -153,9 +169,19 @@ export default class HandBar {
       this.autoBtnText,
       this.removeBtnBg,
       this.removeBtnText,
+      this.endBtnShadow,
+      this.endBtnGlow,
       this.endBtnBg,
       this.endBtnText
     ]);
+
+    scene.tweens.add({
+      targets: [this.bottomAura, this.readyGlow, this.endBtnGlow],
+      alpha: { from: 0.06, to: 0.16 },
+      duration: 1800,
+      yoyo: true,
+      repeat: -1
+    });
   }
 
   setBattleLog(lines) {
@@ -179,7 +205,7 @@ export default class HandBar {
     this.logOffset = Math.max(0, Math.min(maxOffset, this.logOffset));
     const view = list.slice(this.logOffset, this.logOffset + this.logVisibleLines);
     this.logText.setText(view.join("\n"));
-    this.logTitle.setText(`訊息欄 ${list.length > 0 ? `(${this.logOffset + 1}-${Math.min(list.length, this.logOffset + this.logVisibleLines)}/${list.length})` : ""}`);
+    this.logTitle.setText(`戰場紀錄 ${list.length > 0 ? `(${this.logOffset + 1}-${Math.min(list.length, this.logOffset + this.logVisibleLines)}/${list.length})` : ""}`);
   }
 
   _openPileModal(title, cards) {
@@ -330,26 +356,39 @@ export default class HandBar {
     const w = this.scene.scale.width;
     const h = this.scene.scale.height;
 
-    this.endBtnBg.setAlpha(this.canOperate ? 1 : 0.35);
-    this.endBtnText.setAlpha(this.canOperate ? 1 : 0.35);
+    this.endBtnBg.setAlpha(this.canOperate ? 1 : 0.45);
+    this.endBtnText.setAlpha(this.canOperate ? 1 : 0.45);
+    this.endBtnGlow.setAlpha(this.canOperate ? 0.15 : 0.06);
     this.removeBtnBg.setAlpha(this.canOperate ? 1 : 0.35);
     this.removeBtnText.setAlpha(this.canOperate ? 1 : 0.35);
     this.autoBtnBg.setAlpha(1);
     this.autoBtnText.setAlpha(1);
     if (this.removeMode && this.canOperate) {
-      this.removeBtnBg.setFillStyle(0xb04040, 0.75);
+      this.removeBtnBg.setFillStyle(0xb04040, 0.9);
+      this.removeBtnBg.setStrokeStyle(2, 0xffd0d6, 0.88);
       this.removeBtnText.setColor("#fff0f0");
     } else {
-      this.removeBtnBg.setFillStyle(0xffffff, 0.12);
+      this.removeBtnBg.setFillStyle(0x4b2d34, 0.86);
+      this.removeBtnBg.setStrokeStyle(2, 0xffc2cf, 0.62);
       this.removeBtnText.setColor("#ffffff");
     }
 
     if (this.autoPlayerEnabled) {
-      this.autoBtnBg.setFillStyle(0x2f7d4f, 0.75);
+      this.autoBtnBg.setFillStyle(0x2f7d4f, 0.9);
+      this.autoBtnBg.setStrokeStyle(2, 0xc9ffe0, 0.82);
       this.autoBtnText.setColor("#e8ffef");
     } else {
-      this.autoBtnBg.setFillStyle(0xffffff, 0.12);
+      this.autoBtnBg.setFillStyle(0x2d3f5d, 0.86);
+      this.autoBtnBg.setStrokeStyle(2, 0xcfe2ff, 0.58);
       this.autoBtnText.setColor("#ffffff");
+    }
+
+    if (this.canOperate) {
+      this.endBtnBg.setFillStyle(0x4da0df, 0.96);
+      this.endBtnBg.setStrokeStyle(2, 0xf0fbff, 0.9);
+    } else {
+      this.endBtnBg.setFillStyle(0x33526f, 0.7);
+      this.endBtnBg.setStrokeStyle(2, 0xaed7ff, 0.38);
     }
     this.autoBtnText.setText(`我方自動:${this.autoPlayerEnabled ? "開" : "關"}`);
 
@@ -380,10 +419,12 @@ export default class HandBar {
       const card = list[i] || null;
 
       const container = this.scene.add.container(x, y);
-      const bg = this.scene.add.rectangle(0, 0, cardW, cardH, 0x132236, 0.72).setOrigin(0, 0);
+      const glow = this.scene.add.rectangle(cardW / 2, cardH / 2, cardW + 10, cardH + 10, 0x82d4ff, 0.04);
+      const bg = this.scene.add.rectangle(0, 0, cardW, cardH, 0x132236, 0.82).setOrigin(0, 0);
+      const topLight = this.scene.add.rectangle(cardW / 2, 10, cardW - 12, 2, 0xe7f4ff, 0.24);
       const border = this.scene.add.rectangle(0, 0, cardW, cardH, 0x000000, 0).setOrigin(0, 0);
       border.setStrokeStyle(1, 0xa9c0df, 0.26);
-      container.add([bg, border]);
+      container.add([glow, bg, topLight, border]);
 
       if (card) {
         const cost = getCardCost(card);
@@ -396,9 +437,11 @@ export default class HandBar {
 
         const textureKey = getTextureKey(card);
         if (this.scene.textures.exists(textureKey)) {
+          const artFrame = this.scene.add.rectangle(artX + artW / 2, artY + artH / 2, artW + 4, artH + 4, 0x0d1624, 0.95)
+            .setStrokeStyle(1, 0xdcf0ff, 0.22);
           const art = this.scene.add.image(artX + artW / 2, artY + artH / 2, textureKey);
           art.setDisplaySize(artW, artH);
-          container.add(art);
+          container.add([artFrame, art]);
         } else {
           const artBg = this.scene.add.rectangle(artX, artY, artW, artH, 0x223548, 0.9).setOrigin(0, 0);
           const artFallback = this.scene.add
@@ -416,6 +459,7 @@ export default class HandBar {
         const txt1 = this.scene.add.text(textX, 7, card.name, {
           fontSize: cardW < 98 ? "10px" : "12px",
           color: "#ffffff",
+          fontStyle: "bold",
           wordWrap: { width: nameW }
         });
         const txt2 = this.scene.add.text(textX, 35, `費:${cost}`, {
@@ -430,17 +474,54 @@ export default class HandBar {
 
         const sel = this.selectedId && card.id === this.selectedId;
         if (sel) {
-          bg.setFillStyle(0x1b314d, 0.9);
-          border.setStrokeStyle(2, 0x9ddcff, 0.95);
+          bg.setFillStyle(0x24476d, 0.92);
+          glow.setFillStyle(0x8fd8ff, 0.14);
+          border.setStrokeStyle(2, 0xb7ebff, 0.98);
         } else if (canPlay) {
-          bg.setFillStyle(0x1a2c44, 0.84);
-          border.setStrokeStyle(1, 0x8fb8ea, 0.5);
+          bg.setFillStyle(0x1a2c44, 0.88);
+          glow.setFillStyle(0x88d4ff, 0.08);
+          border.setStrokeStyle(1.5, 0x9bd6ff, 0.58);
         }
 
         let holdTimer = null;
         let holdTriggered = false;
 
         bg.setInteractive({ useHandCursor: true });
+
+        bg.on("pointerover", () => {
+          if (!canPlay) return;
+          this.scene.tweens.add({
+            targets: container,
+            y: y - 8,
+            scaleX: 1.03,
+            scaleY: 1.03,
+            duration: 120,
+            ease: "Sine.easeOut"
+          });
+          glow.setFillStyle(0x95e1ff, 0.16);
+          border.setStrokeStyle(2, 0xe5f3ff, 0.95);
+        });
+
+        bg.on("pointerout", () => {
+          this.scene.tweens.add({
+            targets: container,
+            y,
+            scaleX: 1,
+            scaleY: 1,
+            duration: 120,
+            ease: "Sine.easeOut"
+          });
+          if (sel) {
+            glow.setFillStyle(0x8fd8ff, 0.14);
+            border.setStrokeStyle(2, 0xb7ebff, 0.98);
+          } else if (canPlay) {
+            glow.setFillStyle(0x88d4ff, 0.08);
+            border.setStrokeStyle(1.5, 0x9bd6ff, 0.58);
+          } else {
+            glow.setFillStyle(0x82d4ff, 0.04);
+            border.setStrokeStyle(1, 0xa9c0df, 0.26);
+          }
+        });
 
         bg.on("pointerdown", (pointer) => {
           if (pointer.rightButtonDown && pointer.rightButtonDown()) {
@@ -476,28 +557,21 @@ export default class HandBar {
           this.selectedId = card.id;
           if (typeof this.onSelectCard === "function") this.onSelectCard(card);
         });
-
-        container.setAlpha(canPlay ? 1 : 0.6);
       } else {
-        container.setAlpha(0.36);
+        const emptyText = this.scene.add.text(cardW / 2, cardH / 2, "空位", {
+          fontSize: "14px",
+          color: "#6f89a5"
+        }).setOrigin(0.5);
+        container.add(emptyText);
       }
 
-      this.container.add(container);
       this.cards.push(container);
+      this.container.add(container);
     }
   }
 
-  clearSelection() {
-    this.selectedId = null;
-  }
-
-  setSelectionById(cardId) {
-    this.selectedId = cardId ? String(cardId) : null;
-  }
-
   destroy() {
-    if (this.pileModal) this.pileModal.destroy(true);
     if (this.scene?.input && this._onWheel) this.scene.input.off("wheel", this._onWheel);
-    this.container.destroy(true);
+    if (this.container) this.container.destroy(true);
   }
 }
