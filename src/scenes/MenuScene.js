@@ -62,13 +62,19 @@ export default class MenuScene extends Phaser.Scene {
 
   _drawBackground(w, h) {
     const g = this.add.graphics();
-    g.fillGradientStyle(0x13274d, 0x1b4173, 0x07111f, 0x040913, 1);
+    g.fillGradientStyle(0x11264b, 0x214b7d, 0x09101f, 0x040913, 1);
     g.fillRect(0, 0, w, h);
 
-    this.add.ellipse(w * 0.5, h * 0.26, 540, 250, 0x6bd0ff, 0.08);
-    this.add.ellipse(w * 0.22, h * 0.48, 420, 320, 0x59c7ff, 0.06);
-    this.add.ellipse(w * 0.78, h * 0.48, 420, 320, 0xffb573, 0.05);
-    this.add.rectangle(w / 2, h * 0.9, w, 190, 0x07101d, 0.44);
+    this.add.ellipse(w * 0.47, h * 0.24, 560, 250, 0x72d6ff, 0.08);
+    this.add.ellipse(w * 0.22, h * 0.5, 460, 340, 0x59c7ff, 0.07);
+    this.add.ellipse(w * 0.82, h * 0.48, 470, 330, 0xffb16a, 0.07);
+    this.add.ellipse(w * 0.53, h * 0.42, 780, 320, 0xa8dcff, 0.03);
+    this.add.rectangle(w / 2, h * 0.9, w, 190, 0x07101d, 0.48);
+
+    const horizonGlow = this.add.rectangle(w / 2, h * 0.62, w * 0.9, 18, 0xe8f7ff, 0.05).setDepth(6);
+    const battlefieldMist = this.add.ellipse(w / 2, h * 0.68, w * 0.86, 150, 0xd2eeff, 0.06).setDepth(7);
+    const laneLeft = this.add.triangle(w * 0.37, h * 0.76, 0, 54, 180, 0, 210, 108, 0x61cfff, 0.08).setDepth(7).setAngle(-6);
+    const laneRight = this.add.triangle(w * 0.68, h * 0.76, 0, 54, 180, 0, 210, 108, 0xffb574, 0.08).setDepth(7).setAngle(174);
 
     const stars = 85;
     for (let i = 0; i < stars; i += 1) {
@@ -85,11 +91,11 @@ export default class MenuScene extends Phaser.Scene {
       });
     }
 
-    const mistA = this.add.rectangle(w / 2, h * 0.62, w * 0.9, 110, 0xa9dcff, 0.03);
-    const mistB = this.add.rectangle(w / 2, h - 18, w, 150, 0xc3e6ff, 0.08);
+    const mistA = this.add.rectangle(w / 2, h * 0.62, w * 0.9, 110, 0xa9dcff, 0.03).setDepth(8);
+    const mistB = this.add.rectangle(w / 2, h - 18, w, 150, 0xc3e6ff, 0.08).setDepth(8);
     this.tweens.add({
-      targets: [mistA, mistB],
-      alpha: { from: 0.04, to: 0.11 },
+      targets: [mistA, mistB, battlefieldMist, horizonGlow, laneLeft, laneRight],
+      alpha: { from: 0.04, to: 0.12 },
       duration: 2600,
       yoyo: true,
       repeat: -1
@@ -97,20 +103,24 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawHeroSilhouettes(w, h) {
-    const leftAura = this.add.circle(w * 0.12, h * 0.58, 200, 0x5cc7ff, 0.11).setDepth(2);
-    const rightAura = this.add.circle(w * 0.88, h * 0.58, 200, 0xffb26d, 0.1).setDepth(2);
-    const leftBack = this.add.rectangle(w * 0.12, h * 0.68, 156, 350, 0x071a31, 0.44).setAngle(-12).setDepth(3);
-    const rightBack = this.add.rectangle(w * 0.88, h * 0.68, 156, 350, 0x35170f, 0.42).setAngle(12).setDepth(3);
-    const leftBody = this.add.rectangle(w * 0.14, h * 0.68, 138, 332, 0x0a1b33, 0.74).setAngle(-8).setDepth(4);
-    const rightBody = this.add.rectangle(w * 0.86, h * 0.68, 138, 332, 0x2f170f, 0.74).setAngle(8).setDepth(4);
-    const leftEdge = this.add.rectangle(w * 0.17, h * 0.64, 28, 260, 0xa6e7ff, 0.08).setAngle(-10).setDepth(5);
-    const rightEdge = this.add.rectangle(w * 0.83, h * 0.64, 28, 260, 0xffcd9b, 0.08).setAngle(10).setDepth(5);
+    const leftAura = this.add.circle(w * 0.11, h * 0.58, 224, 0x5cc7ff, 0.13).setDepth(2);
+    const rightAura = this.add.circle(w * 0.89, h * 0.57, 214, 0xffb26d, 0.12).setDepth(2);
+    const leftBack = this.add.rectangle(w * 0.11, h * 0.69, 170, 360, 0x071a31, 0.42).setAngle(-15).setDepth(3);
+    const rightBack = this.add.rectangle(w * 0.89, h * 0.67, 164, 344, 0x35170f, 0.4).setAngle(15).setDepth(3);
+    const leftBody = this.add.rectangle(w * 0.145, h * 0.675, 146, 338, 0x0a1b33, 0.76).setAngle(-9).setDepth(4);
+    const rightBody = this.add.rectangle(w * 0.855, h * 0.665, 134, 320, 0x2f170f, 0.76).setAngle(9).setDepth(4);
+    const leftEdge = this.add.rectangle(w * 0.175, h * 0.64, 30, 270, 0xa6e7ff, 0.11).setAngle(-10).setDepth(5);
+    const rightEdge = this.add.rectangle(w * 0.822, h * 0.64, 28, 248, 0xffcd9b, 0.11).setAngle(10).setDepth(5);
+    const leftWeapon = this.add.rectangle(w * 0.22, h * 0.62, 18, 260, 0x8fd8ff, 0.12).setAngle(22).setDepth(5);
+    const rightWeapon = this.add.rectangle(w * 0.78, h * 0.625, 18, 240, 0xffc996, 0.12).setAngle(-20).setDepth(5);
+    const leftSummon = this.add.circle(w * 0.295, h * 0.58, 46, 0x79d8ff, 0.08).setDepth(6);
+    const rightSummon = this.add.circle(w * 0.705, h * 0.56, 42, 0xffb879, 0.08).setDepth(6);
     leftBody.setStrokeStyle(1, 0x87d7ff, 0.18);
     rightBody.setStrokeStyle(1, 0xffc08f, 0.18);
 
     this.tweens.add({
-      targets: [leftAura, rightAura, leftEdge, rightEdge],
-      alpha: { from: 0.06, to: 0.14 },
+      targets: [leftAura, rightAura, leftEdge, rightEdge, leftWeapon, rightWeapon, leftSummon, rightSummon],
+      alpha: { from: 0.06, to: 0.16 },
       duration: 2400,
       yoyo: true,
       repeat: -1
@@ -118,21 +128,24 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawCenterStage(w, h) {
-    const stageGlow = this.add.ellipse(w / 2, h * 0.39, 640, 260, 0x76d2ff, 0.06).setDepth(20);
-    const crestOuter = this.add.circle(w / 2, h * 0.13, 22, 0xf6ca75, 0.82).setStrokeStyle(2, 0xffefbd, 0.95).setDepth(21);
-    this.add.circle(w / 2, h * 0.13, 10, 0xfff8de, 0.98).setDepth(22);
+    const stageGlow = this.add.ellipse(w / 2, h * 0.39, 660, 270, 0x76d2ff, 0.06).setDepth(20);
+    const flameCore = this.add.ellipse(w / 2, h * 0.13, 94, 56, 0xf6b24f, 0.28).setDepth(21);
+    const crestOuter = this.add.circle(w / 2, h * 0.13, 24, 0xf6ca75, 0.86).setStrokeStyle(2, 0xffefbd, 0.95).setDepth(22);
+    const crestInner = this.add.circle(w / 2, h * 0.13, 11, 0xfff8de, 0.98).setDepth(23);
+    const crestSpireL = this.add.triangle(w / 2 - 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(22).setAngle(-18);
+    const crestSpireR = this.add.triangle(w / 2 + 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(22).setAngle(198);
 
     const logoFar = this.add.text(w / 2, h * 0.168, "火焰征程", {
-      fontSize: "90px",
+      fontSize: "92px",
       color: "#61cbff",
       fontStyle: "bold"
-    }).setOrigin(0.5).setAlpha(0.12).setDepth(21);
+    }).setOrigin(0.5).setAlpha(0.1).setDepth(21);
 
     const logoGlow = this.add.text(w / 2, h * 0.162, "火焰征程", {
-      fontSize: "82px",
-      color: "#96deff",
+      fontSize: "84px",
+      color: "#9be2ff",
       fontStyle: "bold"
-    }).setOrigin(0.5).setAlpha(0.22).setDepth(22);
+    }).setOrigin(0.5).setAlpha(0.26).setDepth(22);
 
     const logo = this.add.text(w / 2, h * 0.156, "火焰征程", {
       fontSize: "74px",
@@ -148,18 +161,50 @@ export default class MenuScene extends Phaser.Scene {
       fontStyle: "bold"
     }).setOrigin(0.5).setDepth(23);
 
-    this.add.text(w / 2, h * 0.295, "聖火甦醒，命運之戰即將展開", {
+    this.add.text(w / 2, h * 0.29, "聖火甦醒，命運之戰即將展開", {
       fontSize: "20px",
       color: "#d7eaff",
       stroke: "#09111a",
       strokeThickness: 3
     }).setOrigin(0.5).setDepth(23);
 
-    this._makeButton(w / 2, h * 0.42, "開始冒險", () => this._openBattleModal(), 388, 76, "34px", "primary");
+    const leftCardBack = this.add.rectangle(w * 0.38, h * 0.37, 78, 110, 0x0f2741, 0.9)
+      .setStrokeStyle(2, 0x8fd8ff, 0.6)
+      .setAngle(-24)
+      .setDepth(24);
+    const leftCardCore = this.add.rectangle(w * 0.38, h * 0.37, 54, 68, 0x77d7ff, 0.16)
+      .setAngle(-24)
+      .setDepth(25);
+    const centerCardBack = this.add.rectangle(w * 0.495, h * 0.392, 84, 118, 0x142844, 0.95)
+      .setStrokeStyle(2, 0xf4d08b, 0.68)
+      .setAngle(-8)
+      .setDepth(26);
+    const centerCardCore = this.add.rectangle(w * 0.495, h * 0.392, 56, 72, 0xffc46d, 0.18)
+      .setAngle(-8)
+      .setDepth(27);
+    const rightCardBack = this.add.rectangle(w * 0.615, h * 0.365, 80, 112, 0x2b1f1a, 0.92)
+      .setStrokeStyle(2, 0xffc892, 0.62)
+      .setAngle(21)
+      .setDepth(24);
+    const rightCardCore = this.add.rectangle(w * 0.615, h * 0.365, 52, 66, 0xffc07a, 0.16)
+      .setAngle(21)
+      .setDepth(25);
+    const cardTrailLeft = this.add.ellipse(w * 0.43, h * 0.37, 170, 22, 0x84dbff, 0.08).setAngle(-17).setDepth(23);
+    const cardTrailRight = this.add.ellipse(w * 0.57, h * 0.37, 170, 22, 0xffbf7a, 0.08).setAngle(17).setDepth(23);
+
+    this._makeButton(w / 2, h * 0.432, "開始冒險", () => this._openBattleModal(), 388, 76, "34px", "primary");
 
     this.tweens.add({
-      targets: [stageGlow, crestOuter, logoFar, logoGlow, logo],
+      targets: [stageGlow, flameCore, crestOuter, crestInner, crestSpireL, crestSpireR, logoFar, logoGlow, logo, leftCardBack, rightCardBack, centerCardBack, cardTrailLeft, cardTrailRight],
       alpha: { from: 0.88, to: 1 },
+      duration: 1800,
+      yoyo: true,
+      repeat: -1
+    });
+
+    this.tweens.add({
+      targets: [leftCardBack, leftCardCore, rightCardBack, rightCardCore, centerCardBack, centerCardCore],
+      y: '-=6',
       duration: 1800,
       yoyo: true,
       repeat: -1
@@ -167,8 +212,8 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawModeCards(w, h) {
-    this._makeModeCard(w / 2 - 170, h * 0.55, 260, 120, "副本挑戰", "挑戰關卡、選擇敵人配置", 0x71cfff, () => this.scene.start("ChallengeScene"));
-    this._makeModeCard(w / 2 + 170, h * 0.55, 260, 120, "線上對戰", "與其他玩家即時對戰", 0xffbf82, () => this.scene.start("RoomScene"));
+    this._makeModeCard(w / 2 - 188, h * 0.57, 272, 122, "副本挑戰", "挑戰關卡、選擇敵人配置", 0x71cfff, () => this.scene.start("ChallengeScene"));
+    this._makeModeCard(w / 2 + 164, h * 0.545, 272, 122, "線上對戰", "與其他玩家即時對戰", 0xffbf82, () => this.scene.start("RoomScene"));
   }
 
   _makeModeCard(cx, cy, w, h, title, desc, glowColor, onClick) {
