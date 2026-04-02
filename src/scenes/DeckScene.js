@@ -10,9 +10,9 @@ const GRID_COLS = 3;
 const GRID_ROWS = 4;
 const GRID_PAGE_SIZE = GRID_COLS * GRID_ROWS;
 const TILE_W = 178;
-const TILE_H = 106;
+const TILE_H = 112;
 const GRID_GAP_X = 10;
-const GRID_GAP_Y = 8;
+const GRID_GAP_Y = 10;
 const LONG_PRESS_MS = 400;
 
 const PHYLE_LABELS = {
@@ -147,6 +147,12 @@ export default class DeckScene extends Phaser.Scene {
     this._renderTypeTags = null;
     this._renderRaceTags = null;
     this._resizeHandler = null;
+    this.pendingRoleKey = "";
+  }
+
+  init(data) {
+    const role = String(data?.role || "").trim();
+    this.pendingRoleKey = ROLES.includes(role) ? role : "";
   }
 
   create() {
@@ -160,6 +166,9 @@ export default class DeckScene extends Phaser.Scene {
     this._mountFilterUI();
     this._layoutFilterUI();
 
+    if (this.pendingRoleKey) {
+      this.roleIndex = Math.max(0, ROLES.indexOf(this.pendingRoleKey));
+    }
     this._loadRole();
     this._applySearch();
 
@@ -192,80 +201,119 @@ export default class DeckScene extends Phaser.Scene {
     const w = this.scale.width;
     const h = this.scale.height;
 
-    this.add.rectangle(w / 2, h / 2, w, h, 0x3f2717, 1);
+    const g = this.add.graphics();
+    g.fillGradientStyle(0x11284a, 0x1d4677, 0x08111d, 0x050913, 1);
+    g.fillRect(0, 0, w, h);
 
-    for (let y = 0; y < h; y += 8) {
-      const wave = Math.sin(y * 0.035) * 0.5 + 0.5;
-      const c = wave > 0.5 ? 0x51311d : 0x4a2d1b;
-      const a = 0.12 + wave * 0.08;
-      this.add.rectangle(w / 2, y + 4, w, 8, c, a);
+    this.add.ellipse(w * 0.52, h * 0.18, 760, 260, 0x76d8ff, 0.1);
+    this.add.ellipse(w * 0.18, h * 0.52, 460, 340, 0x63cbff, 0.08);
+    this.add.ellipse(w * 0.84, h * 0.5, 450, 320, 0xffc98b, 0.07);
+    this.add.ellipse(w * 0.5, h * 0.82, 980, 220, 0x0c1930, 0.34);
+    this.add.rectangle(w / 2, h * 0.92, w, 220, 0x06101a, 0.46);
+
+    const vignetteL = this.add.rectangle(0, h / 2, 120, h, 0x03070d, 0.24).setOrigin(0, 0.5);
+    const vignetteR = this.add.rectangle(w, h / 2, 120, h, 0x08050b, 0.24).setOrigin(1, 0.5);
+    const centerGlow = this.add.ellipse(w * 0.5, h * 0.4, 860, 420, 0x8bdcff, 0.04);
+    const leftFloor = this.add.ellipse(w * 0.25, h * 0.82, 500, 90, 0x294968, 0.2);
+    const rightFloor = this.add.ellipse(w * 0.75, h * 0.82, 500, 90, 0x483921, 0.16);
+
+    for (let i = 0; i < 72; i += 1) {
+      const sx = Phaser.Math.Between(0, w);
+      const sy = Phaser.Math.Between(0, Math.floor(h * 0.72));
+      const star = this.add.circle(sx, sy, Phaser.Math.Between(1, 2), 0xe3f5ff, Phaser.Math.FloatBetween(0.1, 0.8));
+      this.tweens.add({
+        targets: star,
+        alpha: { from: Phaser.Math.FloatBetween(0.1, 0.35), to: Phaser.Math.FloatBetween(0.45, 0.9) },
+        duration: Phaser.Math.Between(1400, 2600),
+        yoyo: true,
+        repeat: -1,
+        delay: Phaser.Math.Between(0, 1400)
+      });
     }
 
-    this.add.rectangle(w / 2, h / 2, w, h, 0x000000, 0.22);
+    const mistA = this.add.rectangle(w / 2, h * 0.58, w * 0.92, 120, 0xa6dcff, 0.03);
+    const mistB = this.add.rectangle(w / 2, h - 20, w, 150, 0xd2ebff, 0.08);
+    this.tweens.add({
+      targets: [mistA, mistB, centerGlow, leftFloor, rightFloor, vignetteL, vignetteR],
+      alpha: { from: 0.04, to: 0.1 },
+      duration: 2400,
+      yoyo: true,
+      repeat: -1
+    });
   }
 
   _buildHeader() {
     const w = this.scale.width;
 
+    const topGlow = this.add.rectangle(w / 2, 30, w, 64, 0x6fd2ff, 0.04);
+    const topBar = this.add.rectangle(w / 2, 30, w, 54, 0x081424, 0.78).setStrokeStyle(1.2, 0x8fd8ff, 0.34);
+    const topLine = this.add.rectangle(w / 2, 54, w - 60, 2, 0xf0fbff, 0.12);
+    this.uiStatic.push(topGlow, topBar, topLine);
+
     this.uiStatic.push(
-      this.add.text(24, 10, "牌組編輯（點左側卡移除，點右側卡加入）", {
-        fontSize: "20px",
-        color: "#f3e8c0",
-        fontFamily: "Georgia, Times New Roman, serif"
+      this.add.text(24, 14, "牌組編輯", {
+        fontSize: "30px",
+        color: "#ffffff",
+        fontStyle: "bold",
+        stroke: "#112034",
+        strokeThickness: 5
       })
     );
 
     this.uiStatic.push(
-      this.add
-        .text(w - 140, 20, "返回選單", {
-          fontSize: "18px",
-          color: "#9ddcff",
-          fontFamily: "Georgia, Times New Roman, serif"
-        })
-        .setInteractive({ useHandCursor: true })
-        .on("pointerup", () => this.scene.start("MenuScene"))
+      this.add.text(24, 46, "調整你的主力牌組、職系與卡牌組合", {
+        fontSize: "15px",
+        color: "#cfe7ff"
+      })
     );
 
+    const backBtn = this._makeBtn(w - 154, 16, 130, 32, "返回選單", () => this.scene.start("MenuScene"), "secondary");
+    this.uiStatic.push(backBtn.shadow, backBtn.glow, backBtn.back, backBtn.bg, backBtn.edge, backBtn.t);
+
     this.uiStatic.push(
-      this.add.text(26, 42, "角色：", {
-        fontSize: "24px",
+      this.add.text(26, 84, "角色", {
+        fontSize: "18px",
         color: "#d8e8ff",
-        fontFamily: "Georgia, Times New Roman, serif"
+        fontStyle: "bold"
       })
     );
 
-    this.roleLabel = this.add.text(92, 42, "L1", {
-      fontSize: "24px",
+    this.roleLabel = this.add.text(78, 82, "L1", {
+      fontSize: "28px",
       color: "#ffffff",
-      fontFamily: "Georgia, Times New Roman, serif"
+      fontStyle: "bold",
+      stroke: "#18324f",
+      strokeThickness: 4
     });
     this.uiStatic.push(this.roleLabel);
 
-    this._makeBtn(152, 42, 42, 28, "<", () => {
+    const prevBtn = this._makeBtn(132, 80, 42, 30, "<", () => {
       this.roleIndex = (this.roleIndex - 1 + ROLES.length) % ROLES.length;
       this._loadRole();
       this._renderAll();
-    });
-
-    this._makeBtn(202, 42, 42, 28, ">", () => {
+    }, "secondary");
+    const nextBtn = this._makeBtn(182, 80, 42, 30, ">", () => {
       this.roleIndex = (this.roleIndex + 1) % ROLES.length;
       this._loadRole();
       this._renderAll();
-    });
+    }, "secondary");
+    this.uiStatic.push(prevBtn.shadow, prevBtn.glow, prevBtn.back, prevBtn.bg, prevBtn.edge, prevBtn.t);
+    this.uiStatic.push(nextBtn.shadow, nextBtn.glow, nextBtn.back, nextBtn.bg, nextBtn.edge, nextBtn.t);
 
-    this.searchLabel = this.add.text(674, 48, "搜尋：(全部) | 類型:技能 | 種族:全部 | 效果:全部", {
+    this.searchLabel = this.add.text(360, 86, "搜尋：(全部) | 類型:技能 | 種族:全部 | 效果:全部", {
       fontSize: "14px",
-      color: "#9ddcff",
-      fontFamily: "Georgia, Times New Roman, serif"
+      color: "#9ddcff"
     });
     this.uiStatic.push(this.searchLabel);
 
-    this.poolPageLabel = this.add.text(1030, 48, "", {
+    this.poolPageLabel = this.add.text(w - 250, 86, "", {
       fontSize: "16px",
       color: "#d8e8ff",
-      fontFamily: "Georgia, Times New Roman, serif"
+      fontStyle: "bold"
     });
     this.uiStatic.push(this.poolPageLabel);
+
+    this.tweens.add({ targets: topGlow, alpha: { from: 0.04, to: 0.09 }, duration: 1800, yoyo: true, repeat: -1 });
   }
 
   _mountFilterUI() {
@@ -277,9 +325,9 @@ export default class DeckScene extends Phaser.Scene {
     root.id = "deck-filter-root";
     root.style.position = "absolute";
     root.style.left = "674px";
-    root.style.top = "14px";
+    root.style.top = "44px";
     root.style.display = "flex";
-    root.style.gap = "8px";
+    root.style.gap = "10px";
     root.style.alignItems = "center";
     root.style.flexWrap = "nowrap";
     root.style.justifyContent = "space-between";
@@ -288,21 +336,22 @@ export default class DeckScene extends Phaser.Scene {
     root.style.position = "absolute";
 
     const makeInputBase = (el) => {
-      el.style.height = "28px";
+      el.style.height = "34px";
       el.style.boxSizing = "border-box";
-      el.style.border = "1px solid #9f7a4d";
-      el.style.background = "#f0e3c9";
-      el.style.color = "#2d1c10";
-      el.style.borderRadius = "4px";
+      el.style.border = "1px solid rgba(143, 216, 255, 0.4)";
+      el.style.background = "linear-gradient(180deg, rgba(13,28,46,0.96), rgba(8,20,35,0.9))";
+      el.style.color = "#eef7ff";
+      el.style.borderRadius = "10px";
       el.style.fontSize = "13px";
-      el.style.padding = "2px 6px";
-      el.style.fontFamily = "Georgia, Times New Roman, serif";
+      el.style.padding = "4px 10px";
+      el.style.fontFamily = "Segoe UI, Microsoft JhengHei, sans-serif";
+      el.style.boxShadow = "0 0 0 1px rgba(255,255,255,0.04) inset, 0 6px 18px rgba(0,0,0,0.18)";
       return el;
     };
 
     const searchInput = makeInputBase(document.createElement("input"));
     searchInput.type = "text";
-    searchInput.placeholder = "搜尋 名稱/ID/sourceId";
+    searchInput.placeholder = "搜尋 名稱 / ID / sourceId";
     searchInput.style.width = "220px";
     searchInput.style.minWidth = "140px";
     searchInput.value = this.searchText;
@@ -384,6 +433,11 @@ export default class DeckScene extends Phaser.Scene {
     typeTags.style.gap = "6px";
     typeTags.style.alignItems = "center";
     typeTags.style.marginLeft = "8px";
+    typeTags.style.padding = "5px 8px";
+    typeTags.style.borderRadius = "12px";
+    typeTags.style.background = "linear-gradient(180deg, rgba(12,26,43,0.84), rgba(9,22,38,0.7))";
+    typeTags.style.border = "1px solid rgba(114,160,207,0.44)";
+    typeTags.style.boxShadow = "0 10px 24px rgba(0,0,0,0.14)";
 
     const typeTagDefs = [
       { value: "special", label: "特殊士兵" },
@@ -398,12 +452,14 @@ export default class DeckScene extends Phaser.Scene {
         b.type = "button";
         b.textContent = it.label;
         b.style.height = "34px";
-        b.style.padding = "0 10px";
-        b.style.border = "1px solid #6b88ad";
-        b.style.borderRadius = "8px";
+        b.style.padding = "0 12px";
+        b.style.border = this.typeFilter === it.value ? "1px solid rgba(182,229,255,0.72)" : "1px solid rgba(107,136,173,0.72)";
+        b.style.borderRadius = "10px";
         b.style.cursor = "pointer";
         b.style.color = "#e8f3ff";
-        b.style.background = this.typeFilter === it.value ? "#2b4e7a" : "rgba(16,36,61,0.85)";
+        b.style.fontWeight = "700";
+        b.style.background = this.typeFilter === it.value ? "linear-gradient(180deg, #4371aa, #29507e)" : "rgba(16,36,61,0.85)";
+        b.style.boxShadow = this.typeFilter === it.value ? "0 8px 18px rgba(104,184,255,0.18)" : "none";
         b.addEventListener("click", () => {
           this.typeFilter = it.value;
           if (this.typeSelectEl) this.typeSelectEl.value = it.value;
@@ -431,10 +487,11 @@ export default class DeckScene extends Phaser.Scene {
     raceTags.style.maxHeight = "none";
     raceTags.style.overflowX = "auto";
     raceTags.style.overflowY = "hidden";
-    raceTags.style.padding = "4px 6px";
-    raceTags.style.background = "rgba(9,22,38,0.68)";
-    raceTags.style.border = "1px solid rgba(86,124,165,0.65)";
-    raceTags.style.borderRadius = "10px";
+    raceTags.style.padding = "5px 8px";
+    raceTags.style.background = "linear-gradient(180deg, rgba(12,26,43,0.84), rgba(9,22,38,0.72))";
+    raceTags.style.border = "1px solid rgba(86,124,165,0.5)";
+    raceTags.style.borderRadius = "12px";
+    raceTags.style.boxShadow = "0 10px 24px rgba(0,0,0,0.14)";
 
     const renderRaceTags = () => {
       raceTags.innerHTML = "";
@@ -449,15 +506,16 @@ export default class DeckScene extends Phaser.Scene {
         b.title = full;
         b.style.height = "28px";
         b.style.minWidth = "0";
-        b.style.padding = "0 6px";
-        b.style.border = "1px solid #5f7fa6";
-        b.style.borderRadius = "7px";
+        b.style.padding = "0 8px";
+        b.style.border = this.raceFilter === it.value ? "1px solid rgba(181,230,255,0.68)" : "1px solid #5f7fa6";
+        b.style.borderRadius = "8px";
         b.style.cursor = "pointer";
         b.style.color = "#d6ebff";
         b.style.fontSize = "12px";
         b.style.fontWeight = "700";
         b.style.letterSpacing = "0.5px";
-        b.style.background = this.raceFilter === it.value ? "#2f5c8f" : "rgba(18,40,68,0.82)";
+        b.style.background = this.raceFilter === it.value ? "linear-gradient(180deg, #3d6da4, #2c5683)" : "rgba(18,40,68,0.82)";
+        b.style.boxShadow = this.raceFilter === it.value ? "0 8px 16px rgba(97,170,255,0.16)" : "none";
         b.addEventListener("click", () => {
           this.raceFilter = this.raceFilter === it.value ? "all" : it.value;
           if (this.raceSelectEl) this.raceSelectEl.value = this.raceFilter;
@@ -639,82 +697,79 @@ export default class DeckScene extends Phaser.Scene {
 
   _buildPanels() {
     const leftX = 24;
-    const topY = 104;
+    const topY = 124;
     const panelW = 600;
-    const panelH = 492;
-
+    const panelH = 508;
     const rightX = 656;
 
-    const pageColor = 0xd6c09a;
-    const pageInner = 0xcbb085;
-    const edge = 0x6f4d2c;
-    const shadow = 0x2c1a10;
+    const buildPanel = (x, title, glowColor, titleColor, variant = "left") => {
+      const cx = x + panelW / 2;
+      const cy = topY + panelH / 2;
+      const isLeft = variant === "left";
+      this.uiStatic.push(this.add.ellipse(cx, cy, panelW + 54, panelH + 42, glowColor, isLeft ? 0.09 : 0.065));
+      this.uiStatic.push(this.add.rectangle(cx, cy + 10, panelW, panelH, 0x000000, 0.26));
+      this.uiStatic.push(this.add.rectangle(cx, cy, panelW, panelH, isLeft ? 0x0b1b31 : 0x101b2e, isLeft ? 0.9 : 0.82).setStrokeStyle(1.8, isLeft ? 0xb6e5ff : 0xd3e9ff, isLeft ? 0.44 : 0.26));
+      this.uiStatic.push(this.add.rectangle(cx, topY + 16, panelW - 28, 2, 0xf0fbff, isLeft ? 0.16 : 0.08));
+      this.uiStatic.push(this.add.rectangle(cx, topY + 30, panelW - 52, 28, isLeft ? 0x74d4ff : 0xffc58f, isLeft ? 0.05 : 0.04));
+      this.uiStatic.push(this.add.text(x + 18, topY - 38, title, {
+        fontSize: isLeft ? "28px" : "24px",
+        color: titleColor,
+        fontStyle: "bold",
+        stroke: "#132036",
+        strokeThickness: 4
+      }));
+    };
 
-    this.uiStatic.push(this.add.rectangle(leftX + panelW / 2, topY + panelH / 2 + 4, panelW, panelH, shadow, 0.25));
-    this.uiStatic.push(this.add.rectangle(rightX + panelW / 2, topY + panelH / 2 + 4, panelW, panelH, shadow, 0.25));
+    buildPanel(leftX, "目前牌組", 0x7ad4ff, "#ffffff", "left");
+    buildPanel(rightX, "我的卡牌", 0xffc58f, "#fff0d8", "right");
 
-    this.uiStatic.push(this.add.rectangle(leftX + panelW / 2, topY + panelH / 2, panelW, panelH, pageColor, 1));
-    this.uiStatic.push(this.add.rectangle(rightX + panelW / 2, topY + panelH / 2, panelW, panelH, pageColor, 1));
+    this.uiStatic.push(this.add.ellipse(640, topY + panelH / 2, 16, panelH + 12, 0x7fd6ff, 0.16));
+    this.uiStatic.push(this.add.rectangle(640, topY + panelH / 2, 8, panelH + 12, 0x113458, 0.46));
+    this.uiStatic.push(this.add.rectangle(640, topY + panelH / 2, 2, panelH + 12, 0xe6f4ff, 0.22));
 
-    this.uiStatic.push(this.add.rectangle(leftX + panelW / 2, topY + panelH / 2, panelW - 18, panelH - 18, pageInner, 0.55));
-    this.uiStatic.push(this.add.rectangle(rightX + panelW / 2, topY + panelH / 2, panelW - 18, panelH - 18, pageInner, 0.55));
-
-    this.uiStatic.push(this.add.rectangle(leftX + panelW / 2, topY + panelH / 2, panelW, panelH).setStrokeStyle(3, edge, 1));
-    this.uiStatic.push(this.add.rectangle(rightX + panelW / 2, topY + panelH / 2, panelW, panelH).setStrokeStyle(3, edge, 1));
-
-    this.uiStatic.push(this.add.rectangle(640, topY + panelH / 2, 8, panelH + 8, 0x5c3d24, 0.8));
-    this.uiStatic.push(this.add.rectangle(640, topY + panelH / 2, 2, panelH + 8, 0x8f6a47, 0.8));
-
-    this.deckTitleLabel = this.add.text(leftX + 10, topY - 36, "目前牌組", {
-      fontSize: "24px",
-      color: "#2d1c10",
-      fontFamily: "Georgia, Times New Roman, serif"
+    this.deckTitleLabel = this.add.text(leftX + 18, topY - 2, "目前牌組", {
+      fontSize: "19px",
+      color: "#d5ebff",
+      fontStyle: "bold"
     });
     this.uiStatic.push(this.deckTitleLabel);
-
-    this.uiStatic.push(
-      this.add.text(rightX + 10, topY - 36, "我的卡牌", {
-        fontSize: "24px",
-        color: "#2d1c10",
-        fontFamily: "Georgia, Times New Roman, serif"
-      })
-    );
   }
 
   _buildBottomButtons() {
     const h = this.scale.height;
+    const addBtn = (btn) => this.uiStatic.push(btn.shadow, btn.glow, btn.back, btn.bg, btn.edge, btn.t);
 
-    this._makeBtn(24, h - 40, 160, 30, "儲存", () => this._save());
-    this._makeBtn(194, h - 40, 160, 30, "重設此角色", () => {
+    addBtn(this._makeBtn(24, h - 40, 182, 34, "儲存套牌", () => this._save(), "primary"));
+    addBtn(this._makeBtn(216, h - 40, 154, 34, "重設此角色", () => {
       this._resetRole();
       this._renderAll();
-    });
-    this._makeBtn(364, h - 40, 220, 30, "清空所有牌組設定", () => {
+    }, "secondary"));
+    addBtn(this._makeBtn(380, h - 40, 206, 34, "清空所有牌組設定", () => {
       GameState.clearAllDecks();
       this._loadRole();
       this._renderAll();
-    });
+    }, "danger"));
 
-    this._makeBtn(656, h - 40, 96, 30, "套牌上頁", () => {
+    addBtn(this._makeBtn(656, h - 40, 96, 30, "套牌上頁", () => {
       this.deckPage = Math.max(0, this.deckPage - 1);
       this._renderDeckGrid();
-    });
-    this._makeBtn(760, h - 40, 96, 30, "套牌下頁", () => {
+    }, "secondary"));
+    addBtn(this._makeBtn(760, h - 40, 96, 30, "套牌下頁", () => {
       const maxPage = Math.max(0, Math.ceil(this.deckIds.length / GRID_PAGE_SIZE) - 1);
       this.deckPage = Math.min(maxPage, this.deckPage + 1);
       this._renderDeckGrid();
-    });
+    }, "secondary"));
 
-    this._makeBtn(920, h - 40, 100, 30, "上一頁", () => {
+    addBtn(this._makeBtn(920, h - 40, 100, 30, "上一頁", () => {
       this.poolPage = Math.max(0, this.poolPage - 1);
       this._renderPoolGrid();
-    });
-    this._makeBtn(1028, h - 40, 100, 30, "下一頁", () => {
+    }, "secondary"));
+    addBtn(this._makeBtn(1028, h - 40, 100, 30, "下一頁", () => {
       const maxPage = Math.max(0, Math.ceil(this.filteredDefs.length / GRID_PAGE_SIZE) - 1);
       this.poolPage = Math.min(maxPage, this.poolPage + 1);
       this._renderPoolGrid();
-    });
-    this._makeBtn(1136, h - 40, 64, 30, "清搜", () => {
+    }, "secondary"));
+    addBtn(this._makeBtn(1136, h - 40, 64, 30, "清搜", () => {
       this.searchText = "";
       this.typeFilter = "skill";
       this.raceFilter = "all";
@@ -731,28 +786,51 @@ export default class DeckScene extends Phaser.Scene {
       this._applySearch();
       this._renderPoolGrid();
       this._updateTopLabels();
-    });
+    }, "secondary"));
   }
 
-  _makeBtn(x, y, w, h, text, onClick) {
-    const bg = this.add
-      .rectangle(x + w / 2, y + h / 2, w, h, 0x4d341f, 0.88)
-      .setStrokeStyle(1, 0x9f7a4d, 0.95)
-      .setInteractive({ useHandCursor: true });
+  _makeBtn(x, y, w, h, text, onClick, variant = "secondary") {
+    const isPrimary = variant === "primary";
+    const isAccent = variant === "accent";
+    const isDanger = variant === "danger";
+    const baseColor = isPrimary ? 0x58baf0 : (isAccent ? 0x6f5ad1 : (isDanger ? 0xb04956 : 0x11233b));
+    const backColor = isPrimary ? 0x2b6290 : (isAccent ? 0x382d73 : (isDanger ? 0x5f2431 : 0x09131f));
+    const glowColor = isPrimary ? 0x8cdcff : (isAccent ? 0xd5c0ff : (isDanger ? 0xffadb7 : 0x7ecfff));
+    const strokeColor = isPrimary ? 0xf1fbff : (isAccent ? 0xf3e4ff : (isDanger ? 0xffd6dc : 0xa7d9ff));
 
-    const t = this.add.text(x + w / 2, y + h / 2, text, {
+    const cx = x + w / 2;
+    const cy = y + h / 2;
+    const shadow = this.add.rectangle(cx, cy + 5, w, h, 0x000000, 0.34);
+    const glow = this.add.ellipse(cx, cy, w + 26, h + 18, glowColor, isPrimary || isAccent || isDanger ? 0.16 : 0.06);
+    const back = this.add.rectangle(cx, cy + 2, w, h, backColor, 0.95);
+    const bg = this.add.rectangle(cx, cy, w, h, baseColor, isPrimary || isAccent || isDanger ? 0.96 : 0.9)
+      .setStrokeStyle(1.6, strokeColor, isPrimary || isAccent || isDanger ? 0.88 : 0.42)
+      .setInteractive({ useHandCursor: true });
+    const edge = this.add.rectangle(cx, cy - h / 2 + 9, w - 18, 2, 0xf4fbff, isPrimary || isAccent || isDanger ? 0.3 : 0.14);
+    const t = this.add.text(cx, cy, text, {
       fontSize: "16px",
-      color: "#f8ecd2",
-      fontFamily: "Georgia, Times New Roman, serif"
+      color: "#ffffff",
+      fontStyle: "bold",
+      stroke: "#132036",
+      strokeThickness: 3
     }).setOrigin(0.5);
 
-    bg.on("pointerover", () => bg.setFillStyle(0x6a482a, 0.95));
-    bg.on("pointerout", () => bg.setFillStyle(0x4d341f, 0.88));
+    bg.on("pointerover", () => {
+      bg.setFillStyle(isPrimary ? 0x7fd5ff : (isAccent ? 0x8471e6 : (isDanger ? 0xc35c69 : 0x18304f)), 1);
+      glow.setFillStyle(glowColor, isPrimary || isAccent || isDanger ? 0.22 : 0.1);
+      this.tweens.add({ targets: [bg, back, t, edge], scaleX: 1.025, scaleY: 1.025, duration: 100 });
+    });
+    bg.on("pointerout", () => {
+      bg.setFillStyle(baseColor, isPrimary || isAccent || isDanger ? 0.96 : 0.9);
+      glow.setFillStyle(glowColor, isPrimary || isAccent || isDanger ? 0.16 : 0.06);
+      this.tweens.add({ targets: [bg, back, t, edge], scaleX: 1, scaleY: 1, duration: 100 });
+    });
     bg.on("pointerup", () => {
+      this.tweens.add({ targets: [bg, back, t], scaleX: 0.985, scaleY: 0.985, duration: 65, yoyo: true });
       if (typeof onClick === "function") onClick();
     });
 
-    this.uiStatic.push(bg, t);
+    return { shadow, glow, back, bg, edge, t };
   }
 
   _onKeyDown(ev) {
@@ -1096,26 +1174,35 @@ export default class DeckScene extends Phaser.Scene {
   _makeEmptyTile(x, y, text = "空") {
     const c = this.add.container(0, 0);
 
-    const bg = this.add.rectangle(x + TILE_W / 2, y + TILE_H / 2, TILE_W, TILE_H, 0x8c6a42, 0.35);
-    bg.setStrokeStyle(1, 0x6f4d2c, 0.45);
+    const shadow = this.add.rectangle(x + TILE_W / 2, y + TILE_H / 2 + 5, TILE_W, TILE_H, 0x000000, 0.2);
+    const bg = this.add.rectangle(x + TILE_W / 2, y + TILE_H / 2, TILE_W, TILE_H, 0x0f1f34, 0.58);
+    bg.setStrokeStyle(1.2, 0x91cfff, 0.14);
+    const edge = this.add.rectangle(x + TILE_W / 2, y + 10, TILE_W - 14, 2, 0xe7f4ff, 0.08);
+    const inner = this.add.rectangle(x + TILE_W / 2, y + TILE_H / 2, TILE_W - 18, TILE_H - 18, 0xffffff, 0.015);
 
     const t = this.add.text(x + TILE_W / 2, y + TILE_H / 2, text, {
       fontSize: "18px",
-      color: "#69492b",
-      fontFamily: "Georgia, Times New Roman, serif"
+      color: "#6f9abb",
+      fontStyle: "bold"
     }).setOrigin(0.5);
 
-    c.add([bg, t]);
+    c.add([shadow, bg, edge, inner, t]);
     return c;
   }
 
   _makeCardTile(x, y, def, options) {
     const c = this.add.container(0, 0);
+    const isSkill = (def.type || "summon") === "skill";
+    const actionGlow = options.action === "add" ? 0x82d4ff : 0xffba86;
+    const baseTint = isSkill ? 0x182347 : 0x16293d;
 
+    const shadow = this.add.rectangle(x + TILE_W / 2, y + TILE_H / 2 + 5, TILE_W, TILE_H, 0x000000, 0.24);
+    const glow = this.add.ellipse(x + TILE_W / 2, y + TILE_H / 2, TILE_W + 18, TILE_H + 12, actionGlow, 0.08);
     const base = this.add
-      .rectangle(x + TILE_W / 2, y + TILE_H / 2, TILE_W, TILE_H, 0x28384f, 0.9)
-      .setStrokeStyle(2, options.action === "add" ? 0x5c84b8 : 0xb86f47, 0.95)
+      .rectangle(x + TILE_W / 2, y + TILE_H / 2, TILE_W, TILE_H, baseTint, 0.92)
+      .setStrokeStyle(1.8, actionGlow, 0.82)
       .setInteractive({ useHandCursor: true });
+    const edge = this.add.rectangle(x + TILE_W / 2, y + 9, TILE_W - 18, 2, 0xf3fbff, 0.16);
 
     let pressTimer = null;
     let isPressing = false;
@@ -1129,9 +1216,15 @@ export default class DeckScene extends Phaser.Scene {
       }
     };
 
-    base.on("pointerover", () => base.setFillStyle(0x304566, 0.98));
+    base.on("pointerover", () => {
+      base.setFillStyle(0x1b3350, 0.98);
+      glow.setFillStyle(options.action === "add" ? 0x82d4ff : 0xffba86, 0.15);
+      this.tweens.add({ targets: [base, edge], scaleX: 1.02, scaleY: 1.02, duration: 100 });
+    });
     base.on("pointerout", () => {
-      base.setFillStyle(0x1f2e45, 0.96);
+      base.setFillStyle(0x12243a, 0.92);
+      glow.setFillStyle(options.action === "add" ? 0x82d4ff : 0xffba86, 0.08);
+      this.tweens.add({ targets: [base, edge], scaleX: 1, scaleY: 1, duration: 100 });
       cancelPress();
     });
 
@@ -1154,74 +1247,86 @@ export default class DeckScene extends Phaser.Scene {
       }
     });
 
-    const imageBox = this.add.rectangle(x + 34, y + TILE_H / 2, 56, 82, 0x0c1628, 1);
-    imageBox.setStrokeStyle(1, 0x6f8bb2, 0.85);
+    const imageBox = this.add.rectangle(x + 37, y + TILE_H / 2, 60, 88, 0x0b1728, 0.98);
+    imageBox.setStrokeStyle(1, 0xd8edff, 0.22);
 
-    c.add([base, imageBox]);
+    const infoPanel = this.add.rectangle(x + 122, y + TILE_H / 2, 102, 88, 0xffffff, 0.03);
+    infoPanel.setStrokeStyle(1, 0xffffff, 0.04);
+
+    c.add([shadow, glow, base, edge, imageBox, infoPanel]);
 
     const texKey = `card_${def.id}`;
     if (this.textures.exists(texKey)) {
-      const img = this.add.image(x + 34, y + TILE_H / 2, texKey);
-      img.setDisplaySize(54, 80);
+      const img = this.add.image(x + 37, y + TILE_H / 2, texKey);
+      img.setDisplaySize(58, 86);
       c.add(img);
     } else {
-      const noImg = this.add.text(x + 34, y + TILE_H / 2, "No\nImg", {
-        fontSize: "12px",
+      const noImg = this.add.text(x + 37, y + TILE_H / 2, isSkill ? "Skill\nCard" : "No\nArt", {
+        fontSize: "11px",
         color: "#8ea7c8",
         align: "center",
-        fontFamily: "Georgia, Times New Roman, serif"
+        fontStyle: "bold"
       }).setOrigin(0.5);
       c.add(noImg);
     }
 
-    const name = trimText(def.name, 8);
-    const nameText = this.add.text(x + 66, y + 8, name, {
-      fontSize: "14px",
-      color: "#f5f0df",
-      fontFamily: "Georgia, Times New Roman, serif"
-    });
-
-    const idText = this.add.text(x + 66, y + 30, `[${def.id}]`, {
-      fontSize: "10px",
-      color: "#9ec0f0",
-      fontFamily: "Georgia, Times New Roman, serif"
-    });
-
-    const stats = this.add.text(x + 66, y + 52, `費 ${def.cost}  HP ${def.unit.hp}  ATK ${def.unit.atk}`, {
-      fontSize: "11px",
+    const name = trimText(def.name, 9);
+    const nameText = this.add.text(x + 72, y + 10, name, {
+      fontSize: "15px",
       color: "#ffffff",
-      fontFamily: "Georgia, Times New Roman, serif"
+      fontStyle: "bold"
     });
 
-    const race = this.add.text(x + 66, y + 65, `種族 ${raceLabelByCode(def.phyle)}`, {
-      fontSize: "10px",
-      color: "#b7f0c2",
-      fontFamily: "Georgia, Times New Roman, serif"
-    });
-
-    const typeTag = this.add.text(x + TILE_W - 10, y + 28, (def.type || "summon") === "skill" ? "技能" : "士兵", {
-      fontSize: "10px",
-      color: "#e8d9ff",
-      fontFamily: "Georgia, Times New Roman, serif",
-      backgroundColor: "#00000088",
-      padding: { left: 4, right: 4, top: 1, bottom: 1 }
-    }).setOrigin(1, 0);
-
-    const hint = this.add.text(x + 66, y + 80, options.action === "add" ? "點擊加入套牌" : "點擊移出套牌", {
-      fontSize: "10px",
-      color: options.action === "add" ? "#9fe2a8" : "#ffb39f",
-      fontFamily: "Georgia, Times New Roman, serif"
-    });
-
-    const copy = this.add.text(x + TILE_W - 10, y + 8, `x${options.copy || 0}`, {
+    const manaBadge = this.add.text(x + TILE_W - 12, y + 10, `費 ${def.cost ?? 0}`, {
       fontSize: "12px",
-      color: "#f3e8c0",
-      fontFamily: "Georgia, Times New Roman, serif",
-      backgroundColor: "#00000088",
-      padding: { left: 4, right: 4, top: 1, bottom: 1 }
+      color: "#ffffff",
+      fontStyle: "bold",
+      backgroundColor: isSkill ? "#6a54c9dd" : "#2f6db6dd",
+      padding: { left: 7, right: 7, top: 3, bottom: 3 }
     }).setOrigin(1, 0);
 
-    c.add([nameText, idText, stats, race, typeTag, hint, copy]);
+    const idText = this.add.text(x + 72, y + 31, `#${def.sourceId || def.id}`, {
+      fontSize: "10px",
+      color: "#9ec0f0"
+    });
+
+    const typeTag = this.add.text(x + TILE_W - 12, y + 34, isSkill ? "技能" : "士兵", {
+      fontSize: "10px",
+      color: "#eef6ff",
+      fontStyle: "bold",
+      backgroundColor: isSkill ? "#5f4db0cc" : "#244a70cc",
+      padding: { left: 5, right: 5, top: 2, bottom: 2 }
+    }).setOrigin(1, 0);
+
+    const statBg = this.add.rectangle(x + 121, y + 60, 102, 20, 0x0d1a2a, 0.74);
+    statBg.setStrokeStyle(1, 0xffffff, 0.04);
+    const stats = this.add.text(x + 76, y + 52, `HP ${def.unit?.hp ?? 0}   ATK ${def.unit?.atk ?? 0}`, {
+      fontSize: "11px",
+      color: "#f3fbff",
+      fontStyle: "bold"
+    });
+
+    const race = this.add.text(x + 76, y + 71, raceLabelByCode(def.phyle), {
+      fontSize: "10px",
+      color: "#aee7ff",
+      fontStyle: "bold"
+    });
+
+    const hint = this.add.text(x + 76, y + 89, options.action === "add" ? "加入套牌" : "移出套牌", {
+      fontSize: "10px",
+      color: options.action === "add" ? "#9fe2ff" : "#ffd0a8",
+      fontStyle: "bold"
+    });
+
+    const copy = this.add.text(x + TILE_W - 12, y + TILE_H - 24, `x${options.copy || 0}`, {
+      fontSize: "12px",
+      color: "#ffffff",
+      fontStyle: "bold",
+      backgroundColor: "#00000088",
+      padding: { left: 6, right: 6, top: 2, bottom: 2 }
+    }).setOrigin(1, 0);
+
+    c.add([nameText, manaBadge, idText, typeTag, statBg, stats, race, hint, copy]);
     return c;
   }
 
@@ -1249,4 +1354,6 @@ export default class DeckScene extends Phaser.Scene {
     });
   }
 }
+
+
 

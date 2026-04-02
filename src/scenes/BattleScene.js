@@ -869,12 +869,89 @@ export default class BattleScene extends Phaser.Scene {
     this.pendingCardUse.clear();
   }
 
+  _showBattleResult(result, winnerName = "", leftHp = 0, rightHp = 0) {
+    if (this.resultModal) return;
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const isWin = result === "win";
+    const title = isWin ? "勝利" : "失敗";
+    const glowColor = isWin ? 0xf2c76b : 0xff7d9d;
+    const titleColor = isWin ? "#fff2bf" : "#ffe1ea";
+
+    const overlay = this.add.rectangle(w / 2, h / 2, w, h, 0x000000, 0.66).setDepth(9800).setInteractive();
+    const glow = this.add.ellipse(w / 2, h / 2 - 12, 520, 260, glowColor, 0.14).setDepth(9801);
+    const panelShadow = this.add.rectangle(w / 2, h / 2 + 10, 480, 280, 0x000000, 0.4).setDepth(9802);
+    const panel = this.add.rectangle(w / 2, h / 2, 480, 280, 0x101b2b, 0.96).setDepth(9803).setStrokeStyle(2, glowColor, 0.68);
+    const topLine = this.add.rectangle(w / 2, h / 2 - 112, 410, 2, 0xf8fbff, 0.18).setDepth(9804);
+    const titleText = this.add.text(w / 2, h / 2 - 86, title, {
+      fontSize: "46px",
+      color: titleColor,
+      fontStyle: "bold",
+      stroke: isWin ? "#5b4300" : "#4a1020",
+      strokeThickness: 6
+    }).setOrigin(0.5).setDepth(9805);
+    const subText = this.add.text(w / 2, h / 2 - 22, winnerName ? `勝者：${winnerName}` : "戰鬥結束", {
+      fontSize: "22px",
+      color: "#eaf4ff"
+    }).setOrigin(0.5).setDepth(9805);
+    const hpText = this.add.text(w / 2, h / 2 + 18, `我方 HP：${leftHp}    敵方 HP：${rightHp}`, {
+      fontSize: "19px",
+      color: "#cde2ff"
+    }).setOrigin(0.5).setDepth(9805);
+    const tipText = this.add.text(w / 2, h / 2 + 56, isWin ? "漂亮的一戰。按下方按鈕返回。" : "再試一次，你已經很接近了。", {
+      fontSize: "18px",
+      color: "#d7e7ff"
+    }).setOrigin(0.5).setDepth(9805);
+    const btnShadow = this.add.rectangle(w / 2, h / 2 + 108, 188, 44, 0x000000, 0.35).setDepth(9805);
+    const btn = this.add.rectangle(w / 2, h / 2 + 104, 188, 44, isWin ? 0xd8a84f : 0xc85a7a, 0.96).setDepth(9806).setStrokeStyle(2, 0xf8fbff, 0.62).setInteractive({ useHandCursor: true });
+    const btnText = this.add.text(w / 2, h / 2 + 104, "返回首頁", {
+      fontSize: "22px",
+      color: "#ffffff",
+      fontStyle: "bold",
+      stroke: "#203040",
+      strokeThickness: 4
+    }).setOrigin(0.5).setDepth(9807);
+
+    const close = () => {
+      if (this.resultModal) {
+        this.resultModal.destroy(true);
+        this.resultModal = null;
+      }
+      this.scene.start(this._isOnlineMode() || this._isSpectatorMode() ? "RoomScene" : "MenuScene");
+    };
+    btn.on("pointerup", close);
+    overlay.on("pointerup", close);
+
+    this.resultModal = this.add.container(0, 0, [overlay, glow, panelShadow, panel, topLine, titleText, subText, hpText, tipText, btnShadow, btn, btnText]).setDepth(9800);
+    this.tweens.add({ targets: [glow, titleText], alpha: { from: 0.78, to: 1 }, duration: 900, yoyo: true, repeat: -1 });
+  }
+
   onBattleState(state) {
     const left = state.left;
     const right = state.right;
     this.currentTurnSide = String(state?.turnSide || this.currentTurnSide || "L");
 
-    if ((this._isOnlineMode() || this._isSpectatorMode()) && !this.gameOverHandled) {
+    if (!this.gameOverHandled && (Number(left?.hp || 0) <= 0 || Number(right?.hp || 0) <= 0)) {
+      this.gameOverHandled = true;
+      const leftWon = Number(right?.hp || 0) <= 0 && Number(left?.hp || 0) > 0;
+      const winner = Number(left?.hp || 0) <= 0 ? this.rightPlayerName : this.leftPlayerName;
+      this.combat?._log?.(`對戰結束，勝者：${winner}。`);
+      this._showBattleResult(leftWon ? "win" : "lose", winner, Number(left?.hp || 0), Number(right?.hp || 0));
+
+      if (this._isOnlineMode() || this._isSpectatorMode()) {
+        if (this.roomCode) {
+          ApiClient.postAction(this.roomCode, this.playerId || "A", {
+            type: "gameOver",
+            winner: winner,
+            leftHp: Number(left?.hp || 0),
+            rightHp: Number(right?.hp || 0)
+          }).catch(() => {});
+        }
+        this._stopSync();
+      }
+    }
+
+    if ((this._isOnlineMode() || this._isSpectatorMode()) && !this.resultModal) {
       if (Number(left?.hp || 0) <= 0 || Number(right?.hp || 0) <= 0) {
         this.gameOverHandled = true;
         const winner = Number(left?.hp || 0) <= 0 ? this.rightPlayerName : this.leftPlayerName;

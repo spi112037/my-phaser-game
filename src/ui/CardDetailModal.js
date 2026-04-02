@@ -60,99 +60,110 @@ export default class CardDetailModal {
     const w = scene.scale.width;
     const h = scene.scale.height;
 
-    const panelW = Math.min(900, Math.floor(w * 0.9));
-    const panelH = Math.min(520, Math.floor(h * 0.85));
-    const leftW = Math.floor(panelW * 0.36);
-    const rightW = panelW - leftW - 24;
+    const panelW = Math.min(980, Math.floor(w * 0.9));
+    const panelH = Math.min(560, Math.floor(h * 0.88));
+    const leftW = Math.floor(panelW * 0.35);
+    const rightW = panelW - leftW - 28;
 
     this.container = scene.add.container(0, 0).setDepth(3000).setVisible(false);
 
     this.backdrop = scene.add
-      .rectangle(0, 0, w, h, 0x000000, 0.66)
+      .rectangle(0, 0, w, h, 0x000000, 0.72)
       .setOrigin(0, 0)
       .setInteractive({ useHandCursor: true });
     this.backdrop.on("pointerup", () => this.hide());
 
-    this.panel = scene.add
-      .rectangle(w / 2, h / 2, panelW, panelH, 0x0b1220, 0.96)
-      .setStrokeStyle(2, 0xffffff, 0.24)
-      .setInteractive();
-
     const panelX = w / 2 - panelW / 2;
     const panelY = h / 2 - panelH / 2;
 
+    this.panelGlow = scene.add.ellipse(w / 2, h / 2, panelW + 60, panelH + 40, 0x89d6ff, 0.08);
+    this.panelShadow = scene.add.rectangle(w / 2, h / 2 + 10, panelW, panelH, 0x000000, 0.4);
+    this.panel = scene.add
+      .rectangle(w / 2, h / 2, panelW, panelH, 0x0b1220, 0.97)
+      .setStrokeStyle(1.8, 0x9fdcff, 0.42)
+      .setInteractive();
+    this.panelTopLine = scene.add.rectangle(w / 2, panelY + 18, panelW - 42, 2, 0xf1fbff, 0.14);
+
     this.leftCardFrame = scene.add
-      .rectangle(panelX + 12 + leftW / 2, h / 2, leftW, panelH - 24, 0x131f34, 1)
-      .setStrokeStyle(2, 0x9ddcff, 0.32);
+      .rectangle(panelX + 14 + leftW / 2, h / 2, leftW, panelH - 28, 0x121f35, 0.94)
+      .setStrokeStyle(1.8, 0x9ddcff, 0.34);
+    this.leftArtGlow = scene.add.ellipse(panelX + 14 + leftW / 2, h / 2 - 14, leftW - 24, panelH - 100, 0x6fcfff, 0.07);
 
     this.rightPanel = scene.add
-      .rectangle(panelX + 12 + leftW + 12 + rightW / 2, h / 2, rightW, panelH - 24, 0x101925, 1)
-      .setStrokeStyle(1, 0xffffff, 0.15);
+      .rectangle(panelX + 14 + leftW + 14 + rightW / 2, h / 2, rightW, panelH - 28, 0x101925, 0.96)
+      .setStrokeStyle(1.2, 0xffffff, 0.12);
 
     this.titleText = scene.add
-      .text(panelX + 12 + leftW + 12 + rightW / 2, panelY + 22, "", { fontSize: "44px", color: "#ffffff" })
-      .setOrigin(0.5, 0);
-
-    this.typeText = scene.add
-      .text(panelX + 12 + leftW + 12 + rightW / 2, panelY + 72, "", { fontSize: "24px", color: "#9ddcff" })
-      .setOrigin(0.5, 0);
-
-    this.raceText = scene.add
-      .text(panelX + 12 + leftW + 12 + rightW / 2, panelY + 104, "", { fontSize: "22px", color: "#aee9b7" })
-      .setOrigin(0.5, 0);
-
-    this.statsText = scene.add
-      .text(panelX + 20, panelY + panelH - 22, "", { fontSize: "28px", color: "#ffffff" })
-      .setOrigin(0, 1);
-
-    this.effectsTitleText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 150, "效果", { fontSize: "24px", color: "#ffdca8" })
+      .text(panelX + 14 + leftW + 14 + 18, panelY + 26, "", { fontSize: "38px", color: "#ffffff", fontStyle: "bold", wordWrap: { width: rightW - 36 } })
       .setOrigin(0, 0);
 
+    this.typeBadge = scene.add.rectangle(panelX + 14 + leftW + 14 + 64, panelY + 86, 108, 28, 0x214a73, 0.92).setStrokeStyle(1.4, 0xdff3ff, 0.34);
+    this.typeText = scene.add
+      .text(panelX + 14 + leftW + 14 + 64, panelY + 86, "", { fontSize: "16px", color: "#eff8ff", fontStyle: "bold" })
+      .setOrigin(0.5);
+
+    this.raceBadge = scene.add.rectangle(panelX + 14 + leftW + 14 + 196, panelY + 86, 132, 28, 0x274831, 0.92).setStrokeStyle(1.4, 0xe4ffe8, 0.28);
+    this.raceText = scene.add
+      .text(panelX + 14 + leftW + 14 + 196, panelY + 86, "", { fontSize: "16px", color: "#dcffe4", fontStyle: "bold" })
+      .setOrigin(0.5);
+
+    this.statsPanel = scene.add.rectangle(panelX + 14 + leftW / 2, panelY + panelH - 48, leftW - 28, 56, 0x08111c, 0.9).setStrokeStyle(1.4, 0xbfe3ff, 0.22);
+    this.statsText = scene.add
+      .text(panelX + 28, panelY + panelH - 48, "", { fontSize: "22px", color: "#ffffff", fontStyle: "bold" })
+      .setOrigin(0, 0.5);
+
+    this.effectsTitleText = scene.add
+      .text(panelX + 14 + leftW + 28, panelY + 132, "核心效果", { fontSize: "22px", color: "#ffdca8", fontStyle: "bold" })
+      .setOrigin(0, 0);
+    this.effectsPanel = scene.add.rectangle(panelX + 14 + leftW + 28 + (rightW - 54) / 2, panelY + 215, rightW - 54, 126, 0x0d1a2b, 0.92).setStrokeStyle(1.2, 0x92cfff, 0.16);
     this.effectsText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 182, "", {
-        fontSize: "14px",
-        color: "#e8f2ff",
-        lineSpacing: 1
+      .text(panelX + 14 + leftW + 44, panelY + 162, "", {
+        fontSize: "18px",
+        color: "#eef6ff",
+        lineSpacing: 8,
+        wordWrap: { width: rightW - 86 }
       })
       .setOrigin(0, 0);
 
     this.descTitleText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 318, "描述", { fontSize: "24px", color: "#ffdca8" })
+      .text(panelX + 14 + leftW + 28, panelY + 286, "卡牌描述", { fontSize: "22px", color: "#ffdca8", fontStyle: "bold" })
       .setOrigin(0, 0);
-
+    this.descPanel = scene.add.rectangle(panelX + 14 + leftW + 28 + (rightW - 54) / 2, panelY + 370, rightW - 54, 118, 0x0d1a2b, 0.88).setStrokeStyle(1.2, 0x92cfff, 0.12);
     this.descText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 350, "", {
-        fontSize: "21px",
+      .text(panelX + 14 + leftW + 44, panelY + 316, "", {
+        fontSize: "20px",
         color: "#d7e6ff",
-        lineSpacing: 6
+        lineSpacing: 8,
+        wordWrap: { width: rightW - 86 }
       })
       .setOrigin(0, 0);
 
     this.statusTitleText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 428, "目前狀態", { fontSize: "23px", color: "#ffdca8" })
+      .text(panelX + 14 + leftW + 28, panelY + 428, "目前狀態", { fontSize: "22px", color: "#ffdca8", fontStyle: "bold" })
       .setOrigin(0, 0);
-
+    this.statusPanel = scene.add.rectangle(panelX + 14 + leftW + 28 + (rightW - 54) / 2, panelY + 488, rightW - 54, 72, 0x0d1a2b, 0.88).setStrokeStyle(1.2, 0x92cfff, 0.1);
     this.statusText = scene.add
-      .text(panelX + 12 + leftW + 24, panelY + 458, "", {
-        fontSize: "14px",
+      .text(panelX + 14 + leftW + 44, panelY + 458, "", {
+        fontSize: "17px",
         color: "#bde6ff",
-        lineSpacing: 1
+        lineSpacing: 6,
+        wordWrap: { width: rightW - 86 }
       })
       .setOrigin(0, 0);
 
     this.tipText = scene.add
-      .text(panelX + 12 + leftW + 12 + rightW / 2, panelY + panelH - 18, "點背景或按 ESC 關閉", {
-        fontSize: "20px",
+      .text(panelX + 14 + leftW + 14 + rightW / 2, panelY + panelH - 18, "點背景或按 ESC 關閉", {
+        fontSize: "16px",
         color: "#8ea4c1"
       })
       .setOrigin(0.5, 1);
 
     this.artImage = null;
     this.artFallback = scene.add
-      .text(panelX + 12 + leftW / 2, h / 2, "NO IMAGE", {
+      .text(panelX + 14 + leftW / 2, h / 2 - 12, "NO IMAGE", {
         fontSize: "28px",
-        color: "#9db8ce"
+        color: "#9db8ce",
+        fontStyle: "bold"
       })
       .setOrigin(0.5);
 
@@ -160,18 +171,28 @@ export default class CardDetailModal {
 
     this.container.add([
       this.backdrop,
+      this.panelGlow,
+      this.panelShadow,
       this.panel,
+      this.panelTopLine,
       this.leftCardFrame,
+      this.leftArtGlow,
       this.rightPanel,
       this.titleText,
+      this.typeBadge,
       this.typeText,
+      this.raceBadge,
       this.raceText,
+      this.statsPanel,
       this.statsText,
       this.effectsTitleText,
+      this.effectsPanel,
       this.effectsText,
       this.descTitleText,
+      this.descPanel,
       this.descText,
       this.statusTitleText,
+      this.statusPanel,
       this.statusText,
       this.tipText,
       this.artFallback
@@ -261,53 +282,34 @@ export default class CardDetailModal {
 
     this.titleText.setText(String(name || "未知"));
     this.typeText.setText(String(type || ""));
-    this.raceText.setText(`種族：${PHYLE_LABELS[Number(phyle)] || `未知(${Number(phyle)})`}`);
-    this.statsText.setText(`費用:${cost}    HP:${hp}/${maxHp}    ATK:${atk}`);
-
-    const rightBaseX = panelX + 12 + leftW + 24;
-    const colGap = 18;
-    const colW = Math.max(180, Math.floor((rightW - 24 - 24 - colGap) / 2));
-    const effectsX = rightBaseX;
-    const statusX = rightBaseX + colW + colGap;
-    const sectionY = panelY + 150;
-
-    this.statusTitleText.setX(statusX);
-    this.statusTitleText.setY(sectionY);
-    this.statusText.setX(statusX);
-    this.statusText.setY(sectionY + 30);
-    this.statusTitleText.setVisible(true);
-    this.statusText.setVisible(true);
-
-    this.effectsTitleText.setX(effectsX);
-    this.effectsTitleText.setY(sectionY);
-    this.effectsText.setX(effectsX);
-    this.effectsText.setY(sectionY + 32);
+    this.raceText.setText(PHYLE_LABELS[Number(phyle)] || `未知(${Number(phyle)})`);
+    this.statsText.setText(`費用 ${cost}   HP ${hp}/${maxHp}   ATK ${atk}`);
 
     const effectRows = effects.length > 0 ? effects.map((x, idx) => `${idx + 1}. ${x}`).join("\n") : "無";
-    this.effectsText.setText(toLines(effectRows, 20, this.hideDescriptionInBattle ? 26 : 14));
+    this.effectsText.setText(toLines(effectRows, 24, this.hideDescriptionInBattle ? 7 : 5));
 
-    const statusRows =
-      Array.isArray(statuses) && statuses.length > 0 ? statuses.map((x) => `• ${x}`).join("\n") : "無";
-    this.statusText.setText(toLines(statusRows, 20, this.hideDescriptionInBattle ? 26 : 14));
+    const statusRows = Array.isArray(statuses) && statuses.length > 0 ? statuses.map((x) => `• ${x}`).join("\n") : "無特殊狀態";
+    this.statusText.setText(toLines(statusRows, 26, 3));
 
     if (this.hideDescriptionInBattle) {
       this.descTitleText.setVisible(false);
+      this.descPanel.setVisible(false);
       this.descText.setVisible(false);
       this.descText.setText("");
+      this.statusTitleText.setY(panelY + 286);
+      this.statusPanel.setY(panelY + 346);
+      this.statusText.setY(panelY + 316);
     } else {
       this.descTitleText.setVisible(true);
+      this.descPanel.setVisible(true);
       this.descText.setVisible(true);
-      const descY = Math.max(
-        panelY + 318,
-        Math.max(this.effectsText.y + this.effectsText.height, this.statusText.y + this.statusText.height) + 14
-      );
-      this.descTitleText.setY(descY);
-      this.descText.setY(descY + 32);
-      this.descText.setText(toLines(description || "", 22, 5));
-
-      if (this.descText.y + this.descText.height > panelY + panelH - 56) {
-        this.descText.setText(toLines(description || "", 22, 3));
-      }
+      this.descTitleText.setY(panelY + 286);
+      this.descPanel.setY(panelY + 370);
+      this.descText.setY(panelY + 316);
+      this.descText.setText(toLines(description || "", 24, 4));
+      this.statusTitleText.setY(panelY + 428);
+      this.statusPanel.setY(panelY + 488);
+      this.statusText.setY(panelY + 458);
     }
 
     if (this.artImage) {

@@ -2,6 +2,16 @@
 
 const MENU_BGM_KEY = "menu_bgm_main";
 const MENU_BGM_PATH = "mv/我的錄音 8.m4a";
+const KEY_ART_CARD_KEYS = {
+  saintLead: "menu_card_saint_lead",
+  saintSupport: "menu_card_saint_support",
+  saintLight: "menu_card_saint_light"
+};
+const KEY_ART_CARD_PATHS = {
+  saintLead: "/cards/custom/f_42__.png",
+  saintSupport: "/cards/custom/f_21762_StellaVolt.webp",
+  saintLight: "/cards/custom/f_21222_Fran.webp"
+};
 
 export default class MenuScene extends Phaser.Scene {
   constructor() {
@@ -19,6 +29,16 @@ export default class MenuScene extends Phaser.Scene {
   preload() {
     if (!this.cache.audio.exists(MENU_BGM_KEY)) {
       this.load.audio(MENU_BGM_KEY, [MENU_BGM_PATH]);
+    }
+
+    if (!this.textures.exists(KEY_ART_CARD_KEYS.saintLead)) {
+      this.load.image(KEY_ART_CARD_KEYS.saintLead, KEY_ART_CARD_PATHS.saintLead);
+    }
+    if (!this.textures.exists(KEY_ART_CARD_KEYS.saintSupport)) {
+      this.load.image(KEY_ART_CARD_KEYS.saintSupport, KEY_ART_CARD_PATHS.saintSupport);
+    }
+    if (!this.textures.exists(KEY_ART_CARD_KEYS.saintLight)) {
+      this.load.image(KEY_ART_CARD_KEYS.saintLight, KEY_ART_CARD_PATHS.saintLight);
     }
   }
 
@@ -40,62 +60,66 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawTopBar(w) {
-    const glow = this.add.rectangle(w / 2, 28, w, 64, 0x67cfff, 0.05).setDepth(10);
-    const bar = this.add.rectangle(w / 2, 28, w, 54, 0x081425, 0.76).setDepth(11);
-    const topEdge = this.add.rectangle(w / 2, 52, w - 60, 2, 0xecf8ff, 0.14).setDepth(12);
-    glow.setAlpha(0.05);
-    bar.setStrokeStyle(1.2, 0x8fd8ff, 0.34);
-    this.add.text(26, 28, "玩家：彼羽", {
-      fontSize: "18px",
-      color: "#e4f4ff",
+    const glow = this.add.rectangle(w / 2, 26, w, 58, 0x67cfff, 0.035).setDepth(10);
+    const bar = this.add.rectangle(w / 2, 26, w, 46, 0x081425, 0.54).setDepth(11);
+    const topEdge = this.add.rectangle(w / 2, 48, w - 96, 2, 0xecf8ff, 0.1).setDepth(12);
+    glow.setAlpha(0.035);
+    bar.setStrokeStyle(1, 0x8fd8ff, 0.22);
+    this.add.text(28, 26, "玩家：彼羽", {
+      fontSize: "16px",
+      color: "#dcedff",
       fontStyle: "bold"
-    }).setOrigin(0, 0.5).setDepth(13);
-    this.add.text(w - 26, 28, "晶焰 1280  |  金幣 54210", {
-      fontSize: "18px",
+    }).setOrigin(0, 0.5).setDepth(13).setAlpha(0.9);
+    this.add.text(w - 28, 26, "晶焰 1280  |  金幣 54210", {
+      fontSize: "16px",
       color: "#ffe3a8",
       fontStyle: "bold"
-    }).setOrigin(1, 0.5).setDepth(13);
-    this.add.rectangle(w / 2, 28, 160, 22, 0x78d7ff, 0.04).setDepth(12);
-    this.tweens.add({ targets: [glow], alpha: { from: 0.04, to: 0.09 }, duration: 1800, yoyo: true, repeat: -1 });
-    topEdge.setAlpha(0.14);
+    }).setOrigin(1, 0.5).setDepth(13).setAlpha(0.88);
+    this.add.rectangle(w / 2, 26, 148, 18, 0x78d7ff, 0.028).setDepth(12);
+    this.tweens.add({ targets: [glow], alpha: { from: 0.03, to: 0.065 }, duration: 1800, yoyo: true, repeat: -1 });
+    topEdge.setAlpha(0.1);
   }
 
   _drawBackground(w, h) {
     const g = this.add.graphics();
-    g.fillGradientStyle(0x11264b, 0x214b7d, 0x09101f, 0x040913, 1);
+    g.fillGradientStyle(0x86cfff, 0x63b9ff, 0xe4f6ff, 0x8fd2ff, 1);
     g.fillRect(0, 0, w, h);
 
-    this.add.ellipse(w * 0.47, h * 0.24, 560, 250, 0x72d6ff, 0.08);
-    this.add.ellipse(w * 0.22, h * 0.5, 460, 340, 0x59c7ff, 0.07);
-    this.add.ellipse(w * 0.82, h * 0.48, 470, 330, 0xffb16a, 0.07);
-    this.add.ellipse(w * 0.53, h * 0.42, 780, 320, 0xa8dcff, 0.03);
-    this.add.rectangle(w / 2, h * 0.9, w, 190, 0x07101d, 0.48);
+    this.add.ellipse(w * 0.28, h * 0.16, 300, 82, 0xf8fdff, 0.7).setDepth(1);
+    this.add.ellipse(w * 0.5, h * 0.12, 420, 92, 0xf8fdff, 0.64).setDepth(1);
+    this.add.ellipse(w * 0.76, h * 0.18, 340, 88, 0xf8fdff, 0.66).setDepth(1);
+    this.add.ellipse(w * 0.48, h * 0.28, 720, 280, 0xffffff, 0.12).setDepth(2);
+    this.add.ellipse(w * 0.2, h * 0.44, 420, 250, 0x7dd6ff, 0.08).setDepth(2);
+    this.add.ellipse(w * 0.82, h * 0.43, 420, 250, 0xffd79b, 0.06).setDepth(2);
 
-    const horizonGlow = this.add.rectangle(w / 2, h * 0.62, w * 0.9, 18, 0xe8f7ff, 0.05).setDepth(6);
-    const battlefieldMist = this.add.ellipse(w / 2, h * 0.68, w * 0.86, 150, 0xd2eeff, 0.06).setDepth(7);
-    const laneLeft = this.add.triangle(w * 0.37, h * 0.76, 0, 54, 180, 0, 210, 108, 0x61cfff, 0.08).setDepth(7).setAngle(-6);
-    const laneRight = this.add.triangle(w * 0.68, h * 0.76, 0, 54, 180, 0, 210, 108, 0xffb574, 0.08).setDepth(7).setAngle(174);
+    const horizonGlow = this.add.rectangle(w / 2, h * 0.61, w * 0.9, 18, 0xffffff, 0.22).setDepth(3);
+    const grassBand = this.add.rectangle(w / 2, h * 0.84, w, h * 0.34, 0x6bc46b, 0.92).setDepth(3);
+    const grassLight = this.add.ellipse(w / 2, h * 0.74, w * 0.92, 120, 0xcdf29d, 0.22).setDepth(4);
+    const hillLeft = this.add.ellipse(w * 0.22, h * 0.81, 420, 110, 0x56ae58, 0.75).setDepth(4);
+    const hillMid = this.add.ellipse(w * 0.5, h * 0.8, 620, 126, 0x5eb85f, 0.78).setDepth(4);
+    const hillRight = this.add.ellipse(w * 0.8, h * 0.82, 430, 116, 0x4fa652, 0.74).setDepth(4);
+    const flowerMist = this.add.ellipse(w / 2, h * 0.67, w * 0.86, 130, 0xf7fbff, 0.14).setDepth(5);
+    const sacredArcL = this.add.ellipse(w * 0.42, h * 0.33, 260, 42, 0x8ee0ff, 0.08).setDepth(6).setAngle(-22);
+    const sacredArcR = this.add.ellipse(w * 0.58, h * 0.32, 260, 42, 0xffcc8b, 0.08).setDepth(6).setAngle(22);
 
-    const stars = 85;
+    const stars = 36;
     for (let i = 0; i < stars; i += 1) {
       const sx = Phaser.Math.Between(0, w);
-      const sy = Phaser.Math.Between(0, Math.floor(h * 0.72));
-      const star = this.add.circle(sx, sy, Phaser.Math.Between(1, 2), 0xe3f5ff, Phaser.Math.FloatBetween(0.12, 0.8));
+      const sy = Phaser.Math.Between(0, Math.floor(h * 0.48));
+      const star = this.add.circle(sx, sy, Phaser.Math.Between(1, 2), 0xe3f5ff, Phaser.Math.FloatBetween(0.08, 0.34));
       this.tweens.add({
         targets: star,
-        alpha: { from: Phaser.Math.FloatBetween(0.1, 0.4), to: Phaser.Math.FloatBetween(0.45, 0.9) },
-        duration: Phaser.Math.Between(1400, 2800),
+        alpha: { from: Phaser.Math.FloatBetween(0.06, 0.18), to: Phaser.Math.FloatBetween(0.18, 0.42) },
+        duration: Phaser.Math.Between(1600, 3000),
         yoyo: true,
         repeat: -1,
         delay: Phaser.Math.Between(0, 1500)
       });
     }
 
-    const mistA = this.add.rectangle(w / 2, h * 0.62, w * 0.9, 110, 0xa9dcff, 0.03).setDepth(8);
-    const mistB = this.add.rectangle(w / 2, h - 18, w, 150, 0xc3e6ff, 0.08).setDepth(8);
     this.tweens.add({
-      targets: [mistA, mistB, battlefieldMist, horizonGlow, laneLeft, laneRight],
-      alpha: { from: 0.04, to: 0.12 },
+      targets: [horizonGlow, grassLight, flowerMist, sacredArcL, sacredArcR],
+      alpha: { from: 0.08, to: 0.2 },
       duration: 2600,
       yoyo: true,
       repeat: -1
@@ -103,49 +127,72 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawHeroSilhouettes(w, h) {
-    const leftAura = this.add.circle(w * 0.11, h * 0.58, 224, 0x5cc7ff, 0.13).setDepth(2);
-    const rightAura = this.add.circle(w * 0.89, h * 0.57, 214, 0xffb26d, 0.12).setDepth(2);
-    const leftBack = this.add.rectangle(w * 0.11, h * 0.69, 170, 360, 0x071a31, 0.42).setAngle(-15).setDepth(3);
-    const rightBack = this.add.rectangle(w * 0.89, h * 0.67, 164, 344, 0x35170f, 0.4).setAngle(15).setDepth(3);
-    const leftBody = this.add.rectangle(w * 0.145, h * 0.675, 146, 338, 0x0a1b33, 0.76).setAngle(-9).setDepth(4);
-    const rightBody = this.add.rectangle(w * 0.855, h * 0.665, 134, 320, 0x2f170f, 0.76).setAngle(9).setDepth(4);
-    const leftEdge = this.add.rectangle(w * 0.175, h * 0.64, 30, 270, 0xa6e7ff, 0.11).setAngle(-10).setDepth(5);
-    const rightEdge = this.add.rectangle(w * 0.822, h * 0.64, 28, 248, 0xffcd9b, 0.11).setAngle(10).setDepth(5);
-    const leftWeapon = this.add.rectangle(w * 0.22, h * 0.62, 18, 260, 0x8fd8ff, 0.12).setAngle(22).setDepth(5);
-    const rightWeapon = this.add.rectangle(w * 0.78, h * 0.625, 18, 240, 0xffc996, 0.12).setAngle(-20).setDepth(5);
-    const leftSummon = this.add.circle(w * 0.295, h * 0.58, 46, 0x79d8ff, 0.08).setDepth(6);
-    const rightSummon = this.add.circle(w * 0.705, h * 0.56, 42, 0xffb879, 0.08).setDepth(6);
-    leftBody.setStrokeStyle(1, 0x87d7ff, 0.18);
-    rightBody.setStrokeStyle(1, 0xffc08f, 0.18);
+    const leftAura = this.add.circle(w * 0.14, h * 0.56, 232, 0x8fd9ff, 0.14).setDepth(2);
+    const rightAura = this.add.circle(w * 0.84, h * 0.55, 226, 0xffd08d, 0.12).setDepth(2);
+    const leftBloom = this.add.ellipse(w * 0.18, h * 0.6, 300, 430, 0x7bd7ff, 0.08).setDepth(3).setAngle(-10);
+    const rightBloom = this.add.ellipse(w * 0.82, h * 0.58, 286, 420, 0xffc17d, 0.08).setDepth(3).setAngle(9);
+    const leftFrame = this.add.rectangle(w * 0.18, h * 0.63, 210, 360, 0x081625, 0.34).setAngle(-10).setDepth(4);
+    const rightFrame = this.add.rectangle(w * 0.82, h * 0.615, 196, 344, 0x26150f, 0.32).setAngle(9).setDepth(4);
+
+    const leftCard = this.textures.exists(KEY_ART_CARD_KEYS.saintLead)
+      ? this.add.image(w * 0.21, h * 0.62, KEY_ART_CARD_KEYS.saintLead).setDepth(6)
+      : this.add.rectangle(w * 0.21, h * 0.62, 190, 300, 0x103252, 0.9).setDepth(6);
+    if (leftCard.setDisplaySize) leftCard.setDisplaySize(218, 330);
+    leftCard.setAngle(-10);
+    leftCard.setAlpha(0.96);
+
+    const rightCard = this.textures.exists(KEY_ART_CARD_KEYS.saintSupport)
+      ? this.add.image(w * 0.81, h * 0.605, KEY_ART_CARD_KEYS.saintSupport).setDepth(6)
+      : this.add.rectangle(w * 0.81, h * 0.605, 182, 288, 0x4a2b16, 0.88).setDepth(6);
+    if (rightCard.setDisplaySize) rightCard.setDisplaySize(204, 310);
+    rightCard.setAngle(8);
+    rightCard.setAlpha(0.94);
+
+    const leftEdge = this.add.rectangle(w * 0.265, h * 0.635, 16, 284, 0xa6e7ff, 0.12).setAngle(-10).setDepth(7);
+    const rightEdge = this.add.rectangle(w * 0.742, h * 0.62, 16, 270, 0xffd0a2, 0.12).setAngle(9).setDepth(7);
+    const leftSummon = this.add.circle(w * 0.34, h * 0.56, 50, 0x79d8ff, 0.09).setDepth(7);
+    const rightSummon = this.add.circle(w * 0.67, h * 0.54, 46, 0xffb879, 0.09).setDepth(7);
+    const leftRibbon = this.add.ellipse(w * 0.33, h * 0.52, 180, 30, 0x85dcff, 0.08).setDepth(7).setAngle(-32);
+    const rightRibbon = this.add.ellipse(w * 0.66, h * 0.5, 180, 30, 0xffc481, 0.08).setDepth(7).setAngle(28);
 
     this.tweens.add({
-      targets: [leftAura, rightAura, leftEdge, rightEdge, leftWeapon, rightWeapon, leftSummon, rightSummon],
-      alpha: { from: 0.06, to: 0.16 },
+      targets: [leftAura, rightAura, leftBloom, rightBloom, leftEdge, rightEdge, leftSummon, rightSummon, leftRibbon, rightRibbon],
+      alpha: { from: 0.06, to: 0.17 },
       duration: 2400,
+      yoyo: true,
+      repeat: -1
+    });
+
+    this.tweens.add({
+      targets: [leftCard, rightCard],
+      y: '-=6',
+      duration: 2200,
       yoyo: true,
       repeat: -1
     });
   }
 
   _drawCenterStage(w, h) {
-    const stageGlow = this.add.ellipse(w / 2, h * 0.39, 660, 270, 0x76d2ff, 0.06).setDepth(20);
-    const flameCore = this.add.ellipse(w / 2, h * 0.13, 94, 56, 0xf6b24f, 0.28).setDepth(21);
-    const crestOuter = this.add.circle(w / 2, h * 0.13, 24, 0xf6ca75, 0.86).setStrokeStyle(2, 0xffefbd, 0.95).setDepth(22);
-    const crestInner = this.add.circle(w / 2, h * 0.13, 11, 0xfff8de, 0.98).setDepth(23);
-    const crestSpireL = this.add.triangle(w / 2 - 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(22).setAngle(-18);
-    const crestSpireR = this.add.triangle(w / 2 + 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(22).setAngle(198);
+    const stageGlow = this.add.ellipse(w / 2, h * 0.39, 680, 280, 0x76d2ff, 0.06).setDepth(20);
+    const flameHalo = this.add.ellipse(w / 2, h * 0.152, 168, 58, 0xf4c670, 0.14).setDepth(21);
+    const flameCore = this.add.ellipse(w / 2, h * 0.13, 104, 60, 0xf6b24f, 0.32).setDepth(22);
+    const crestOuter = this.add.circle(w / 2, h * 0.13, 24, 0xf6ca75, 0.86).setStrokeStyle(2, 0xffefbd, 0.95).setDepth(23);
+    const crestInner = this.add.circle(w / 2, h * 0.13, 11, 0xfff8de, 0.98).setDepth(24);
+    const crestRing = this.add.ellipse(w / 2, h * 0.13, 184, 74, 0xffda92, 0.05).setStrokeStyle(1.5, 0xffe9b2, 0.35).setDepth(22);
+    const crestSpireL = this.add.triangle(w / 2 - 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(23).setAngle(-18);
+    const crestSpireR = this.add.triangle(w / 2 + 28, h * 0.13 + 2, 0, 18, 20, -24, 44, 22, 0xffcf7c, 0.72).setDepth(23).setAngle(198);
 
     const logoFar = this.add.text(w / 2, h * 0.168, "火焰征程", {
       fontSize: "92px",
       color: "#61cbff",
       fontStyle: "bold"
-    }).setOrigin(0.5).setAlpha(0.1).setDepth(21);
+    }).setOrigin(0.5).setAlpha(0.08).setDepth(24);
 
     const logoGlow = this.add.text(w / 2, h * 0.162, "火焰征程", {
       fontSize: "84px",
       color: "#9be2ff",
       fontStyle: "bold"
-    }).setOrigin(0.5).setAlpha(0.26).setDepth(22);
+    }).setOrigin(0.5).setAlpha(0.24).setDepth(25);
 
     const logo = this.add.text(w / 2, h * 0.156, "火焰征程", {
       fontSize: "74px",
@@ -153,49 +200,35 @@ export default class MenuScene extends Phaser.Scene {
       fontStyle: "bold",
       stroke: "#1d2e45",
       strokeThickness: 6
-    }).setOrigin(0.5).setDepth(23);
+    }).setOrigin(0.5).setDepth(26);
 
     this.add.text(w / 2, h * 0.225, "Flame Journey", {
       fontSize: "26px",
       color: "#d5ebff",
       fontStyle: "bold"
-    }).setOrigin(0.5).setDepth(23);
+    }).setOrigin(0.5).setDepth(26);
 
-    this.add.text(w / 2, h * 0.29, "聖火甦醒，命運之戰即將展開", {
+    this.add.text(w / 2, h * 0.286, "聖火甦醒，命運之戰即將展開", {
       fontSize: "20px",
       color: "#d7eaff",
       stroke: "#09111a",
       strokeThickness: 3
-    }).setOrigin(0.5).setDepth(23);
+    }).setOrigin(0.5).setDepth(26);
 
-    const leftCardBack = this.add.rectangle(w * 0.38, h * 0.37, 78, 110, 0x0f2741, 0.9)
-      .setStrokeStyle(2, 0x8fd8ff, 0.6)
-      .setAngle(-24)
-      .setDepth(24);
-    const leftCardCore = this.add.rectangle(w * 0.38, h * 0.37, 54, 68, 0x77d7ff, 0.16)
-      .setAngle(-24)
-      .setDepth(25);
-    const centerCardBack = this.add.rectangle(w * 0.495, h * 0.392, 84, 118, 0x142844, 0.95)
-      .setStrokeStyle(2, 0xf4d08b, 0.68)
-      .setAngle(-8)
-      .setDepth(26);
-    const centerCardCore = this.add.rectangle(w * 0.495, h * 0.392, 56, 72, 0xffc46d, 0.18)
-      .setAngle(-8)
-      .setDepth(27);
-    const rightCardBack = this.add.rectangle(w * 0.615, h * 0.365, 80, 112, 0x2b1f1a, 0.92)
-      .setStrokeStyle(2, 0xffc892, 0.62)
-      .setAngle(21)
-      .setDepth(24);
-    const rightCardCore = this.add.rectangle(w * 0.615, h * 0.365, 52, 66, 0xffc07a, 0.16)
-      .setAngle(21)
-      .setDepth(25);
-    const cardTrailLeft = this.add.ellipse(w * 0.43, h * 0.37, 170, 22, 0x84dbff, 0.08).setAngle(-17).setDepth(23);
-    const cardTrailRight = this.add.ellipse(w * 0.57, h * 0.37, 170, 22, 0xffbf7a, 0.08).setAngle(17).setDepth(23);
+    const centerSupport = this.textures.exists(KEY_ART_CARD_KEYS.saintLight)
+      ? this.add.image(w * 0.5, h * 0.392, KEY_ART_CARD_KEYS.saintLight).setDepth(24)
+      : this.add.rectangle(w * 0.5, h * 0.392, 76, 108, 0x142844, 0.95).setDepth(24);
+    if (centerSupport.setDisplaySize) centerSupport.setDisplaySize(106, 150);
+    centerSupport.setAngle(-2).setAlpha(0.78);
 
-    this._makeButton(w / 2, h * 0.432, "開始冒險", () => this._openBattleModal(), 388, 76, "34px", "primary");
+    const centerSupportGlow = this.add.ellipse(w * 0.5, h * 0.39, 140, 34, 0xffcc7d, 0.09).setDepth(23);
+    const cardTrailLeft = this.add.ellipse(w * 0.42, h * 0.39, 210, 26, 0x84dbff, 0.08).setAngle(-17).setDepth(23);
+    const cardTrailRight = this.add.ellipse(w * 0.58, h * 0.38, 210, 26, 0xffbf7a, 0.08).setAngle(17).setDepth(23);
+
+    this._makeButton(w / 2, h * 0.44, "開始冒險", () => this._openBattleModal(), 388, 76, "34px", "primary");
 
     this.tweens.add({
-      targets: [stageGlow, flameCore, crestOuter, crestInner, crestSpireL, crestSpireR, logoFar, logoGlow, logo, leftCardBack, rightCardBack, centerCardBack, cardTrailLeft, cardTrailRight],
+      targets: [stageGlow, flameHalo, flameCore, crestOuter, crestInner, crestRing, crestSpireL, crestSpireR, logoFar, logoGlow, logo, centerSupport, centerSupportGlow, cardTrailLeft, cardTrailRight],
       alpha: { from: 0.88, to: 1 },
       duration: 1800,
       yoyo: true,
@@ -203,7 +236,7 @@ export default class MenuScene extends Phaser.Scene {
     });
 
     this.tweens.add({
-      targets: [leftCardBack, leftCardCore, rightCardBack, rightCardCore, centerCardBack, centerCardCore],
+      targets: [centerSupport],
       y: '-=6',
       duration: 1800,
       yoyo: true,
@@ -212,27 +245,27 @@ export default class MenuScene extends Phaser.Scene {
   }
 
   _drawModeCards(w, h) {
-    this._makeModeCard(w / 2 - 188, h * 0.57, 272, 122, "副本挑戰", "挑戰關卡、選擇敵人配置", 0x71cfff, () => this.scene.start("ChallengeScene"));
-    this._makeModeCard(w / 2 + 164, h * 0.545, 272, 122, "線上對戰", "與其他玩家即時對戰", 0xffbf82, () => this.scene.start("RoomScene"));
+    this._makeModeCard(w / 2 - 208, h * 0.602, 230, 104, "副本挑戰", "挑戰關卡、選擇敵人配置", 0x71cfff, () => this.scene.start("ChallengeScene"));
+    this._makeModeCard(w / 2 + 198, h * 0.582, 230, 104, "線上對戰", "與其他玩家即時對戰", 0xffbf82, () => this.scene.start("RoomScene"));
   }
 
   _makeModeCard(cx, cy, w, h, title, desc, glowColor, onClick) {
-    const glow = this.add.ellipse(cx, cy, w + 36, h + 30, glowColor, 0.09).setDepth(25);
-    const shadow = this.add.rectangle(cx, cy + 7, w, h, 0x000000, 0.34).setDepth(26);
-    const panel = this.add.rectangle(cx, cy, w, h, 0x0f2036, 0.88).setDepth(27).setStrokeStyle(1.8, 0xcde8ff, 0.46);
-    const topEdge = this.add.rectangle(cx, cy - h / 2 + 12, w - 30, 2, 0xf2fbff, 0.18).setDepth(28);
-    const iconRing = this.add.circle(cx - w / 2 + 38, cy - 8, 18, 0x18344f, 0.98).setDepth(28).setStrokeStyle(2, glowColor, 0.72);
-    const titleText = this.add.text(cx - w / 2 + 68, cy - 24, title, {
-      fontSize: "24px",
+    const glow = this.add.ellipse(cx, cy, w + 30, h + 24, glowColor, 0.075).setDepth(25);
+    const shadow = this.add.rectangle(cx, cy + 6, w, h, 0x000000, 0.28).setDepth(26);
+    const panel = this.add.rectangle(cx, cy, w, h, 0x0f2036, 0.8).setDepth(27).setStrokeStyle(1.4, 0xcde8ff, 0.34);
+    const topEdge = this.add.rectangle(cx, cy - h / 2 + 10, w - 26, 2, 0xf2fbff, 0.14).setDepth(28);
+    const iconRing = this.add.circle(cx - w / 2 + 32, cy - 6, 16, 0x18344f, 0.94).setDepth(28).setStrokeStyle(2, glowColor, 0.6);
+    const titleText = this.add.text(cx - w / 2 + 58, cy - 20, title, {
+      fontSize: "22px",
       color: "#ffffff",
       fontStyle: "bold"
     }).setDepth(28);
-    const descText = this.add.text(cx - w / 2 + 68, cy + 8, desc, {
-      fontSize: "15px",
+    const descText = this.add.text(cx - w / 2 + 58, cy + 6, desc, {
+      fontSize: "14px",
       color: "#cae2f7"
     }).setDepth(28);
-    const enterText = this.add.text(cx - w / 2 + 68, cy + 34, "進入模式 →", {
-      fontSize: "15px",
+    const enterText = this.add.text(cx - w / 2 + 58, cy + 28, "進入模式 →", {
+      fontSize: "14px",
       color: Phaser.Display.Color.IntegerToColor(glowColor).rgba,
       fontStyle: "bold"
     }).setDepth(28);
@@ -265,11 +298,11 @@ export default class MenuScene extends Phaser.Scene {
       }
     ];
 
-    const y = h * 0.7;
-    const startX = w / 2 - 294;
-    const gap = 196;
+    const y = h * 0.72;
+    const startX = w / 2 - 282;
+    const gap = 188;
     for (let i = 0; i < items.length; i += 1) {
-      this._makeButton(startX + i * gap, y, items[i].label, items[i].onClick, 170, 42, "19px", "secondary");
+      this._makeButton(startX + i * gap, y, items[i].label, items[i].onClick, 156, 38, "17px", "secondary");
     }
   }
 

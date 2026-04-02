@@ -17,7 +17,7 @@ export default class GridBoardUI {
     this.onCellClick = onCellClick;
     this.onInspectUnit = onInspectUnit;
 
-    this.container = scene.add.container(0, 0);
+    this.container = scene.add.container(0, 0).setDepth(1200);
     this.effectLayer = scene.add.container(0, 0).setDepth(1800);
 
     this.cells = [];
@@ -33,23 +33,33 @@ export default class GridBoardUI {
   }
 
   _draw() {
+    const panelShadow = this.scene.add
+      .rectangle(GRID_X + GRID_W / 2 + 3, GRID_Y + GRID_H / 2 + 4, GRID_W + 8, GRID_H + 8, 0x000000, 0.28);
     const panel = this.scene.add
-      .rectangle(GRID_X + GRID_W / 2, GRID_Y + GRID_H / 2, GRID_W, GRID_H, 0x000000, 0.18)
-      .setStrokeStyle(1, 0xffffff, 0.06);
-    this.container.add(panel);
+      .rectangle(GRID_X + GRID_W / 2, GRID_Y + GRID_H / 2, GRID_W, GRID_H, 0x060d18, 0.44)
+      .setStrokeStyle(2, 0x6f91bd, 0.35);
+    const panelTopEdge = this.scene.add
+      .rectangle(GRID_X + GRID_W / 2, GRID_Y + 1, GRID_W - 8, 2, 0xbfd9ff, 0.18);
+    this.container.add([panelShadow, panel, panelTopEdge]);
 
     for (let r = 0; r < GRID_ROWS; r += 1) {
       for (let c = 0; c < GRID_COLS; c += 1) {
         const x = GRID_X + c * CELL_W;
         const y = GRID_Y + r * CELL_H;
 
+        const shadow = this.scene.add
+          .rectangle(x + 1.5, y + 2, CELL_W, CELL_H, 0x000000, 0.22)
+          .setOrigin(0, 0);
         const rect = this.scene.add
-          .rectangle(x, y, CELL_W, CELL_H, 0xffffff, 0.03)
+          .rectangle(x, y, CELL_W, CELL_H, 0x0d1626, 0.25)
           .setOrigin(0, 0)
-          .setStrokeStyle(1, 0xffffff, 0.04)
+          .setStrokeStyle(1, 0xc6ddff, 0.08)
           .setInteractive({ useHandCursor: true });
+        const topEdge = this.scene.add
+          .rectangle(x + CELL_W / 2, y + 1, CELL_W - 6, 2, 0xd9e9ff, 0.08)
+          .setOrigin(0.5, 0);
 
-        const cell = { rect, r, c, holdTimer: null, holdTriggered: false };
+        const cell = { rect, shadow, topEdge, r, c, holdTimer: null, holdTriggered: false };
 
         rect.on("pointerover", () => {
           if (!this.deployEnabled) return;
@@ -95,7 +105,7 @@ export default class GridBoardUI {
           if (typeof this.onCellClick === "function") this.onCellClick(cell.r, cell.c);
         });
 
-        this.container.add(rect);
+        this.container.add([shadow, rect, topEdge]);
         this.cells.push(cell);
       }
     }
@@ -159,24 +169,32 @@ export default class GridBoardUI {
       const cell = this.cells[i];
       const key = `${cell.r},${cell.c}`;
       if (this.pendingTargets.has(key)) {
-        cell.rect.setFillStyle(0xffc26b, 0.24);
-        cell.rect.setStrokeStyle(2, 0x000000, 0.95);
+        cell.rect.setFillStyle(0xffb96a, 0.34);
+        cell.rect.setStrokeStyle(2, 0xffe6b3, 0.95);
+        if (cell.topEdge) cell.topEdge.setFillStyle(0xfff0cb, 0.45);
+        if (cell.shadow) cell.shadow.setFillStyle(0x000000, 0.35);
         continue;
       }
       if (!this.deployEnabled) {
-        cell.rect.setFillStyle(0xffffff, 0.03);
-        cell.rect.setStrokeStyle(1, 0xffffff, 0.04);
+        cell.rect.setFillStyle(0x0d1626, 0.25);
+        cell.rect.setStrokeStyle(1, 0xc6ddff, 0.08);
+        if (cell.topEdge) cell.topEdge.setFillStyle(0xd9e9ff, 0.08);
+        if (cell.shadow) cell.shadow.setFillStyle(0x000000, 0.22);
         continue;
       }
       const can = this.canDeployCellFn ? Boolean(this.canDeployCellFn(cell.r, cell.c)) : true;
       if (can) {
-        const fill = this.deploySide === "R" ? 0x3a1717 : 0x13253a;
-        const stroke = this.deploySide === "R" ? 0xff6b6b : 0x4db3ff;
-        cell.rect.setFillStyle(fill, 0.28);
+        const fill = this.deploySide === "R" ? 0x3c1620 : 0x122842;
+        const stroke = this.deploySide === "R" ? 0xff708f : 0x65c2ff;
+        cell.rect.setFillStyle(fill, 0.4);
         cell.rect.setStrokeStyle(2, stroke, 0.95);
+        if (cell.topEdge) cell.topEdge.setFillStyle(0xe7f2ff, 0.28);
+        if (cell.shadow) cell.shadow.setFillStyle(0x000000, 0.34);
       } else {
-        cell.rect.setFillStyle(0xffffff, 0.03);
-        cell.rect.setStrokeStyle(1, 0xffffff, 0.04);
+        cell.rect.setFillStyle(0x0d1626, 0.25);
+        cell.rect.setStrokeStyle(1, 0xc6ddff, 0.08);
+        if (cell.topEdge) cell.topEdge.setFillStyle(0xd9e9ff, 0.08);
+        if (cell.shadow) cell.shadow.setFillStyle(0x000000, 0.22);
       }
     }
   }

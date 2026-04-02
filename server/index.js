@@ -345,12 +345,32 @@ const server = http.createServer(async (req, res) => {
         return sendJson(req, res, 400, { error: "invalid_action" });
       }
 
+      const actionType = String(action?.type || "");
+
+      if (actionType === "leaveRoom") {
+        room.players[playerId] = null;
+
+        const hasA = Boolean(room?.players?.A);
+        const hasB = Boolean(room?.players?.B);
+        if (!hasA && !hasB) {
+          rooms.delete(code);
+          return sendJson(req, res, 200, { ok: true, deleted: true, status: "deleted" });
+        }
+
+        if (room.status !== "finished") {
+          room.status = hasA && hasB ? "ready" : "waiting";
+        }
+
+        room.updatedAt = Date.now();
+        return sendJson(req, res, 200, { ok: true, status: room.status });
+      }
+
       // 即時動作視為事件流，不在此處強卡回合，避免同步抖動造成對端漏事件。
       room.liveActionSeq = Number(room.liveActionSeq || 0) + 1;
       room.liveActions.push({ seq: room.liveActionSeq, playerId, action, at: Date.now() });
       if (room.liveActions.length > 300) room.liveActions = room.liveActions.slice(room.liveActions.length - 300);
 
-      if (String(action?.type || "") === "gameOver") {
+      if (actionType === "gameOver") {
         room.status = "finished";
         room.finishedAt = Date.now();
       } else if (room.status === "ready") {

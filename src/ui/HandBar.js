@@ -215,20 +215,24 @@ export default class HandBar {
     const w = scene.scale.width;
     const h = scene.scale.height;
 
-    const overlay = scene.add.rectangle(w / 2, h / 2, w, h, 0x000000, 0.62).setInteractive();
+    const overlay = scene.add.rectangle(w / 2, h / 2, w, h, 0x000000, 0.7).setInteractive();
     const pw = Math.min(980, w - 80);
     const ph = Math.min(680, h - 70);
-    const panel = scene.add.rectangle(w / 2, h / 2, pw, ph, 0x0f1828, 0.98).setStrokeStyle(1, 0xffffff, 0.22);
+    const glow = scene.add.ellipse(w / 2, h / 2, pw + 48, ph + 36, 0x82d4ff, 0.08);
+    const shadow = scene.add.rectangle(w / 2, h / 2 + 10, pw, ph, 0x000000, 0.38);
+    const panel = scene.add.rectangle(w / 2, h / 2, pw, ph, 0x0f1828, 0.98).setStrokeStyle(1.6, 0x9edcff, 0.36);
+    const topLine = scene.add.rectangle(w / 2, h / 2 - ph / 2 + 20, pw - 46, 2, 0xf0fbff, 0.14);
     const titleText = scene.add.text(w / 2, h / 2 - ph / 2 + 16, `${title}（${cards.length}）`, {
-      fontSize: "30px",
-      color: "#ffffff"
+      fontSize: "32px",
+      color: "#ffffff",
+      fontStyle: "bold"
     }).setOrigin(0.5, 0);
 
     const gridX = w / 2 - pw / 2 + 22;
     const gridY = h / 2 - ph / 2 + 68;
     const gridW = pw - 44;
     const gridH = ph - 126;
-    const gridBg = scene.add.rectangle(gridX + gridW / 2, gridY + gridH / 2, gridW, gridH, 0xffffff, 0.03).setOrigin(0.5);
+    const gridBg = scene.add.rectangle(gridX + gridW / 2, gridY + gridH / 2, gridW, gridH, 0x0b1626, 0.9).setStrokeStyle(1.2, 0x89cfff, 0.14).setOrigin(0.5);
 
     const cols = 4;
     const rows = 4;
@@ -243,10 +247,14 @@ export default class HandBar {
     const pageText = scene.add.text(w / 2, h / 2 + ph / 2 - 48, "", { fontSize: "18px", color: "#9dc4e6" }).setOrigin(0.5, 0.5);
 
     const makeBtn = (cx, cy, label, onClick) => {
-      const bg = scene.add.rectangle(cx, cy, 104, 34, 0xffffff, 0.14).setInteractive({ useHandCursor: true });
-      const t = scene.add.text(cx, cy, label, { fontSize: "16px", color: "#ffffff" }).setOrigin(0.5);
+      const shadow = scene.add.rectangle(cx, cy + 4, 108, 36, 0x000000, 0.32);
+      const bg = scene.add.rectangle(cx, cy, 104, 34, 0x14304d, 0.92).setStrokeStyle(1.4, 0xcde8ff, 0.34).setInteractive({ useHandCursor: true });
+      const top = scene.add.rectangle(cx, cy - 10, 84, 2, 0xf4fbff, 0.18);
+      const t = scene.add.text(cx, cy, label, { fontSize: "16px", color: "#ffffff", fontStyle: "bold" }).setOrigin(0.5);
+      bg.on("pointerover", () => bg.setFillStyle(0x1c4369, 1));
+      bg.on("pointerout", () => bg.setFillStyle(0x14304d, 0.92));
       bg.on("pointerup", onClick);
-      return [bg, t];
+      return [shadow, bg, top, t];
     };
 
     const prevBtn = makeBtn(w / 2 - 140, h / 2 + ph / 2 - 48, "上一頁", () => {
@@ -275,9 +283,11 @@ export default class HandBar {
         const x = gridX + 8 + c * (cellW + gap);
         const y = gridY + 8 + r * (cellH + gap);
 
-        const bg = scene.add.rectangle(x + cellW / 2, y + cellH / 2, cellW, cellH, 0xffffff, 0.06)
-          .setStrokeStyle(1, 0xffffff, 0.2);
-        cardsContainer.add(bg);
+        const cardShadow = scene.add.rectangle(x + cellW / 2, y + cellH / 2 + 4, cellW, cellH, 0x000000, 0.24);
+        const bg = scene.add.rectangle(x + cellW / 2, y + cellH / 2, cellW, cellH, 0x12243a, 0.92)
+          .setStrokeStyle(1.4, 0x9fd9ff, 0.24);
+        const topEdge = scene.add.rectangle(x + cellW / 2, y + 10, cellW - 14, 2, 0xf1fbff, 0.12);
+        cardsContainer.add([cardShadow, bg, topEdge]);
 
         const tex = getTextureKey(card);
         const artH = cellH - 58;
@@ -325,7 +335,10 @@ export default class HandBar {
 
     this.pileModal = scene.add.container(0, 0, [
       overlay,
+      glow,
+      shadow,
       panel,
+      topLine,
       titleText,
       gridBg,
       cardsContainer,
